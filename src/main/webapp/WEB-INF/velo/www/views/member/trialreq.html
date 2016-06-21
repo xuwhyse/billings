@@ -1,0 +1,211 @@
+#set($layout="/www/layout/member_layout.html") #set($pageClass="usercenter") #set($title="试用-金融投资云平台") #msgAlertShow($!msgList)
+<div class="member-portlet clearfix">
+    <div class="member-header">
+        <h2 class="module-name">
+			试用申请
+		</h2>
+        <ul class="nav nav-tabs" style="height:42px;">
+        </ul>
+    </div>
+    <div class="member-body">
+        <div class="panel" id="trial-panel">
+            <div class="panel-body" id="#verify-tabs">
+                <form role="form" name="trialreq" class="form-horizontal validatorForm" method="post" action="$!{ctx}/member/savetrialreq.do">
+                    <fieldset>
+                        <legend>个人信息</legend>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="realName" class="col-md-3">申请人姓名:<span class="red">*</span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="realName" placeholder="请填写申请人姓名" value="$!trialreqForm.realName" data-rule-required="true" data-msg-required="请填写申请人姓名！" data-rule-maxlength="18" data-msg-maxlength="姓名不能超过18个字符！" data-rule-remote="$!{ctx}/member/checkSpechars.do"  data-msg-remote="不能含有特殊字符！"/>
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+									</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="companyName" class="col-md-3">公司名称:<span class="red">*</span></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="companyName" placeholder="请填写公司名称" value="$!trialreqForm.companyName" data-rule-maxlength="90" data-msg-maxlength="公司名称不能超过90个字符！" data-rule-required="true" data-msg-required="请填写公司名称！" data-rule-remote="$!{ctx}/member/checkSpechars.do"  data-msg-remote="不能含有特殊字符！"/>
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+									</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="mobilePhoneNumber" class="col-md-3">手机号:<span class="red">*</span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="mobilePhoneNumber" placeholder="请填写手机号" #if($trialreqForm.mobilePhoneNumber)value="$!trialreqForm.mobilePhoneNumber" #else value="$!user.mobile" #end data-rule-mobile="true" data-msg-mobile="手机格式不正确！"data-rule-required="true"data-msg-required="请填写手机号！" />
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+									</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="email" class="col-md-3">邮箱:<span class="red">*</span>
+                                </label>
+
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="email" placeholder="请填写邮箱" value="$!trialreqForm.email" data-rule-maxlength="40" data-rule-required="true" data-msg-required="请填写邮箱！" data-msg-maxlength="邮箱字段长度不能超过40字符！" data-rule-email="true" data-msg-email="邮箱格式不正确！"
+                                    />
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+									</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="officeTelNumber" class="col-md-3">办公电话:</label>
+
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="officeTelNumber" placeholder="请填写办公电话" value="$!trialreqForm.officeTelNumber" data-rule-maxlength="18" data-msg-maxlength="办公电话不能超过18位" data-rule-pattern="^[0-9+-]*$" data-msg-pattern="办公电话格式不正确"/>
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+									</span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>业务信息</legend>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="businessCategories" class="col-md-3">业务类别:<span>*</span>
+                                </label>
+                                <div class="col-md-4">
+									<input type="checkbox" value="1" name="businessCategories" id="businessCategories" data-rule-required="true" data-msg-required="请选择业务类别！"/>A股
+                                    <input type="checkbox" value="2" name="businessCategories" id="businessCategories" data-rule-required="true" data-msg-required="请选择业务类别！"/>期货
+									<input type="checkbox" value="3" name="businessCategories" id="businessCategories"data-rule-required="true" data-msg-required="请选择业务类别！" />银行间
+                                    <input type="checkbox" value="4" name="businessCategories" id="businessCategories" data-rule-required="true" data-msg-required="请选择业务类别！"/>场外
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+									</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="entrustWay" class="col-md-3">申请委托方式:<span>*</span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="checkbox" value="1" name="entrustWay" id="entrustWay" data-rule-required="true" data-msg-required="请选择委托方式！"/>自由委托
+                                    <input type="checkbox" value="2" name="entrustWay" id="entrustWay" data-rule-required="true" data-msg-required="请选择委托方式！"/>指令委托
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+									</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="accountModel" class="col-md-3">账户模式:<span>*</span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="radio" value="1" name="accountModel" id="accountModel" #if($!trialreqForm.accountModel== 1)checked#end data-rule-required="true" data-msg-required="请选择账户模式！"/>子账户模式
+                                    <input type="radio" value="2" name="accountModel" id="accountModel" #if($!trialreqForm.accountModel== 2)checked#end data-rule-required="true" data-msg-required="请选择账户模式！"/>多账户模式
+								</div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+									</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="subAccountManModel" class="col-md-3">子账户管理模式:<span>*</span></label>
+                                <div class="col-md-4">
+                                    <input type="radio" value="1" name="subAccountManModel" id="subAccountManModel"  #if($!trialreqForm.subAccountManModel== 1||!$trialreqForm.subAccountManModel)checked#end data-rule-required="true" data-msg-required="请选择子账户管理模式！"/>标准子账户模式
+                                    <input type="radio" value="2" name="subAccountManModel" id="subAccountManModel"  #if($!trialreqForm.subAccountManModel== 2)checked#end data-rule-required="true" data-msg-required="请选择子账户管理模式！"/>融资借货模式</div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+									</span>
+                                </div>
+                            </div>
+                        </div>
+						<div class="row">
+                            <div class="form-group">
+                                <label for="manyAccountCount" class="col-md-3">多账户账户个数:<span>*</span></label>
+                                <div class="col-md-4">
+                                    <select id="manyAccountCount" class="form-control" name="manyAccountCount" data-rule-required="true" data-msg-required="请选择多账户账户个数！">
+                                        <option value="1" #if($!trialreqForm.manyAccountCount== 1)selected#end>1</option>
+                                        <option value="2" #if($!trialreqForm.manyAccountCount== 2)selected#end>2</option>
+										<option value="3" #if($!trialreqForm.manyAccountCount== 3)selected#end>3</option>
+										<option value="4" #if($!trialreqForm.manyAccountCount== 4)selected#end>4</option>
+										<option value="5" #if($!trialreqForm.manyAccountCount== 5)selected#end>5</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+
+									</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="serverCount" class="col-md-3">管理端个数:<span>*</span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="serverCount" placeholder="请填写管理端个数" value="$!trialreqForm.serverCount"  data-rule-required="true" data-msg-required="请填写管理端个数！" data-rule-maxlength="6"  data-msg-maxlength="管理端个数太多！"   data-rule-digits="true" data-msg-digits="交易端个数必须为正整数！"  />
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+
+									</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="clientCount" class="col-md-3">交易端个数:<span>*</span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="clientCount" id="clientCount" placeholder="请填写交易端个数" value="$!trialreqForm.clientCount" data-rule-required="true" data-msg-required="请填写交易端个数！"  data-rule-digits="true" data-msg-digits="交易端个数必须为正整数！" data-rule-range="[1,5]"  data-msg-range="客户端数量：1~5" />
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="help-block">
+										客户端数量：1~5
+									</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="remark" class="col-md-3">试用周期:</label>
+
+                                <div class="col-md-9">
+                                    默认1周
+                                    <span class="help-block">
+										试用限期为一周，到期后如需延期请以邮件方式申请，每次延期为一周，最多延期三次。
+									</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-toolbar">
+                            <button type="submit" class=" btn btn-primary">填写完成</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

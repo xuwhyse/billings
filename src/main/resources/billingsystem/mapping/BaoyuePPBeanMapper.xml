@@ -1,0 +1,1423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.internet.billingsystem.dao.BaoyuePPBeanMapper">
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="CreateBy" jdbcType="TINYINT" property="createby" />
+    <result column="Name" jdbcType="VARCHAR" property="name" />
+    <result column="EditorRecommend" jdbcType="VARCHAR" property="editorrecommend" />
+    <result column="BookNum" jdbcType="INTEGER" property="booknum" />
+    <result column="BuyNum" jdbcType="INTEGER" property="buynum" />
+    <result column="BuyNumPriority" jdbcType="INTEGER" property="buynumpriority" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Cover" jdbcType="VARCHAR" property="cover" />
+    <result column="totalValue" jdbcType="INTEGER" property="totalvalue" />
+    <result column="OpenDesc" jdbcType="VARCHAR" property="opendesc" />
+    <result column="StartTime" jdbcType="BIGINT" property="starttime" />
+    <result column="EndTime" jdbcType="BIGINT" property="endtime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    <result column="PriceInfo" jdbcType="LONGVARCHAR" property="priceinfo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, CreateBy, Name, EditorRecommend, BookNum, BuyNum, BuyNumPriority, CreateTime, 
+    UpdateTime, Status, Cover, totalValue, OpenDesc, StartTime, EndTime
+  </sql>
+  <sql id="Blob_Column_List">
+    PriceInfo
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from baoyue_package
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_package
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria">
+    delete from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    insert into baoyue_package (Id, CreateBy, Name, 
+      EditorRecommend, BookNum, BuyNum, 
+      BuyNumPriority, CreateTime, UpdateTime, 
+      Status, Cover, totalValue, 
+      OpenDesc, StartTime, EndTime, 
+      PriceInfo)
+    values (#{id,jdbcType=BIGINT}, #{createby,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, 
+      #{editorrecommend,jdbcType=VARCHAR}, #{booknum,jdbcType=INTEGER}, #{buynum,jdbcType=INTEGER}, 
+      #{buynumpriority,jdbcType=INTEGER}, #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{cover,jdbcType=VARCHAR}, #{totalvalue,jdbcType=INTEGER}, 
+      #{opendesc,jdbcType=VARCHAR}, #{starttime,jdbcType=BIGINT}, #{endtime,jdbcType=BIGINT}, 
+      #{priceinfo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    insert into baoyue_package
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="createby != null">
+        CreateBy,
+      </if>
+      <if test="name != null">
+        Name,
+      </if>
+      <if test="editorrecommend != null">
+        EditorRecommend,
+      </if>
+      <if test="booknum != null">
+        BookNum,
+      </if>
+      <if test="buynum != null">
+        BuyNum,
+      </if>
+      <if test="buynumpriority != null">
+        BuyNumPriority,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="cover != null">
+        Cover,
+      </if>
+      <if test="totalvalue != null">
+        totalValue,
+      </if>
+      <if test="opendesc != null">
+        OpenDesc,
+      </if>
+      <if test="starttime != null">
+        StartTime,
+      </if>
+      <if test="endtime != null">
+        EndTime,
+      </if>
+      <if test="priceinfo != null">
+        PriceInfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="editorrecommend != null">
+        #{editorrecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="booknum != null">
+        #{booknum,jdbcType=INTEGER},
+      </if>
+      <if test="buynum != null">
+        #{buynum,jdbcType=INTEGER},
+      </if>
+      <if test="buynumpriority != null">
+        #{buynumpriority,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="totalvalue != null">
+        #{totalvalue,jdbcType=INTEGER},
+      </if>
+      <if test="opendesc != null">
+        #{opendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=BIGINT},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=BIGINT},
+      </if>
+      <if test="priceinfo != null">
+        #{priceinfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_package
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.createby != null">
+        CreateBy = #{record.createby,jdbcType=TINYINT},
+      </if>
+      <if test="record.name != null">
+        Name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editorrecommend != null">
+        EditorRecommend = #{record.editorrecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.booknum != null">
+        BookNum = #{record.booknum,jdbcType=INTEGER},
+      </if>
+      <if test="record.buynum != null">
+        BuyNum = #{record.buynum,jdbcType=INTEGER},
+      </if>
+      <if test="record.buynumpriority != null">
+        BuyNumPriority = #{record.buynumpriority,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.cover != null">
+        Cover = #{record.cover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalvalue != null">
+        totalValue = #{record.totalvalue,jdbcType=INTEGER},
+      </if>
+      <if test="record.opendesc != null">
+        OpenDesc = #{record.opendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null">
+        StartTime = #{record.starttime,jdbcType=BIGINT},
+      </if>
+      <if test="record.endtime != null">
+        EndTime = #{record.endtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.priceinfo != null">
+        PriceInfo = #{record.priceinfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update baoyue_package
+    set Id = #{record.id,jdbcType=BIGINT},
+      CreateBy = #{record.createby,jdbcType=TINYINT},
+      Name = #{record.name,jdbcType=VARCHAR},
+      EditorRecommend = #{record.editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{record.booknum,jdbcType=INTEGER},
+      BuyNum = #{record.buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{record.buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Cover = #{record.cover,jdbcType=VARCHAR},
+      totalValue = #{record.totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{record.opendesc,jdbcType=VARCHAR},
+      StartTime = #{record.starttime,jdbcType=BIGINT},
+      EndTime = #{record.endtime,jdbcType=BIGINT},
+      PriceInfo = #{record.priceinfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_package
+    set Id = #{record.id,jdbcType=BIGINT},
+      CreateBy = #{record.createby,jdbcType=TINYINT},
+      Name = #{record.name,jdbcType=VARCHAR},
+      EditorRecommend = #{record.editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{record.booknum,jdbcType=INTEGER},
+      BuyNum = #{record.buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{record.buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Cover = #{record.cover,jdbcType=VARCHAR},
+      totalValue = #{record.totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{record.opendesc,jdbcType=VARCHAR},
+      StartTime = #{record.starttime,jdbcType=BIGINT},
+      EndTime = #{record.endtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    update baoyue_package
+    <set>
+      <if test="createby != null">
+        CreateBy = #{createby,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="editorrecommend != null">
+        EditorRecommend = #{editorrecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="booknum != null">
+        BookNum = #{booknum,jdbcType=INTEGER},
+      </if>
+      <if test="buynum != null">
+        BuyNum = #{buynum,jdbcType=INTEGER},
+      </if>
+      <if test="buynumpriority != null">
+        BuyNumPriority = #{buynumpriority,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="cover != null">
+        Cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="totalvalue != null">
+        totalValue = #{totalvalue,jdbcType=INTEGER},
+      </if>
+      <if test="opendesc != null">
+        OpenDesc = #{opendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        StartTime = #{starttime,jdbcType=BIGINT},
+      </if>
+      <if test="endtime != null">
+        EndTime = #{endtime,jdbcType=BIGINT},
+      </if>
+      <if test="priceinfo != null">
+        PriceInfo = #{priceinfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    update baoyue_package
+    set CreateBy = #{createby,jdbcType=TINYINT},
+      Name = #{name,jdbcType=VARCHAR},
+      EditorRecommend = #{editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{booknum,jdbcType=INTEGER},
+      BuyNum = #{buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Cover = #{cover,jdbcType=VARCHAR},
+      totalValue = #{totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{opendesc,jdbcType=VARCHAR},
+      StartTime = #{starttime,jdbcType=BIGINT},
+      EndTime = #{endtime,jdbcType=BIGINT},
+      PriceInfo = #{priceinfo,jdbcType=LONGVARCHAR}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    update baoyue_package
+    set CreateBy = #{createby,jdbcType=TINYINT},
+      Name = #{name,jdbcType=VARCHAR},
+      EditorRecommend = #{editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{booknum,jdbcType=INTEGER},
+      BuyNum = #{buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Cover = #{cover,jdbcType=VARCHAR},
+      totalValue = #{totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{opendesc,jdbcType=VARCHAR},
+      StartTime = #{starttime,jdbcType=BIGINT},
+      EndTime = #{endtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithBLOBsWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="CreateBy" jdbcType="TINYINT" property="createby" />
+    <result column="Name" jdbcType="VARCHAR" property="name" />
+    <result column="EditorRecommend" jdbcType="VARCHAR" property="editorrecommend" />
+    <result column="BookNum" jdbcType="INTEGER" property="booknum" />
+    <result column="BuyNum" jdbcType="INTEGER" property="buynum" />
+    <result column="BuyNumPriority" jdbcType="INTEGER" property="buynumpriority" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Cover" jdbcType="VARCHAR" property="cover" />
+    <result column="totalValue" jdbcType="INTEGER" property="totalvalue" />
+    <result column="OpenDesc" jdbcType="VARCHAR" property="opendesc" />
+    <result column="StartTime" jdbcType="BIGINT" property="starttime" />
+    <result column="EndTime" jdbcType="BIGINT" property="endtime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    <result column="PriceInfo" jdbcType="LONGVARCHAR" property="priceinfo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, CreateBy, Name, EditorRecommend, BookNum, BuyNum, BuyNumPriority, CreateTime, 
+    UpdateTime, Status, Cover, totalValue, OpenDesc, StartTime, EndTime
+  </sql>
+  <sql id="Blob_Column_List">
+    PriceInfo
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from baoyue_package
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_package
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria">
+    delete from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    insert into baoyue_package (Id, CreateBy, Name, 
+      EditorRecommend, BookNum, BuyNum, 
+      BuyNumPriority, CreateTime, UpdateTime, 
+      Status, Cover, totalValue, 
+      OpenDesc, StartTime, EndTime, 
+      PriceInfo)
+    values (#{id,jdbcType=BIGINT}, #{createby,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, 
+      #{editorrecommend,jdbcType=VARCHAR}, #{booknum,jdbcType=INTEGER}, #{buynum,jdbcType=INTEGER}, 
+      #{buynumpriority,jdbcType=INTEGER}, #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{cover,jdbcType=VARCHAR}, #{totalvalue,jdbcType=INTEGER}, 
+      #{opendesc,jdbcType=VARCHAR}, #{starttime,jdbcType=BIGINT}, #{endtime,jdbcType=BIGINT}, 
+      #{priceinfo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    insert into baoyue_package
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="createby != null">
+        CreateBy,
+      </if>
+      <if test="name != null">
+        Name,
+      </if>
+      <if test="editorrecommend != null">
+        EditorRecommend,
+      </if>
+      <if test="booknum != null">
+        BookNum,
+      </if>
+      <if test="buynum != null">
+        BuyNum,
+      </if>
+      <if test="buynumpriority != null">
+        BuyNumPriority,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="cover != null">
+        Cover,
+      </if>
+      <if test="totalvalue != null">
+        totalValue,
+      </if>
+      <if test="opendesc != null">
+        OpenDesc,
+      </if>
+      <if test="starttime != null">
+        StartTime,
+      </if>
+      <if test="endtime != null">
+        EndTime,
+      </if>
+      <if test="priceinfo != null">
+        PriceInfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="editorrecommend != null">
+        #{editorrecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="booknum != null">
+        #{booknum,jdbcType=INTEGER},
+      </if>
+      <if test="buynum != null">
+        #{buynum,jdbcType=INTEGER},
+      </if>
+      <if test="buynumpriority != null">
+        #{buynumpriority,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="totalvalue != null">
+        #{totalvalue,jdbcType=INTEGER},
+      </if>
+      <if test="opendesc != null">
+        #{opendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=BIGINT},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=BIGINT},
+      </if>
+      <if test="priceinfo != null">
+        #{priceinfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_package
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.createby != null">
+        CreateBy = #{record.createby,jdbcType=TINYINT},
+      </if>
+      <if test="record.name != null">
+        Name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editorrecommend != null">
+        EditorRecommend = #{record.editorrecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.booknum != null">
+        BookNum = #{record.booknum,jdbcType=INTEGER},
+      </if>
+      <if test="record.buynum != null">
+        BuyNum = #{record.buynum,jdbcType=INTEGER},
+      </if>
+      <if test="record.buynumpriority != null">
+        BuyNumPriority = #{record.buynumpriority,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.cover != null">
+        Cover = #{record.cover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalvalue != null">
+        totalValue = #{record.totalvalue,jdbcType=INTEGER},
+      </if>
+      <if test="record.opendesc != null">
+        OpenDesc = #{record.opendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null">
+        StartTime = #{record.starttime,jdbcType=BIGINT},
+      </if>
+      <if test="record.endtime != null">
+        EndTime = #{record.endtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.priceinfo != null">
+        PriceInfo = #{record.priceinfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update baoyue_package
+    set Id = #{record.id,jdbcType=BIGINT},
+      CreateBy = #{record.createby,jdbcType=TINYINT},
+      Name = #{record.name,jdbcType=VARCHAR},
+      EditorRecommend = #{record.editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{record.booknum,jdbcType=INTEGER},
+      BuyNum = #{record.buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{record.buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Cover = #{record.cover,jdbcType=VARCHAR},
+      totalValue = #{record.totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{record.opendesc,jdbcType=VARCHAR},
+      StartTime = #{record.starttime,jdbcType=BIGINT},
+      EndTime = #{record.endtime,jdbcType=BIGINT},
+      PriceInfo = #{record.priceinfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_package
+    set Id = #{record.id,jdbcType=BIGINT},
+      CreateBy = #{record.createby,jdbcType=TINYINT},
+      Name = #{record.name,jdbcType=VARCHAR},
+      EditorRecommend = #{record.editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{record.booknum,jdbcType=INTEGER},
+      BuyNum = #{record.buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{record.buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Cover = #{record.cover,jdbcType=VARCHAR},
+      totalValue = #{record.totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{record.opendesc,jdbcType=VARCHAR},
+      StartTime = #{record.starttime,jdbcType=BIGINT},
+      EndTime = #{record.endtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    update baoyue_package
+    <set>
+      <if test="createby != null">
+        CreateBy = #{createby,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="editorrecommend != null">
+        EditorRecommend = #{editorrecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="booknum != null">
+        BookNum = #{booknum,jdbcType=INTEGER},
+      </if>
+      <if test="buynum != null">
+        BuyNum = #{buynum,jdbcType=INTEGER},
+      </if>
+      <if test="buynumpriority != null">
+        BuyNumPriority = #{buynumpriority,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="cover != null">
+        Cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="totalvalue != null">
+        totalValue = #{totalvalue,jdbcType=INTEGER},
+      </if>
+      <if test="opendesc != null">
+        OpenDesc = #{opendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        StartTime = #{starttime,jdbcType=BIGINT},
+      </if>
+      <if test="endtime != null">
+        EndTime = #{endtime,jdbcType=BIGINT},
+      </if>
+      <if test="priceinfo != null">
+        PriceInfo = #{priceinfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    update baoyue_package
+    set CreateBy = #{createby,jdbcType=TINYINT},
+      Name = #{name,jdbcType=VARCHAR},
+      EditorRecommend = #{editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{booknum,jdbcType=INTEGER},
+      BuyNum = #{buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Cover = #{cover,jdbcType=VARCHAR},
+      totalValue = #{totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{opendesc,jdbcType=VARCHAR},
+      StartTime = #{starttime,jdbcType=BIGINT},
+      EndTime = #{endtime,jdbcType=BIGINT},
+      PriceInfo = #{priceinfo,jdbcType=LONGVARCHAR}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    update baoyue_package
+    set CreateBy = #{createby,jdbcType=TINYINT},
+      Name = #{name,jdbcType=VARCHAR},
+      EditorRecommend = #{editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{booknum,jdbcType=INTEGER},
+      BuyNum = #{buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Cover = #{cover,jdbcType=VARCHAR},
+      totalValue = #{totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{opendesc,jdbcType=VARCHAR},
+      StartTime = #{starttime,jdbcType=BIGINT},
+      EndTime = #{endtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithBLOBsWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="CreateBy" jdbcType="TINYINT" property="createby" />
+    <result column="Name" jdbcType="VARCHAR" property="name" />
+    <result column="EditorRecommend" jdbcType="VARCHAR" property="editorrecommend" />
+    <result column="BookNum" jdbcType="INTEGER" property="booknum" />
+    <result column="BuyNum" jdbcType="INTEGER" property="buynum" />
+    <result column="BuyNumPriority" jdbcType="INTEGER" property="buynumpriority" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Cover" jdbcType="VARCHAR" property="cover" />
+    <result column="totalValue" jdbcType="INTEGER" property="totalvalue" />
+    <result column="OpenDesc" jdbcType="VARCHAR" property="opendesc" />
+    <result column="StartTime" jdbcType="BIGINT" property="starttime" />
+    <result column="EndTime" jdbcType="BIGINT" property="endtime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    <result column="PriceInfo" jdbcType="LONGVARCHAR" property="priceinfo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, CreateBy, Name, EditorRecommend, BookNum, BuyNum, BuyNumPriority, CreateTime, 
+    UpdateTime, Status, Cover, totalValue, OpenDesc, StartTime, EndTime
+  </sql>
+  <sql id="Blob_Column_List">
+    PriceInfo
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from baoyue_package
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_package
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria">
+    delete from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    insert into baoyue_package (Id, CreateBy, Name, 
+      EditorRecommend, BookNum, BuyNum, 
+      BuyNumPriority, CreateTime, UpdateTime, 
+      Status, Cover, totalValue, 
+      OpenDesc, StartTime, EndTime, 
+      PriceInfo)
+    values (#{id,jdbcType=BIGINT}, #{createby,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, 
+      #{editorrecommend,jdbcType=VARCHAR}, #{booknum,jdbcType=INTEGER}, #{buynum,jdbcType=INTEGER}, 
+      #{buynumpriority,jdbcType=INTEGER}, #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{cover,jdbcType=VARCHAR}, #{totalvalue,jdbcType=INTEGER}, 
+      #{opendesc,jdbcType=VARCHAR}, #{starttime,jdbcType=BIGINT}, #{endtime,jdbcType=BIGINT}, 
+      #{priceinfo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    insert into baoyue_package
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="createby != null">
+        CreateBy,
+      </if>
+      <if test="name != null">
+        Name,
+      </if>
+      <if test="editorrecommend != null">
+        EditorRecommend,
+      </if>
+      <if test="booknum != null">
+        BookNum,
+      </if>
+      <if test="buynum != null">
+        BuyNum,
+      </if>
+      <if test="buynumpriority != null">
+        BuyNumPriority,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="cover != null">
+        Cover,
+      </if>
+      <if test="totalvalue != null">
+        totalValue,
+      </if>
+      <if test="opendesc != null">
+        OpenDesc,
+      </if>
+      <if test="starttime != null">
+        StartTime,
+      </if>
+      <if test="endtime != null">
+        EndTime,
+      </if>
+      <if test="priceinfo != null">
+        PriceInfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="editorrecommend != null">
+        #{editorrecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="booknum != null">
+        #{booknum,jdbcType=INTEGER},
+      </if>
+      <if test="buynum != null">
+        #{buynum,jdbcType=INTEGER},
+      </if>
+      <if test="buynumpriority != null">
+        #{buynumpriority,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="totalvalue != null">
+        #{totalvalue,jdbcType=INTEGER},
+      </if>
+      <if test="opendesc != null">
+        #{opendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=BIGINT},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=BIGINT},
+      </if>
+      <if test="priceinfo != null">
+        #{priceinfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_package
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.createby != null">
+        CreateBy = #{record.createby,jdbcType=TINYINT},
+      </if>
+      <if test="record.name != null">
+        Name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editorrecommend != null">
+        EditorRecommend = #{record.editorrecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.booknum != null">
+        BookNum = #{record.booknum,jdbcType=INTEGER},
+      </if>
+      <if test="record.buynum != null">
+        BuyNum = #{record.buynum,jdbcType=INTEGER},
+      </if>
+      <if test="record.buynumpriority != null">
+        BuyNumPriority = #{record.buynumpriority,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.cover != null">
+        Cover = #{record.cover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalvalue != null">
+        totalValue = #{record.totalvalue,jdbcType=INTEGER},
+      </if>
+      <if test="record.opendesc != null">
+        OpenDesc = #{record.opendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null">
+        StartTime = #{record.starttime,jdbcType=BIGINT},
+      </if>
+      <if test="record.endtime != null">
+        EndTime = #{record.endtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.priceinfo != null">
+        PriceInfo = #{record.priceinfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update baoyue_package
+    set Id = #{record.id,jdbcType=BIGINT},
+      CreateBy = #{record.createby,jdbcType=TINYINT},
+      Name = #{record.name,jdbcType=VARCHAR},
+      EditorRecommend = #{record.editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{record.booknum,jdbcType=INTEGER},
+      BuyNum = #{record.buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{record.buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Cover = #{record.cover,jdbcType=VARCHAR},
+      totalValue = #{record.totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{record.opendesc,jdbcType=VARCHAR},
+      StartTime = #{record.starttime,jdbcType=BIGINT},
+      EndTime = #{record.endtime,jdbcType=BIGINT},
+      PriceInfo = #{record.priceinfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_package
+    set Id = #{record.id,jdbcType=BIGINT},
+      CreateBy = #{record.createby,jdbcType=TINYINT},
+      Name = #{record.name,jdbcType=VARCHAR},
+      EditorRecommend = #{record.editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{record.booknum,jdbcType=INTEGER},
+      BuyNum = #{record.buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{record.buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Cover = #{record.cover,jdbcType=VARCHAR},
+      totalValue = #{record.totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{record.opendesc,jdbcType=VARCHAR},
+      StartTime = #{record.starttime,jdbcType=BIGINT},
+      EndTime = #{record.endtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    update baoyue_package
+    <set>
+      <if test="createby != null">
+        CreateBy = #{createby,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="editorrecommend != null">
+        EditorRecommend = #{editorrecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="booknum != null">
+        BookNum = #{booknum,jdbcType=INTEGER},
+      </if>
+      <if test="buynum != null">
+        BuyNum = #{buynum,jdbcType=INTEGER},
+      </if>
+      <if test="buynumpriority != null">
+        BuyNumPriority = #{buynumpriority,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="cover != null">
+        Cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="totalvalue != null">
+        totalValue = #{totalvalue,jdbcType=INTEGER},
+      </if>
+      <if test="opendesc != null">
+        OpenDesc = #{opendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        StartTime = #{starttime,jdbcType=BIGINT},
+      </if>
+      <if test="endtime != null">
+        EndTime = #{endtime,jdbcType=BIGINT},
+      </if>
+      <if test="priceinfo != null">
+        PriceInfo = #{priceinfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    update baoyue_package
+    set CreateBy = #{createby,jdbcType=TINYINT},
+      Name = #{name,jdbcType=VARCHAR},
+      EditorRecommend = #{editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{booknum,jdbcType=INTEGER},
+      BuyNum = #{buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Cover = #{cover,jdbcType=VARCHAR},
+      totalValue = #{totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{opendesc,jdbcType=VARCHAR},
+      StartTime = #{starttime,jdbcType=BIGINT},
+      EndTime = #{endtime,jdbcType=BIGINT},
+      PriceInfo = #{priceinfo,jdbcType=LONGVARCHAR}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBean">
+    update baoyue_package
+    set CreateBy = #{createby,jdbcType=TINYINT},
+      Name = #{name,jdbcType=VARCHAR},
+      EditorRecommend = #{editorrecommend,jdbcType=VARCHAR},
+      BookNum = #{booknum,jdbcType=INTEGER},
+      BuyNum = #{buynum,jdbcType=INTEGER},
+      BuyNumPriority = #{buynumpriority,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Cover = #{cover,jdbcType=VARCHAR},
+      totalValue = #{totalvalue,jdbcType=INTEGER},
+      OpenDesc = #{opendesc,jdbcType=VARCHAR},
+      StartTime = #{starttime,jdbcType=BIGINT},
+      EndTime = #{endtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithBLOBsWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyuePPBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_package
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

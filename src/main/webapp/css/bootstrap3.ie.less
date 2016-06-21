@@ -1,0 +1,207 @@
+
+/**
+ * oooo
+ * 修正IE浏览器BUG 主要针对IE8 以下样式问题
+ * 1.boxing
+ *
+ *
+ *
+ */
+.row{
+	clear:both;
+	vertical-align:top;
+  .col-md-1,
+  .col-md-2,
+  .col-md-3,
+  .col-md-4,
+  .col-md-5,
+  .col-md-6,
+  .col-md-7,
+  .col-md-8,
+  .col-md-9,
+  .col-md-10,
+  .col-md-11,
+  .col-md-12 {
+    float:left;
+    *zoom:1;
+    *display: inline;
+    *float:none;
+  }
+  .col-md-12{
+    width: 100%;
+    *width: 97.859680851063829%;
+  }
+  .col-md-11{
+    width: 91.48936170212765%;
+    *width: 91.43617021276594%;
+  }
+  .col-md-10{
+    width: 82.97872340425532%;
+    *width: 82.92553191489361%;
+  }
+  .col-md-9{
+    width: 100%;
+    width: 72.56808510638297%;
+    *width: 72.51489361702126%;
+  }
+  .col-md-8{
+    width: 64.59425531914893%;
+    *width: 64.59425531914893%;
+  }
+  .col-md-7{
+      width: 57.44680851063829%;
+      *width: 57.39361702127659%;
+  }
+  .col-md-6{
+    width: 47.93617021276595%;
+    *width: 47%;
+  }
+  .col-md-5{
+    width: 38.5276263739%;
+    *width:38.3276263739%;
+  }
+  .col-md-4{
+    width: 31.313702127659576%;
+    *width: 31.313702127659576%;
+  }
+  .col-md-3{
+    width: 23.404255319148934%;
+    *width: 23%;
+  }
+  .col-md-2{
+    width: 14.893617021276595%;
+    *width: 14.840425531914894%;
+  }
+  .col-md-1{
+    width: 6.382978723404255%;
+    *width: 6.351787234042553%;
+  }
+	.col-md-offset-2{
+		margin-left:18.8936%;
+	}
+}
+
+.col-md-6{
+	  width: 50%;
+	  padding-top:0;
+    display: block;
+	  vertical-align:top;
+	  float:left;
+    min-height: 30px;
+    *zoom:1;
+	  *display:inline-block;
+    *display: inline;
+	  *float:none;
+}
+
+.navbar-nav{
+	li{
+		display:inline-block;
+		*display:inline;
+		*zoom:1;
+	}
+}
+ .checkbox input[type="checkbox"]{
+  	float:none;
+  	vertical-align:middle;
+  	margin-top:0;
+ }
+ .row{
+	.col-md-9{
+		width:710px;
+		*width:680px;
+	}
+	.col-md-3{
+		width:310px;
+		*width:280px;
+	}
+ }
+ .profile .col-md-12.form-group{
+	 .col-md-10{
+		margin-left:-4px;
+	 }
+ }
+
+ .member .col-md-12.form-group{
+	 .col-md-10{
+		margin-left:-4px;
+	 }
+ }
+
+ label{
+  margin-bottom: 0;//profile格式错乱IE8
+}
+.modal-dialog{
+  float: left;
+  left: 50%;
+}
+.modal-content{
+  left:-50%;
+}
+.formTable{
+  .formTable-body{
+    .col-md-8{
+       width: 65.59425531914893%;
+    }
+    .col-md-12{
+      width: 95.872%;
+    }
+    .col-md-2{
+      width: 15.7%;
+    }
+    .col-md-10{
+      width: 83.97%;
+    }
+  }
+}
+.org{
+  .sidePicDes1{
+    .pull-left{
+      max-width: 145px;
+    }
+  }
+}
+.fixDatePicker{
+  .datepicker[readonly]{
+    background-position:140px -167px;
+  }
+}
+.datepicker-lg[readonly]{
+  background-position:190px -167px;
+}
+.dl-horizontal dt {
+  float: left;
+  width: 160px;
+  overflow: hidden;
+  clear: left;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dl-horizontal dd {
+  margin-left: 180px;
+}
+.dl-horizontal dd:before,
+.dl-horizontal dd:after {
+  display: table;
+  content: " ";
+}
+.dl-horizontal dd:after {
+  clear: both;
+}
+.dl-horizontal dd:before,
+.dl-horizontal dd:after {
+  display: table;
+  content: " ";
+}
+.dl-horizontal dd:after {
+  clear: both;
+}
+label.error{
+  display: inline;
+}
+.upload-panel-body{
+  .col-md-4{
+    width: 32%;
+  }
+}

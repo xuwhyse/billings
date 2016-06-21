@@ -1,0 +1,16 @@
+<ol class="breadcrumb">
+	<li><span class="glyphicon glyphicon-home"></span></li> 
+	#foreach($menu in $navList)
+		#if(${curMenu.authorityId} == ${menu.authorityId})
+			<li>${menu.name}</li>
+		#else
+			#if(${menu.url.endsWith("list.do")})
+				<li><a href="${ctx}${menu.url}?$!{paraObj.parasUrl}&$!{paraObj.parasCusUrl}">$!{menu.name}</a></li>
+			#elseif(${menu.url.endsWith("#")})
+				<li>$!{menu.name}</li>
+			#else
+				<li><a href="${ctx}${menu.url}">$!{menu.name}</a></li>
+			#end
+		#end
+	#end
+</ol>

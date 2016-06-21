@@ -1,0 +1,137 @@
+<!-- 介绍详细页面 -->
+#set($layout="/www/layout/layout.html") #set($pageClass="homs")
+#set($title = "HOMS介绍-金融投资云平台")
+<div class="banner-container">
+    <div class="container">
+        <img src="$!{ctx}/images/homs/intro_banner.png" alt="金融投资云平台"/>
+        <a href="$!{ctx}/member/trialreq.do" class="try-link"></a>
+        <a href="#" data-toggle="modal" data-target="#myModal" class="panel-title-more"><span class="icons-player"></span>快速了解HOMS</a>
+    </div>
+</div>
+<div class="position-taker">
+    <div class="tab-container">
+        <div class="container">
+            <div class="col-df col-df-5" >
+                <a href="#intro_1"><div class="icons-navbar"></div><p>账号管理</p></a>
+            </div>
+            <div class="col-df col-df-5" >
+                <a href="#intro_2"><div class="icons-navbar"></div><p>资产管理</p></a>
+            </div>
+            <div class="col-df col-df-5" >
+                <a href="#intro_3"><div class="icons-navbar"></div><p>风险控制</p></a>
+            </div>
+            <div class="col-df col-df-5" >
+                <a href="#intro_4"><div class="icons-navbar"></div><p>云服务</p></a>
+            </div>
+            <div class="col-df col-df-5 fr" >
+                <a href="$!{ctx}/www/homs/intro.do">更多介绍</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portlet-container">
+    <a name="intro_1"></a>
+    <div class="bar-container">
+        <div class="container">
+        <img src="$!{ctx}/images/homs/intro_d1.png" alt="" />
+        </div>
+    </div>
+    <a name="intro_2"></a>
+    <div class="bar-container">
+        <div class="container">
+        <img src="$!{ctx}/images/homs/intro_d2.png" alt="" />
+        </div>
+    </div>
+     <a name="intro_3"></a>
+    <div class="bar-container">
+        <div class="container">
+        <img src="$!{ctx}/images/homs/intro_d3.png" alt="" />
+        </div>
+    </div>
+    <a name="intro_4"></a>
+    <div class="bar-container">
+        <div class="container">
+        <img src="$!{ctx}/images/homs/intro_d4.png" alt="" />
+        </div>
+    </div>
+    </div>
+</div>
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-color:transparent;">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="youkuplayer" style="width:560px;height:480px;">&nbsp;</div>
+                <script type="text/javascript" src="http://player.youku.com/jsapi">
+                    window.player = new YKU.Player('youkuplayer',
+                    {
+                        styleid: '0',
+                        client_id: '8b6099e5bdd2fa87',
+                        vid: 'XNzQyNTA2MzE2',
+                        autoplay: false
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="#"><div class="scroll_top"></div></a>
+<script src="/thirdparty/jquery/jquery-1.8.3.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    $(window).bind('scroll', function() {
+        var pagetop = document.documentElement.scrollTop || document.body.scrollTop;
+        if(pagetop > 440){
+            $('.tab-container').addClass('barfix');
+            $('.col-df-5').removeClass('active');
+            $('.scroll_top').show();
+            if(pagetop < 950){
+                $('.col-df-5:eq(0)').addClass('active');
+            }else if(pagetop < 1200){
+                $('.col-df-5:eq(1)').addClass('active');
+            }else if(pagetop < 1950){
+                $('.col-df-5:eq(2)').addClass('active');
+            }else{
+                $('.col-df-5:eq(3)').addClass('active');
+            }
+        }else{
+            $('.scroll_top').hide();
+            $('.tab-container').removeClass('barfix');
+        }
+    });
+
+    $('.scroll_top').on('click',function(){
+        $('.col-df-5').removeClass('active');
+        $('.col-df-5:eq(0)').addClass('active');
+    });
+
+    highlight();
+    //进入页面时高亮判断
+    function highlight(){
+        var temp = window.location.href;
+        var index = temp.slice(-1);
+        $('.tab-container').addClass('barfix');
+        switch(index){
+            case "1":
+                $('.col-df-5:eq(0)').addClass('active');
+                break;
+            case "2":
+                $('.col-df-5:eq(1)').addClass('active');
+                break;
+            case "3":
+                $('.col-df-5:eq(2)').addClass('active');
+                break;
+            case "4":
+                $('.col-df-5:eq(3)').addClass('active');
+                break;
+            default:
+                $('.tab-container').removeClass('barfix');
+                $('.col-df-5:eq(0)').addClass('active');
+                break;
+        }
+    }
+});
+</script>

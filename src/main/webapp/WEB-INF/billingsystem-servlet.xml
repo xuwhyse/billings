@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+		
+    <!-- @ResponseBody，返回使用utf-8;编码 -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+				<list>
+					<value>text/html;charset=UTF-8</value>
+				</list>
+				</property>
+			</bean>
+			</list>
+		</property>
+	</bean>
+
+    <!-- com.hundsun.internet.billingsystem.controller -->
+    <context:component-scan base-package="com.hundsun.internet.billingsystem.controller" />
+    
+    <!-- 拦截器 	-->
+    <!-- -->
+	<mvc:interceptors>
+	 	
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.hundsun.internet.billingsystem.interceptor.MessageInterceptor"></bean>
+		</mvc:interceptor>
+		
+		 
+		<mvc:interceptor>
+			<mvc:mapping path="/manager/**"/>
+			<bean class="com.hundsun.internet.billingsystem.interceptor.RightInterceptor"></bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/member/billings/**" />
+			<bean class="com.hundsun.internet.billingsystem.interceptor.AccountInterceptor"></bean>
+		</mvc:interceptor>
+	    
+	</mvc:interceptors>
+	
+	<!-- =====================以上主要是数据源，spring和mybatis结合=========================== -->
+	
+	<bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+	    <!-- 所有htnl资源从value开头开始找 -->
+		<property name="resourceLoaderPath" value="/WEB-INF/velo/"/>
+		<property name= "velocityProperties">      
+			<props>      
+				<prop key="input.encoding">utf-8</prop>      
+				<prop key="output.encoding">utf-8</prop> 
+				<!--/WEB-INF/velo/相对这个目录下  -->
+				<prop key="velocimacro.library">macro/common.vm</prop> 
+				
+				<!-- 以下是关于html转译的安全配置，防止恶意用户挂马，xss攻击等 -->
+				<prop key="eventhandler.referenceinsertion.class">com.hundsun.internet.billingsystem.common.velocity.NoEscapeHtmlReference</prop>
+				 <!--screen_content开头的引用变量将被eventhandler.referenceinsertion.class转译  -->
+				<prop key="eventhandler.escape.html.match">/(?:screen_content)|(?:noescape_.*)|(?:ctx)/</prop>
+				
+			</props>      
+		</property>
+	</bean>
+	 
+	<!-- velocity视图解析器，配置调用java的自定义函数 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+		<property name="cache" value="false"/>
+		<property name="prefix" value=""/>
+		<property name="suffix" value=".html"/>
+		<property name="layoutUrl" value="layout/layout.html"/>
+		<property name="contentType">
+			<value>text/html;charset=UTF-8</value>
+		</property>
+		<property name="dateToolAttribute"><value>dateTool</value></property>
+		<!-- 注意toolbox.xml里面的实例是否引用到了别的资源 -->
+		<property name="toolboxConfigLocation" value="/WEB-INF/velo/toolbox.xml" />
+		<property name="exposeSpringMacroHelpers" value="true"/>
+		<property name="order">
+			<value>0</value>
+		</property>
+		<!--  这个之前可以当作html解析时的字典，$!{dictCache.getDictNameById($!{item.dictParentId})}整个类可以当作放在map中的实例一样用
+		<property name="attributesMap">
+			<map>
+				<entry key="dictCache" value-ref="dictCache" />
+			</map>
+		</property>
+		 -->
+	</bean>
+	
+	<!-- JSR303 hibernate Validator定义 -->   
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="validationMessageSource" ref="messageSource"/>
+	</bean>
+	<bean id="conversion-service" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"/>
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="basenames">
+			<list>
+				<value>classpath:ValidationMessage.properties</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,71 @@
+#set($layout="manager/layout/template.html")
+#msgAlertShow($!msgList)
+
+<div class="bs-body">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">基准列表</h3>
+        </div>
+        <div class="panel-body">
+			
+            <div class="btn-toolbar table-toolbar">
+            	
+                <div class="btn-group">
+                    <a href="$!{ctx}/manager/billings/balance.do?page=${pg.pageIndex}&searchname=$!{searchname}" class="btn btn-default btn-add">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        每日合算(耗性能)
+                    </a>
+
+                </div>
+                 <!-- 
+                <form class="toolbar-form form-inline pull-right" role="search" action="$!{ctx}/manager/score/list.do">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="请输入账号或者流水号" name="searchname" value="$!{searchname}">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+                -->
+            </div>
+			
+
+            <table class="table table-hover table-bordered table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>基准ID</th>
+                        <th >基准日</th>
+                        <th>最大交易流水</th>
+                        <th>状态</th>
+                        <th>结果</th>
+                        <th>创建日期</th>
+                        <th width="110">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    #foreach($item in $pg.result)
+                    <tr>
+                        <td>$!item.datumId</td>
+                        <td>#m_date($!{item.datumDate})</td>
+                        <td>$!{item.maxFlowId}</td>
+                        <td>$!valueRange.value("datumState","$!{item.state}","空")</td>
+                        <td>$!valueRange.value("datumResult","$!{item.result}","空")</td>
+                        <td>#m_datetime($!{item.createDatetime})</td>
+                        <td class="btn-column">
+                            <div class="btn-group btn-group-sm">
+                                <a href="$!{ctx}/manager/datum/query.do?id=$!{item.datumId}&searchname=$!{searchname}&page=$!{pg.pageIndex}" class="btn btn-default btn-edit" role="button">
+                                    <span class="glyphicon glyphicon-trash"></span>查看
+                                </a>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                    #end
+                </tbody>
+            </table>
+            <div class="form-toolbar">
+                <ul class="pagination">
+                    #pagination(${pg.pageCount} ${pg.pageIndex})
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

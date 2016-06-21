@@ -1,0 +1,2713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.internet.billingsystem.dao.BaoyueBeanMapper">
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="PackageId" jdbcType="BIGINT" property="packageid" />
+    <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="RemoveTime" jdbcType="BIGINT" property="removetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Sort" jdbcType="INTEGER" property="sort" />
+    <result column="Finished" jdbcType="TINYINT" property="finished" />
+    <result column="latestPublishTime" jdbcType="BIGINT" property="latestpublishtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
+    latestPublishTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+    delete from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
+      CreateTime, UpdateTime, RemoveTime, 
+      Status, Sort, Finished, 
+      latestPublishTime)
+    values (#{id,jdbcType=BIGINT}, #{packageid,jdbcType=BIGINT}, #{sourceuuid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{removetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
+      #{latestpublishtime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="packageid != null">
+        PackageId,
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="removetime != null">
+        RemoveTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="sort != null">
+        Sort,
+      </if>
+      <if test="finished != null">
+        Finished,
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="packageid != null">
+        #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_packagebook
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.packageid != null">
+        PackageId = #{record.packageid,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourceuuid != null">
+        SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.removetime != null">
+        RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sort != null">
+        Sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.finished != null">
+        Finished = #{record.finished,jdbcType=TINYINT},
+      </if>
+      <if test="record.latestpublishtime != null">
+        latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_packagebook
+    set Id = #{record.id,jdbcType=BIGINT},
+      PackageId = #{record.packageid,jdbcType=BIGINT},
+      SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Sort = #{record.sort,jdbcType=INTEGER},
+      Finished = #{record.finished,jdbcType=TINYINT},
+      latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    <set>
+      <if test="packageid != null">
+        PackageId = #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        RemoveTime = #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        Sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        Finished = #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime = #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    set PackageId = #{packageid,jdbcType=BIGINT},
+      SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      RemoveTime = #{removetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Sort = #{sort,jdbcType=INTEGER},
+      Finished = #{finished,jdbcType=TINYINT},
+      latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="PackageId" jdbcType="BIGINT" property="packageid" />
+    <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="RemoveTime" jdbcType="BIGINT" property="removetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Sort" jdbcType="INTEGER" property="sort" />
+    <result column="Finished" jdbcType="TINYINT" property="finished" />
+    <result column="latestPublishTime" jdbcType="BIGINT" property="latestpublishtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
+    latestPublishTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+    delete from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
+      CreateTime, UpdateTime, RemoveTime, 
+      Status, Sort, Finished, 
+      latestPublishTime)
+    values (#{id,jdbcType=BIGINT}, #{packageid,jdbcType=BIGINT}, #{sourceuuid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{removetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
+      #{latestpublishtime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="packageid != null">
+        PackageId,
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="removetime != null">
+        RemoveTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="sort != null">
+        Sort,
+      </if>
+      <if test="finished != null">
+        Finished,
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="packageid != null">
+        #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_packagebook
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.packageid != null">
+        PackageId = #{record.packageid,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourceuuid != null">
+        SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.removetime != null">
+        RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sort != null">
+        Sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.finished != null">
+        Finished = #{record.finished,jdbcType=TINYINT},
+      </if>
+      <if test="record.latestpublishtime != null">
+        latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_packagebook
+    set Id = #{record.id,jdbcType=BIGINT},
+      PackageId = #{record.packageid,jdbcType=BIGINT},
+      SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Sort = #{record.sort,jdbcType=INTEGER},
+      Finished = #{record.finished,jdbcType=TINYINT},
+      latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    <set>
+      <if test="packageid != null">
+        PackageId = #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        RemoveTime = #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        Sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        Finished = #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime = #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    set PackageId = #{packageid,jdbcType=BIGINT},
+      SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      RemoveTime = #{removetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Sort = #{sort,jdbcType=INTEGER},
+      Finished = #{finished,jdbcType=TINYINT},
+      latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="PackageId" jdbcType="BIGINT" property="packageid" />
+    <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="RemoveTime" jdbcType="BIGINT" property="removetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Sort" jdbcType="INTEGER" property="sort" />
+    <result column="Finished" jdbcType="TINYINT" property="finished" />
+    <result column="latestPublishTime" jdbcType="BIGINT" property="latestpublishtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
+    latestPublishTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+    delete from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
+      CreateTime, UpdateTime, RemoveTime, 
+      Status, Sort, Finished, 
+      latestPublishTime)
+    values (#{id,jdbcType=BIGINT}, #{packageid,jdbcType=BIGINT}, #{sourceuuid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{removetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
+      #{latestpublishtime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="packageid != null">
+        PackageId,
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="removetime != null">
+        RemoveTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="sort != null">
+        Sort,
+      </if>
+      <if test="finished != null">
+        Finished,
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="packageid != null">
+        #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_packagebook
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.packageid != null">
+        PackageId = #{record.packageid,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourceuuid != null">
+        SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.removetime != null">
+        RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sort != null">
+        Sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.finished != null">
+        Finished = #{record.finished,jdbcType=TINYINT},
+      </if>
+      <if test="record.latestpublishtime != null">
+        latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_packagebook
+    set Id = #{record.id,jdbcType=BIGINT},
+      PackageId = #{record.packageid,jdbcType=BIGINT},
+      SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Sort = #{record.sort,jdbcType=INTEGER},
+      Finished = #{record.finished,jdbcType=TINYINT},
+      latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    <set>
+      <if test="packageid != null">
+        PackageId = #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        RemoveTime = #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        Sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        Finished = #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime = #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    set PackageId = #{packageid,jdbcType=BIGINT},
+      SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      RemoveTime = #{removetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Sort = #{sort,jdbcType=INTEGER},
+      Finished = #{finished,jdbcType=TINYINT},
+      latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="PackageId" jdbcType="BIGINT" property="packageid" />
+    <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="RemoveTime" jdbcType="BIGINT" property="removetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Sort" jdbcType="INTEGER" property="sort" />
+    <result column="Finished" jdbcType="TINYINT" property="finished" />
+    <result column="latestPublishTime" jdbcType="BIGINT" property="latestpublishtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
+    latestPublishTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+    delete from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
+      CreateTime, UpdateTime, RemoveTime, 
+      Status, Sort, Finished, 
+      latestPublishTime)
+    values (#{id,jdbcType=BIGINT}, #{packageid,jdbcType=BIGINT}, #{sourceuuid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{removetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
+      #{latestpublishtime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="packageid != null">
+        PackageId,
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="removetime != null">
+        RemoveTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="sort != null">
+        Sort,
+      </if>
+      <if test="finished != null">
+        Finished,
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="packageid != null">
+        #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_packagebook
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.packageid != null">
+        PackageId = #{record.packageid,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourceuuid != null">
+        SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.removetime != null">
+        RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sort != null">
+        Sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.finished != null">
+        Finished = #{record.finished,jdbcType=TINYINT},
+      </if>
+      <if test="record.latestpublishtime != null">
+        latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_packagebook
+    set Id = #{record.id,jdbcType=BIGINT},
+      PackageId = #{record.packageid,jdbcType=BIGINT},
+      SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Sort = #{record.sort,jdbcType=INTEGER},
+      Finished = #{record.finished,jdbcType=TINYINT},
+      latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    <set>
+      <if test="packageid != null">
+        PackageId = #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        RemoveTime = #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        Sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        Finished = #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime = #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    set PackageId = #{packageid,jdbcType=BIGINT},
+      SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      RemoveTime = #{removetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Sort = #{sort,jdbcType=INTEGER},
+      Finished = #{finished,jdbcType=TINYINT},
+      latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="PackageId" jdbcType="BIGINT" property="packageid" />
+    <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="RemoveTime" jdbcType="BIGINT" property="removetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Sort" jdbcType="INTEGER" property="sort" />
+    <result column="Finished" jdbcType="TINYINT" property="finished" />
+    <result column="latestPublishTime" jdbcType="BIGINT" property="latestpublishtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
+    latestPublishTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+    delete from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
+      CreateTime, UpdateTime, RemoveTime, 
+      Status, Sort, Finished, 
+      latestPublishTime)
+    values (#{id,jdbcType=BIGINT}, #{packageid,jdbcType=BIGINT}, #{sourceuuid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{removetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
+      #{latestpublishtime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="packageid != null">
+        PackageId,
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="removetime != null">
+        RemoveTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="sort != null">
+        Sort,
+      </if>
+      <if test="finished != null">
+        Finished,
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="packageid != null">
+        #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_packagebook
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.packageid != null">
+        PackageId = #{record.packageid,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourceuuid != null">
+        SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.removetime != null">
+        RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sort != null">
+        Sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.finished != null">
+        Finished = #{record.finished,jdbcType=TINYINT},
+      </if>
+      <if test="record.latestpublishtime != null">
+        latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_packagebook
+    set Id = #{record.id,jdbcType=BIGINT},
+      PackageId = #{record.packageid,jdbcType=BIGINT},
+      SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Sort = #{record.sort,jdbcType=INTEGER},
+      Finished = #{record.finished,jdbcType=TINYINT},
+      latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    <set>
+      <if test="packageid != null">
+        PackageId = #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        RemoveTime = #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        Sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        Finished = #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime = #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    set PackageId = #{packageid,jdbcType=BIGINT},
+      SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      RemoveTime = #{removetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Sort = #{sort,jdbcType=INTEGER},
+      Finished = #{finished,jdbcType=TINYINT},
+      latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="PackageId" jdbcType="BIGINT" property="packageid" />
+    <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="RemoveTime" jdbcType="BIGINT" property="removetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Sort" jdbcType="INTEGER" property="sort" />
+    <result column="Finished" jdbcType="TINYINT" property="finished" />
+    <result column="latestPublishTime" jdbcType="BIGINT" property="latestpublishtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
+    latestPublishTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+    delete from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
+      CreateTime, UpdateTime, RemoveTime, 
+      Status, Sort, Finished, 
+      latestPublishTime)
+    values (#{id,jdbcType=BIGINT}, #{packageid,jdbcType=BIGINT}, #{sourceuuid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{removetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
+      #{latestpublishtime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="packageid != null">
+        PackageId,
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="removetime != null">
+        RemoveTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="sort != null">
+        Sort,
+      </if>
+      <if test="finished != null">
+        Finished,
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="packageid != null">
+        #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_packagebook
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.packageid != null">
+        PackageId = #{record.packageid,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourceuuid != null">
+        SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.removetime != null">
+        RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sort != null">
+        Sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.finished != null">
+        Finished = #{record.finished,jdbcType=TINYINT},
+      </if>
+      <if test="record.latestpublishtime != null">
+        latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_packagebook
+    set Id = #{record.id,jdbcType=BIGINT},
+      PackageId = #{record.packageid,jdbcType=BIGINT},
+      SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Sort = #{record.sort,jdbcType=INTEGER},
+      Finished = #{record.finished,jdbcType=TINYINT},
+      latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    <set>
+      <if test="packageid != null">
+        PackageId = #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        RemoveTime = #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        Sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        Finished = #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime = #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    set PackageId = #{packageid,jdbcType=BIGINT},
+      SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      RemoveTime = #{removetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Sort = #{sort,jdbcType=INTEGER},
+      Finished = #{finished,jdbcType=TINYINT},
+      latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="PackageId" jdbcType="BIGINT" property="packageid" />
+    <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="RemoveTime" jdbcType="BIGINT" property="removetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Sort" jdbcType="INTEGER" property="sort" />
+    <result column="Finished" jdbcType="TINYINT" property="finished" />
+    <result column="latestPublishTime" jdbcType="BIGINT" property="latestpublishtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
+    latestPublishTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+    delete from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
+      CreateTime, UpdateTime, RemoveTime, 
+      Status, Sort, Finished, 
+      latestPublishTime)
+    values (#{id,jdbcType=BIGINT}, #{packageid,jdbcType=BIGINT}, #{sourceuuid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{removetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
+      #{latestpublishtime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="packageid != null">
+        PackageId,
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="removetime != null">
+        RemoveTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="sort != null">
+        Sort,
+      </if>
+      <if test="finished != null">
+        Finished,
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="packageid != null">
+        #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_packagebook
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.packageid != null">
+        PackageId = #{record.packageid,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourceuuid != null">
+        SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.removetime != null">
+        RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sort != null">
+        Sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.finished != null">
+        Finished = #{record.finished,jdbcType=TINYINT},
+      </if>
+      <if test="record.latestpublishtime != null">
+        latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_packagebook
+    set Id = #{record.id,jdbcType=BIGINT},
+      PackageId = #{record.packageid,jdbcType=BIGINT},
+      SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Sort = #{record.sort,jdbcType=INTEGER},
+      Finished = #{record.finished,jdbcType=TINYINT},
+      latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    <set>
+      <if test="packageid != null">
+        PackageId = #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        RemoveTime = #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        Sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        Finished = #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime = #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    set PackageId = #{packageid,jdbcType=BIGINT},
+      SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      RemoveTime = #{removetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Sort = #{sort,jdbcType=INTEGER},
+      Finished = #{finished,jdbcType=TINYINT},
+      latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="PackageId" jdbcType="BIGINT" property="packageid" />
+    <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="RemoveTime" jdbcType="BIGINT" property="removetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Sort" jdbcType="INTEGER" property="sort" />
+    <result column="Finished" jdbcType="TINYINT" property="finished" />
+    <result column="latestPublishTime" jdbcType="BIGINT" property="latestpublishtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
+    latestPublishTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+    delete from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
+      CreateTime, UpdateTime, RemoveTime, 
+      Status, Sort, Finished, 
+      latestPublishTime)
+    values (#{id,jdbcType=BIGINT}, #{packageid,jdbcType=BIGINT}, #{sourceuuid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{removetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
+      #{latestpublishtime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="packageid != null">
+        PackageId,
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="removetime != null">
+        RemoveTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="sort != null">
+        Sort,
+      </if>
+      <if test="finished != null">
+        Finished,
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="packageid != null">
+        #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_packagebook
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.packageid != null">
+        PackageId = #{record.packageid,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourceuuid != null">
+        SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.removetime != null">
+        RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sort != null">
+        Sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.finished != null">
+        Finished = #{record.finished,jdbcType=TINYINT},
+      </if>
+      <if test="record.latestpublishtime != null">
+        latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_packagebook
+    set Id = #{record.id,jdbcType=BIGINT},
+      PackageId = #{record.packageid,jdbcType=BIGINT},
+      SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Sort = #{record.sort,jdbcType=INTEGER},
+      Finished = #{record.finished,jdbcType=TINYINT},
+      latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    <set>
+      <if test="packageid != null">
+        PackageId = #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        RemoveTime = #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        Sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        Finished = #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime = #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    set PackageId = #{packageid,jdbcType=BIGINT},
+      SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      RemoveTime = #{removetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Sort = #{sort,jdbcType=INTEGER},
+      Finished = #{finished,jdbcType=TINYINT},
+      latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    <id column="Id" jdbcType="BIGINT" property="id" />
+    <result column="PackageId" jdbcType="BIGINT" property="packageid" />
+    <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
+    <result column="CreateTime" jdbcType="BIGINT" property="createtime" />
+    <result column="UpdateTime" jdbcType="BIGINT" property="updatetime" />
+    <result column="RemoveTime" jdbcType="BIGINT" property="removetime" />
+    <result column="Status" jdbcType="SMALLINT" property="status" />
+    <result column="Sort" jdbcType="INTEGER" property="sort" />
+    <result column="Finished" jdbcType="TINYINT" property="finished" />
+    <result column="latestPublishTime" jdbcType="BIGINT" property="latestpublishtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
+    latestPublishTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from baoyue_packagebook
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+    delete from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
+      CreateTime, UpdateTime, RemoveTime, 
+      Status, Sort, Finished, 
+      latestPublishTime)
+    values (#{id,jdbcType=BIGINT}, #{packageid,jdbcType=BIGINT}, #{sourceuuid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{removetime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
+      #{latestpublishtime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    insert into baoyue_packagebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="packageid != null">
+        PackageId,
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="updatetime != null">
+        UpdateTime,
+      </if>
+      <if test="removetime != null">
+        RemoveTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="sort != null">
+        Sort,
+      </if>
+      <if test="finished != null">
+        Finished,
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="packageid != null">
+        #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+    select count(*) from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update baoyue_packagebook
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.packageid != null">
+        PackageId = #{record.packageid,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourceuuid != null">
+        SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null">
+        UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.removetime != null">
+        RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sort != null">
+        Sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.finished != null">
+        Finished = #{record.finished,jdbcType=TINYINT},
+      </if>
+      <if test="record.latestpublishtime != null">
+        latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baoyue_packagebook
+    set Id = #{record.id,jdbcType=BIGINT},
+      PackageId = #{record.packageid,jdbcType=BIGINT},
+      SourceUuid = #{record.sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=BIGINT},
+      UpdateTime = #{record.updatetime,jdbcType=BIGINT},
+      RemoveTime = #{record.removetime,jdbcType=BIGINT},
+      Status = #{record.status,jdbcType=SMALLINT},
+      Sort = #{record.sort,jdbcType=INTEGER},
+      Finished = #{record.finished,jdbcType=TINYINT},
+      latestPublishTime = #{record.latestpublishtime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    <set>
+      <if test="packageid != null">
+        PackageId = #{packageid,jdbcType=BIGINT},
+      </if>
+      <if test="sourceuuid != null">
+        SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        UpdateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="removetime != null">
+        RemoveTime = #{removetime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null">
+        Sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        Finished = #{finished,jdbcType=TINYINT},
+      </if>
+      <if test="latestpublishtime != null">
+        latestPublishTime = #{latestpublishtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+    update baoyue_packagebook
+    set PackageId = #{packageid,jdbcType=BIGINT},
+      SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=BIGINT},
+      UpdateTime = #{updatetime,jdbcType=BIGINT},
+      RemoveTime = #{removetime,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      Sort = #{sort,jdbcType=INTEGER},
+      Finished = #{finished,jdbcType=TINYINT},
+      latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baoyue_packagebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

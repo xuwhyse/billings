@@ -1,0 +1,109 @@
+#set($layout="/www/layout/member_layout.html") #set($pageClass="required")
+<div class="member-portlet clearfix">
+    <div class="member-body">
+        <div class="panel tip-panel">
+            <div class="panel-heading">
+                <div>
+                    <span class="icons-require-tip">
+						</span>
+                    您共有$!{requireBeans.size()}个需求
+                </div>
+                <div class="require-process">
+                    需求受理流程
+                    <span class="require-heading-more icons-require-more #if(${requireBeans.size()}==0) collapse #end">
+					</span>
+                </div>
+            </div>
+            <div class="panel-body #if($requireBeans.size()==0)show #end">
+                <div class="require-process-detail">
+                    <div class="require-process-header">
+                        <h4>需求提交</h4>
+                        <span>2个工作日内回复</span>
+                    </div>
+                    <div class="require-process-body">
+                        <div class="reuqire-process-state require-agree">
+                            <h5>
+										<span class="icons-require-agree"></span>受理
+									</h5>
+                            <span>
+										您可以在线跟踪需求处理情况。
+									</span>
+                        </div>
+                        <div class="reuqire-process-state require-revert">
+                            <h5>
+										<span class="icons-require-revert"></span>暂不受理
+									</h5>
+                            <span>
+										客服将通过电话或邮件的方式联系您,并告知不受理的原因。	
+									</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        #set($Integer = 0) #foreach($item in $requireBeans) #set($state =$Integer.parseInt($!{item.requireMyStateInt}) )
+        <div class="require">
+            <div class="require-heading">
+                <p>
+                    <label for="">需求编号:</label>$!{item.require_code}</p>
+                <p>
+                    <label for="">需求说明:</label>$!{item.require_explain}</p>
+                <div class="require-heading-more icons-require-more  #if(${velocityCount}==1) collapse  #end">
+                </div>
+            </div>
+            <div #if(${velocityCount}==1) class="require-body require-show" #else class="require-body " #end>
+                <div class="line"></div>
+                <div #if( ${state}==1 )class="step active" #else class="step" #end>
+                    <h2>需求入库<span class="icons-process"></span></h2>
+                    #if(${item.create_date})
+                    <div class="prop">入库日期：$!{item.create_date}</div>
+                    #end #if(${item.reply_deadline_date})
+                    <div class="prop">回复期限：$!{item.reply_deadline_date}</div>
+                    #end
+                </div>
+                <div #if(${state}==2 )class="step active" #else class="step" #end>
+                    <h2>需求受理<span class="icons-process"></span></h2>
+                    #if(${state} >= 2) #if(${item.reply_date})
+                    <div class="prop">回复日期: $!{item.reply_date}</div>
+                    #end #if(${item.accept_results})
+                    <div class="prop">受理结果：$!{item.accept_results}</div>
+                    #end #if(${item.first_commitment_issue_date})
+                    <div class="prop">预计发布版本日期：$!{item.first_commitment_issue_date}</div>
+                    #end #if(${item.handling_suggestion})
+                    <div class="prop">处理意见: $!{item.handling_suggestion}</div>
+                    #end #else
+                    <div class="prop"></div>
+                    #end
+                </div>
+                #if(${state}!=5)
+                <div #if(${state}==3 )class="step active" #else class="step" #end>
+                    <h2>任务执行<span class="icons-process"></span></h2>
+                    #if(${state} >= 3) #if(${item.public_state})
+                    <div class="prop">版本发布状态: $!{item.public_state}</div>
+                    #end #if(${item.commitment_issue_date})
+                    <div class="prop">版本发布日期：$!{item.commitment_issue_date}</div>
+                    #end #else
+                    <div class="prop"></div>
+                    #end
+                </div>
+                #end
+                <div #if(${state}>= 4)class="step active"#else class="step"#end>
+                    <h2>结束<span class="icons-process"></span></h2>
+                    #if(${state} >= 4)
+                    <div class="prop">
+                        #if(${state} == 4)
+                        <label>温馨提示：</label>您的版本已发放给客服，具体交付时间以客服通知为准。 #elseif(${state}==5)
+                        #set($sname=$!{company.companyCode}+"_"+$!{company.companyName} )
+                        <label></label>如有疑问，请联系<a href="http://webcall1.hundsun.com/webCompany.php?arg=hundsun&style=2&username=$tool.urlencode($!sname,'utf-8')&charset=utf-8" target="_blank">在线客服。</a>
+                        #end
+                    </div>
+                    #else
+                    <div class="prop"></div>
+                    #end
+                </div>
+            </div>
+        </div>
+        #end
+

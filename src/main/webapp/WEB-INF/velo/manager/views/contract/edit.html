@@ -1,0 +1,351 @@
+#set($layout="manager/layout/template.html")
+<div class="bs-body module" data-module="module.autocomplete">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">合同信息</h3>
+        </div>
+        <div class="panel-body">			
+        	<form role="form" method="POST" enctype="multipart/form-data" class="form-horizontal validateForm" action="$!{ctx}/manager/contract/save.do">
+				<input type="hidden" name="contractId" value="$!{contract.contractId}"/>
+				<input type="hidden" name="prodId" value="$!product.prodId"/>
+				<input type="hidden" name="modelId" value="$!product.modelId"/>
+				<input type="hidden" name="modelName" value=""/>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">产品意向</label>
+					<div class="col-sm-10" id="product-intention">
+						<input type="hidden" class="pid" name="intentionId" value="$!{intention.intentionId}">
+						<input class="typeahead form-control" type="text" placeholder="如：预约1:1:4产品" data-param-status="2"
+						#if($intention)
+						value="$intention.intentionName"
+						#end
+						>
+						<span class="help-block">请从下拉框中选择意向<font color="red">(不支持直接填写)</font></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">产品名称</label>
+					<div class="col-sm-10">
+						<input type="text" name="prodName" id="prodName" class="form-control" data-rule-required="true" maxlength="50"  placeholder="产品名称" value="$!{product.prodName}" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">合同状态</label>
+					<div class="col-sm-10">
+						<select name="contractState" data-rule-required="true" class="form-control">
+                            <option value="0" #if($contract.contractState == 0) selected #end>线下洽谈（预约类-合同签署-材料提交）</option>
+                            <option value="1" #if($contract.contractState == 1) selected #end>尽职调查（预约类-合同签署-信托审核）</option>
+                            <option value="2" #if($contract.contractState == 2) selected #end>风控审核</option>
+                            <option value="3" #if($contract.contractState == 3) selected #end>合同签订（预约类-账户开通）</option>
+                            <option value="4" #if($contract.contractState == 4) selected #end>产品已发行</option>
+                            <option value="5" #if($contract.contractState == 5) selected #end>合同作废</option>
+                   		</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">产品成立日期</label>
+					<div class="col-sm-10">
+						<input type="datetime" name="prodSetupDateString" data-rule-dateISO="true" data-date-format="yyyy-mm-dd" value="#m_date($!{product.prodSetupDate})" class="form-control">
+						<span class="help-block"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">资方代表</label>
+					<div class="col-sm-10" id="capital-user">
+						<input type="hidden" class="pid" name="capitalUserid" value="$contract.capitalUserid">
+						<input class="typeahead form-control" type="text" placeholder="请填写资方名称" data-param-status="2"
+						#foreach($investor in $investorList)
+						#if($contract.capitalUserid == $investor.userId)
+						value = "$!investor.userRealName"
+						#end
+						#end
+						>
+						<span class="help-block">请从下拉框中选择资方代表<font color="red">(不支持直接填写)</font></span>
+					</div>
+				</div>
+								
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">投顾方代表</label>
+					<div class="col-sm-10" id="adviser-user">
+						<input type="hidden" class="pid" name="adviserUserid" value="$contract.adviserUserid">
+						<input class="typeahead form-control" type="text" placeholder="请填写投顾方名称" data-param-status="2"
+						#foreach($adviser in $adviserList)
+						#if($contract.adviserUserid == $adviser.userId)
+						value="$!adviser.userRealName"
+						#end
+						#end
+						>
+						<span class="help-block">请从下拉框中选择投顾方代表<font color="red">(不支持直接填写)</font></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">我方代表</label>
+					<div class="col-sm-10">
+						<select name="intermediaryUserid" data-rule-required="true" class="form-control">
+							<option value="">请选择我方代表</option>
+							#foreach($cpis in $cpisList)
+                            <option value="$cpis.userId" #if($contract.intermediaryUserid == $cpis.userId) selected #end >$cpis.userRealName</option>
+                            #end
+                   		</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">杠杆比例</label>
+					<div class="col-sm-10">
+						<select name="leverageRatio" data-rule-required="true" id="leverageRatio" class="form-control">
+                            <option value="1" #if($product.leverageRatio == 1) selected #end >1:1</option>
+                            <option value="2" #if($product.leverageRatio == 2) selected #end >1:2</option>
+                            <option value="3" #if($product.leverageRatio == 3) selected #end >1:3</option>
+                            <option value="4" #if($product.leverageRatio == 4) selected #end >1:4</option>
+                            <option value="5" #if($product.leverageRatio == 5) selected #end >1:5</option>
+                            <option value="6" #if($product.leverageRatio == 6) selected #end >1:6</option>
+                            <option value="7" #if($product.leverageRatio == 7) selected #end >1:7</option>
+                            <option value="8" #if($product.leverageRatio == 8) selected #end >1:8</option>
+                            <option value="9" #if($product.leverageRatio == 9) selected #end >1:9</option>
+                   		</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">劣后人数</label>
+					<div class="col-sm-10">
+						<input type="text" name="memberCount"  value="$!{product.memberCount}" class="form-control" data-rule-required="true" data-rule-number="true" data-rule-min="1" data-msg-min="劣后人数至少为1个！" data-msg-required="劣后人数必须填写！" data-msg-number="劣后人数必须为数字！">
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">私募投资额</label>
+					<div class="col-sm-10">
+						<input type="text" name="privateInvestAmount" id="privateInvestAmount" 
+							data-rule-required="true" data-rule-number="true" data-rule-pattern="^(([1-9]\d{0,12})(\.\d{1,2})?)$|(0\.\d{1,2})$" data-msg-pattern="金额格式不正确"
+							class="form-control"  placeholder="私募投资额" value="$!numberTool.format("0",$!{product.privateInvestAmount})" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">融资成本</label>
+					<div class="col-sm-10">
+						<input type="text" name="capitalCost" id="capitalCost" class="form-control"
+							data-rule-required="true" data-rule-number="true" data-rule-pattern="^(([1-9]\d{0,1})(\.\d{1,2})?)$|(0\.0?([1-9]))$" data-msg-pattern="比例格式不正确"
+							placeholder="融资成本" value="$!{product.capitalCost}" />
+						<span class="help-block"></span>
+					</div>
+				</div>				
+
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">融资周期</label>
+					<div class="col-sm-10">
+						<select name="financingCycle" id="financingCycle" data-rule-required="true" class="form-control">
+							#foreach($cycle in [1..8])
+                            <option value="$cycle" #if($cycle == $product.financingCycle) selected #end >$cycle周</option>
+                            #end
+                   		</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">投资策略</label>
+					<div class="col-sm-10">
+						<select name="investStrategy" id="investStrategy" data-rule-required="true" class="form-control">
+							#foreach($strategy in $dictStrategyList)
+                            <option value="$strategy.dictId" #if($strategy.dictId == $product.investStrategy) selected #end >$strategy.dictValue</option>
+                            #end
+                   		</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">投资范围</label>
+					<div class="col-sm-10">
+						<!-- <select name="investScope" id="investScope" data-rule-required="true" class="form-control"> -->
+						<!-- <option value="$scope.dictId" #if($scope.dictId == $product.investScope) selected #end >$scope.dictValue</option> -->
+						#foreach($scope in $dictScopeList)
+                        <label class="checkbox-inline">
+                        	<input type="checkbox" name="investScope" id="$!scope.dictId" value="$!scope.dictId" #if($product.investScope.indexOf($scope.dictId) > -1) checked #end >$!scope.dictValue
+                        </label>
+                        #end
+                   		<!-- </select> -->
+					</div>
+				</div>				
+
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">投资类型</label>
+					<div class="col-sm-10">
+						<select name="investType" id="investType" data-rule-required="true" class="form-control">
+							#foreach($type in $dictTypeList)
+                            <option value="$type.dictId" #if($type.dictId == $product.investType) selected #end >$type.dictValue</option>
+                            #end
+                   		</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">产品经理</label>
+					<div class="col-sm-10">
+						<select name="prodManager" data-rule-required="true" class="form-control">
+							<option value="">请选择产品经理</option>
+							#foreach($adviser in $adviserList)
+                            <option value="$adviser.userId" #if($adviser.userId == $product.prodManager) selected #end >$!adviser.userRealName</option>
+                            #end
+                   		</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">股东账户</label>
+					<div class="col-sm-10">
+						<input type="text" name="holderAccount" id="holderAccount" class="form-control"
+							 value="$!{contract.holderAccount}" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">资金账户</label>
+					<div class="col-sm-10">
+						<input type="text" name="moneyAccount" id="moneyAccount" class="form-control"
+							value="$!{contract.moneyAccount}" />
+						<span class="help-block"></span>
+					</div>
+				</div>		
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">初始密码</label>
+					<div class="col-sm-10">
+						<input type="text" name="initialPwd" id="initialPwd" class="form-control"
+							value="$!{contract.initialPwd}" />
+						<span class="help-block"></span>
+					</div>
+				</div>		
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">用户类型</label>
+					<div class="col-sm-10">
+						<select name="userType" data-rule-required="true" class="form-control">
+							<option value="-1"  >请选择用户类型</option>
+							<option value="1"  #if($intention.userType == 1) selected #end>个人</option>
+							<option value="2"  #if($intention.userType == 2) selected #end>机构</option>
+                   		</select>
+					</div>
+				</div>				
+
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">商务洽谈记录</label>
+					<div class="col-sm-10">
+						<select name="discussId" class="form-control">
+							<option value="">请选择商务洽谈</option>
+							#foreach($discuss in $discussList)
+                            <option value="$discuss.discussId" #if($discuss.discussId == $contract.discussId) selected #end >$discuss.discussTitle</option>
+                            #end
+                   		</select>
+					</div>
+				</div>
+			#if($contract.contractState == 1)
+			<div class="form-group">
+				<label  class="col-sm-2 control-label">材料审核</label>
+				#foreach($item in $blist)
+		        #if($item.contractStatus != 11)	
+		        <div class="img-list-panel">
+		            <div class="img-list-item">
+		            <p class="con-desc">$!{item.typestr}</p>
+	                <a data-toggle="lightbox" data-target="#img$velocityCount" class="thumbnail">
+	                    <img src="/common/download/$!{item.fileId}.do" alt="点击查看图片">
+	                    <em class="icons-enlarge"></em>
+	                    <em class="icons-correct"></em>
+	                </a>
+	                <div id="img$velocityCount" class="lightbox fade"  tabindex="-1" role="dialog" aria-hidden="true">
+	                    <button type="button" class="close" data-dismiss="lightbox">&times;</button>
+	                    <div class='lightbox-content'>
+	                        <img src="/common/download/$!{item.fileId}.do">
+	                        <div class="lightbox-caption"><p>$!{item.typestr}</p></div>
+	                    </div>
+	                </div>
+	                <div class="con-desc checkbox-panel form-group">
+	                    <input type="radio" name="img$velocityCount" id="img1a" value="$!{item.attachmentId}&1" class="hideDiv" data-rule-required="true" data-msg-required="请选择!" #if($item.contractStatus == 1)checked #end ><label for="img1a">符合</label>
+	                    <input type="radio" name="img$velocityCount" id="img1b" value="$!{item.attachmentId}&2" class="showDiv" data-rule-required="true" data-msg-required="请选择!" #if($item.contractStatus == 2)checked #end ><label for="img1b">不符合</label>
+	                    <div class="help-block"></div>
+	                </div>
+		            </div>
+		        </div>
+		         #end
+			     #end
+		    </div>
+		    <div class="form-group">
+		    	<label  class="col-sm-2 control-label"></label>
+		    <div class="con-desc col-sm-10">
+	            以上材料是否符合要求
+	            <span class="msg-sm">温馨提示 : 提交之后暂不允许修改,请仔细审核</span>
+	            <div id="errDiv">
+	                <span class="msg-sm">请输入不符合的原因</span>
+	                <textarea col="4" class="form-control" name="filetext"></textarea>
+	            </div>
+	        </div>
+        	</div>
+         #end
+	    	
+		
+				<!--
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">个股持股比例</label>
+					<div class="col-sm-10">      
+						<input type="text" name="shareHoldingRatio"  id="shareholdingRatio"
+							data-rule-number="true" data-rule-required="true" data-rule-pattern="^([1-9]\d{0,1}(\.\d)?)|(0\.\d)$" data-msg-pattern="比例格式不正确" 
+							class="form-control"  placeholder="个股持股比例" value="$!risk.shareHoldingRatio" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">平仓线</label>
+					<div class="col-sm-10">
+						<input type="text" name="clearanceLine" id="clearanceLine"
+							data-rule-required="true" data-rule-number="true" data-rule-pattern="^0\.\d{1,2}$" data-msg-pattern="数字格式不正确" 
+							class="form-control"  placeholder="平仓线" value="$!risk.clearanceLine" />
+						<span class="help-block"></span>
+					</div>
+				</div>				
+
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">投资限制</label>
+					<div class="col-sm-10">
+						<textarea class="form-control" rows="5"  name="investmentRestriction" id="investmentRestriction"
+							data-rule-required="true" maxlength="1000"
+							placeholder="投资限制">$!risk.investmentRestriction</textarea>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">合同附件</label>
+					<div class="col-sm-10">
+						<div class="form-control">
+							<div id="fileBox" class="files">
+								#foreach($ca in $caList)
+									<a href="/common/download/$!ca.fileId">$!{ca.fileName}</a>
+								#end
+								
+							</div>
+							<span class="btn btn-success fileinput-button">
+						        <i class="glyphicon glyphicon-plus"></i>
+						        <span>选择文件...</span>
+						        
+						        <input  type="file" name="files">
+						    </span>
+						</div>
+						<span class="help-block"></span>
+					</div>
+				</div>				
+				-->
+				<div class="form-toolbar">
+					<button type="submit" class="btn btn-primary">保存</button>
+					<button type="reset" class="btn btn-default">重置</button>
+				</div>
+				
+			</form>	
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<ol class="breadcrumb">
+	<li><span class="glyphicon glyphicon-home"></span><a href="#">首&nbsp;&nbsp;页</a></li>
+	#foreach($menu in $navList)
+		#if(${curMenu.menuid} == ${menu.menuid})
+			<li>${menu.menuname}</li>
+		#else
+			#if(${menu.url.endsWith("list")})
+				<li><a href="${ctx}${menu.url}?$!{paraObj.parasUrl}&$!{paraObj.parasCusUrl}">${menu.menuname}</a></li>
+			#else
+				<li><a href="${ctx}${menu.url}">${menu.menuname}</a></li>
+			#end
+		#end
+	#end
+</ol>

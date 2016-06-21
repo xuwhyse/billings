@@ -1,0 +1,15 @@
+#set($layout="/www/layout/layout.html") <!--layout对应screen_content,是velocity的保留字段  -->
+#set($pageClass="member")  <!--layout.html中定义的pageClass字段，需要这边赋值  -->
+
+<!-- 这个页面其实是layout中的screen_context,所以只是body的一部分,比如一个div中的内容
+因此，头head,body,html等都不需要在这里定义，已经在layout中定义了!!!
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  </head>
+   -->
+   
+   <!-- 自定义class，在layout中head里面link的css文件,文件中含有对该class的样式 -->
+   <div class="index-test-hello">
+ 		<h1> hello xumin.</h1>
+  </div>

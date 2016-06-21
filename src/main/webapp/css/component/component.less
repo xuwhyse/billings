@@ -1,0 +1,172 @@
+/**
+ *  Css 工具类 布局函数
+ *	@sideWidth : 宽度
+ *  @offsetMargin: 间距
+ *  .col-md-resize-custom(100px,0);
+ */
+
+.col-md-resize-custom(@sideWidth,@offsetMargin){
+	position:relative;
+	padding-left:@sideWidth+@offsetMargin;
+	height:auto;
+	.col-md-side{
+		position:absolute;
+		left:0;
+		top:0;
+		bottom:0;
+		width:@sideWidth;
+	}
+	.col-md-content{
+	}
+}
+.col-md-resize-horizontal-custom(@sideHeight,@offsetMargin){
+	.col-md-resize-custom(0,0);
+	padding-top:@sideHeight+@offsetMargin;
+	padding-left:0;
+	.col-md-side{
+		height:@sideHeight;
+		width:100%;
+	}
+	.col-md-content{
+		width:100%;
+		clear:both;
+	}
+}
+/**
+ * 自定义字符宽度
+ *
+ * 	.word-width-custom(20em)
+ */
+
+.word-width-custom(@len){
+	width:@len;
+}
+
+/**
+ *  切分列，不适用布局
+ *
+ */
+.split-col-custom(@colnum){
+	float:left;
+	margin:0 1%;
+	width:(100%/@colnum)-2%;
+}
+.split-col-nowrap{
+	white-space: nowrap;
+	overflow-x:hidden;
+	li{
+		float:none;
+		display:inline-block;
+		*display:inline;
+		*zoom:1;
+	}
+}
+
+
+
+/******* 工具类*********/
+
+/**
+ *  默认 col-md-resize 
+ *
+ */
+.col-md-resize{
+	.col-md-resize-custom(100px,0);
+}
+
+.col-md-resize-horizontal{
+	.col-md-resize-horizontal-custom(40px,0);
+}
+
+.cut_word_5{
+	width:5em;
+}
+.cut_word_10{
+	width:10em;
+}
+.cut_word_15{
+	width:15em;
+}
+.cut_word_20{
+	width:20em;
+}
+/** 图文缩略 **/
+.cmp-article-thumb{
+	margin:0;
+	padding:0;
+	list-style-type:none;
+	&.split-col-4{
+		li{
+			.split-col-custom(4);
+		}
+	}
+	&.split-col-3{
+		li{
+			.split-col-custom(3);
+		}
+	}
+	&.split-col-5{
+		li{
+			.split-col-custom(5);
+		}
+	}
+	.article-thumb{
+		position:relative;
+		img{
+			width:100%;
+			height:100%;
+		}
+	}
+	.article-title,h5{
+		text-align:center;
+	}
+	.article-more{
+		position:absolute;
+		bottom:0;
+		left:0;
+		right:0;
+		height:20px;
+		color:#fff;
+	}
+} 
+/** 文章列表 **/
+.cmp-article-text{
+	&.line-cut li{
+		overflow-y:hidden;
+	}
+	&.line-only li{
+		padding-right:0;
+		.article-more{
+			display:none;
+		}
+	}
+	list-style-type:none;
+	padding:0;
+	margin:0;
+	li{
+		 position: relative;
+		 padding-right:100px;
+		 line-height:25px;
+		
+	}
+	.article-more{
+		position:absolute;
+		right:0px;
+		top:0;
+	}
+}
+/** 图文混合**/
+.cmp-article-graphic{
+	.article-picture{
+		float:left;
+		margin-right:10px;
+	}	
+}
+.article-descript{
+	line-height:22px;
+}
+
+
+
+
+

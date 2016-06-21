@@ -1,0 +1,76 @@
+#set($layout="manager/layout/template.html")
+#msgAlertShow($!msgList)
+
+<div class="bs-body">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">用户积分列表</h3>
+        </div>
+        <div class="panel-body">
+
+            <div class="btn-toolbar table-toolbar">
+                <div class="btn-group">
+                    <a href="$!{ctx}/manager/score/add.do?page=${pg.pageIndex}&searchname=$!{searchname}" class="btn btn-default btn-add">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        添加
+                    </a>
+
+                </div>
+                <form class="toolbar-form form-inline pull-right" role="search" action="$!{ctx}/manager/score/list.do">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="请输入账号" name="searchname" value="$!{searchname}">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+            </div>
+
+
+            <table class="table table-hover table-bordered table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th >用户ID</th>
+                        <th>状态</th>
+                        <th>积分数</th>
+                        <th>红运币数</th>
+                        <th>创建日期</th>
+                        <th width="230">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    #foreach($item in $pg.result)
+                    <tr>
+                        <td>$velocityCount</td>
+                        <td>$!{item.userId}</td>
+                        <td>$!{item.tradeType}$!valueRange.value("userState","$!{item.state}","空")</td>
+                        <td>$!{item.scoreNum}</td>
+                        <td>$!{item.goodLuckCoinNum}</td>
+                        
+                        <td>#m_datetime($!{item.createDatetime})</td>
+                        <td class="btn-column">
+                            <div class="btn-group btn-group-sm">
+                                <a href="$!{ctx}/manager/score/modify.do?id=$!{item.userId}&page=$!{pg.pageIndex}&searchname=$!{searchname}" class="btn btn-default btn-edit" role="button">
+                                <span class="glyphicon glyphicon-edit"></span>修改
+                                </a>
+                                <a href="$!{ctx}/manager/score/delete.do?id=$!{item.userId}&searchname=$!{searchname}&page=$!{pg.pageIndex}" class="btn btn-default btn-delete" role="button">
+                                    <span class="glyphicon glyphicon-trash"></span>删除
+                                </a>
+                                
+                                <a href="$!{ctx}/manager/score/query.do?id=$!{item.userId}&searchname=$!{searchname}&page=$!{pg.pageIndex}" class="btn btn-default btn-edit" role="button">
+                                    <span class="glyphicon glyphicon-trash"></span>查看
+                                </a>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                    #end
+                </tbody>
+            </table>
+            <div class="form-toolbar">
+                <ul class="pagination">
+                    #pagination(${pg.pageCount} ${pg.pageIndex})
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

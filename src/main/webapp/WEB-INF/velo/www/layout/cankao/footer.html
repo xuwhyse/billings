@@ -1,0 +1,55 @@
+<div class="page-footer">
+    <div class="container">
+		<dl class="pull-left text-left">
+            <dt>HOMS</dt>
+			<dd><a  target="_blank" href="$!{ctx}/www/homs/intro.do">产品特性</a></dd>
+			<dd><a  target="_blank" href="$!{ctx}/www/homs/intro_detail.do">功能简介</a></dd>
+        </dl>
+		<dl class="pull-left text-left">
+            <dt>机构间服务</dt>
+			<dd><a  href="#">我要发产品</a></dd>
+			<dd><a  href="#">我有资金</a></dd>
+        </dl>
+        <dl class="pull-left text-left">
+            <dt>软件下载</dt>
+			<dd><a  target="_blank" href="$!{ctx}/www/download.do">PC端下载</a></dd>
+			<dd><a  target="_blank" href="$!{ctx}/www/download.do?platform=mobile">手机端下载</a></dd>
+			<dd><a  target="_blank" href="https://trade.ihoms.com/account/login">WebHOMS</a></dd>
+        </dl>
+		<dl class="pull-left text-left">
+            <dt>更多支持</dt>
+			<dd><a  target="_blank" href="$tool.getCmsPrefix()study/">HOMS学堂</a></dd>
+			<dd><a  target="_blank" href="$tool.getCmsPrefix()help/">常见问题</a></dd>
+			<dd><a  target="_blank" href="http://shop103975743.taobao.com/" target="_blank">在线订购</a></dd>
+        </dl>
+		<dl class="pull-left text-left">
+            <dt>友情链接</dt>
+			<dd><a href="http://www.hundsun.com/" target="_blank">恒生电子</a></dd>
+			<dd><a href="http://www.gildata.com/" target="_blank">恒生聚源</a></dd>
+			<dd><a href="http://www.fund123.cn/" target="_blank">数米网</a></dd>
+        </dl>
+		<img src="$!{ctx}/images/we_chat.png" class="footer-wechat"/>
+        <dl class="about-me pull-right text-left">
+			<dt style="line-height:28px;width:440px;">
+				<img src="$!{ctx}/images/hotline.png" style="float:left;margin-right:5px;"/>
+				<a href="mailto:yuss05951@hundsun.com">yuss05951@hundsun.com</a><br/>
+				<a href="mailto:service.homs@hundsun.com">service.homs@hundsun.com</a>
+			</dt>
+        </dl>
+		<div class="copyright">
+			Copyright © 2011-2014 hundsun.com.All Rights Reserved 浙ICP备09092082号-7 <script src="http://s19.cnzz.com/z_stat.php?id=1000544136&web_id=1000544136" language="JavaScript"></script>
+		</div>
+    </div>
+</div>
+<script src="$!{ctx}/thirdparty/requirejs/require.js" type="text/javascript"></script>
+<script src="$!{ctx}/thirdparty/jquery/jquery-1.8.3.js" type="text/javascript"></script>
+<script src="$!{ctx}/js/module.js" type="text/javascript"></script>
+<script src="$!{ctx}/js/common.js" type="text/javascript"></script>
+<script src="$!{ctx}/thirdparty/bootstrap-3.0.3/js/bootstrap.js" type="text/javascript"></script>
+<script src="$!{ctx}/js/www/common.js" type="text/javascript"></script>
+#if($!user.homsAccountType==1 || $!user.homsAccountType==2 )
+<script type="text/javascript">usernames="$!{company.companyCode}_$!{company.companyName}";kfguin="800053570";eid="2188z8p8p8p8R8P8R8y8p";ws=""; type="0";wpadomain="b";urlpic="$!{ctx}/images/online.png";</script>
+<script type="text/javascript" src="$!{ctx}/js/www/qqonline.js?t=110922"></script>
+#end
+
+

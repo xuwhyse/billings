@@ -1,0 +1,89 @@
+
+/**
+ *  用户会员中心样式文件
+ *  member.css
+ *  author
+ */
+.clear{clear:both;}
+.default-image{
+	background-repeat: no-repeat;
+ 	background-position: 50% 50%
+ }
+#info-verify{}
+
+.company-verify ul li,.user-verify ul li{
+	width:60px;
+	line-height:25px;
+	margin:auto;
+}
+
+/**
+ * page-companyinfo 公司信息模块
+ * @type {[type]}
+ */
+.avatar{width:121px;height:150px;border:1px solid #e1e1e1;position: relative;}
+.page-companyinfo .panel-heading{position: relative;}
+.page-companyinfo .panel-heading .btn-group{position: absolute; right: 10px;top: 4px;}
+.page-companyinfo .fileinput-button{position: relative;overflow: hidden;}
+.page-companyinfo .fileinput-button input[type='file']{width:181px;cursor: pointer;direction: ltr;font-size: 200px;margin: 0;opacity: 0;position: absolute;right: 0;top: 0;-ms-filter:alpha(opacity=1);}
+.page-companyinfo .preview{
+	position: relative;
+}
+.page-companyinfo .preview canvas,.avatar  canvas{ position: absolute;left:0;top:0;height:100%;width:100%;}
+.page-companyinfo .preview .fileName,.avatar .fileName{
+	background: none repeat scroll 0 0 #000000;
+    color: #FFFFFF;
+    height: 25px;
+    line-height: 25px;
+    opacity: 0.42;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left:0;
+    width: 100%;
+}
+.page-companyinfo .image-preview{text-align: center;margin:10px;}
+.page-companyinfo .image-preview .preview{
+	margin:10px auto;
+	height:320px;
+	width:480px;
+	border:1px #ccc dashed;
+}
+.page-companyinfo .image-preview .preview img{height:100%;width:100%;}
+
+/**
+ * page-companyinfo 公司信息模块
+ * @type {[type]}
+ *
+ */
+
+.page-userinfo .fileinput-button{position: relative;overflow: hidden;}
+.page-userinfo .fileinput-button input[type='file']{cursor: pointer;direction: ltr;font-size: 200px;margin: 0;opacity: 0;position: absolute;right: 0;top: 0;}
+
+.page-userinfo .image-preview{text-align: center;margin:10px;}
+.page-userinfo .image-preview .preview{
+	margin:10px auto;
+	width:320px;
+	position: relative;
+	height:240px;
+	border:1px #ccc dashed;
+}
+.page-userinfo .preview canvas{ position: absolute;left:0;top:0;height:100%;width:100%;}
+.page-userinfo .preview .fileName{
+	background: none repeat scroll 0 0 #000000;
+    color: #FFFFFF;
+    height: 25px;
+    line-height: 25px;
+    opacity: 0.42;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left:0;
+    width: 100%;
+}
+/** 产品中心 **/
+
+#product-statistics .panel-body{padding:10px;} 
+#product-statistics .staticst-list dt{width:30%;line-height:30px;display:inline-block;text-align:right;}
+#product-statistics .staticst-list dd{width:70%;line-height:30px;display:inline-block;margin-left:-5px;text-indent:2em;}
+

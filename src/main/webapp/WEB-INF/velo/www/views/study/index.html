@@ -1,0 +1,145 @@
+#set($layout="/www/layout/layout.html")
+#set($pageClass="study")
+<link rel="stylesheet" href="/css/cms.css" />
+<div class="portlet-container">
+    <div class="container">
+		<div id="study-menu" class="navbar" role="navigation">
+			<div class="navbar-header pull-left">
+				 <a class="navbar-brand" href="${base}/study/">HOMS学堂</a>
+			</div>
+            <div class="navbar-collapse pull-left">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="${base}/study/">热门推荐<em></em></a>
+                    </li>
+                    <li class=""><a href="#">新手入门<em></em></a>
+                    </li>
+                    <li class=""><a href="#">高手进晋<em></em></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-search pull-right">
+                <div class="key-search">
+					<form action="${base}/search.jspx" target="_blank">
+						<input type="text" name="q" class="search-box"
+						value="请输入搜索关键字" onfocus="if(this.value=='请输入搜索关键字')this.value=''" onblur="if(this.value=='')this.value='请输入搜索关键字'" maxlength="50" autocomplete="off" />
+						<input type="hidden" name = "channelId" value = "73" /><!--学堂  -->
+						<input type="submit" class="search-btn" value="搜索" />
+                    </form>
+                </div>
+            </div>
+        </div> 
+        <div class="row special-row">
+            <div class="col-md-8 pull-left">
+                <div class="pane" id="study-banner">
+                    <div class="panel-body">
+						<img src="/${res}/img/cms/cms_03.png" alt="banner_ad" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 pull-right">
+                <div class="panel" id="coming">
+                    <div class="panel-heading">
+						<div class="panel-title"><span class="icons-coming-soom"></span>课程预告</div>
+                    </div>
+                    <div class="panel-body">
+					<h3>6月份课程预告中</h3>
+					#* [@cms_content_list count='5' orderBy='4' titLen='15' channelId='77'  channelOption='1']
+                    [#list tag_list as a]
+                    <p>
+	                <a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
+	                </p>
+	                [/#list]
+	                [/@cms_content_list]
+					*#
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 pull-left">
+                <div class="panel study-thumb-list">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">快速上手</h1>
+						[@cms_channel id='76']
+                        <a class="panel-title-more" href="${tag_bean.url}" target="_blank">更多</a>
+                        [/@cms_channel]
+                    </div>
+                    <div class="panel-body">
+						<ul class="article_thumbnail">
+						#*
+                        [@cms_content_list count='4' orderBy='3' titLen='10' channelId='76'  channelOption='1']
+                        [#list tag_list as a]
+                        [#if a.titleImg??]
+						  <li>
+						    <a href="${a.url}" target="_blank"><img class="thumb" src="${a.titleImg!site.defImg}" alt="${a.title}"></a>
+						    <a href="${a.url}" target="_blank"><h4 class="title-label">[@text_cut s=a.title len=titLen /]</h4></a>
+						  </li>
+						[/#if]
+						[/#list]
+                        [/@cms_content_list]
+						*#
+						</ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 pull-right">
+                <div class="panel">
+                    <div class="panel-body">
+                        <ul class="article">
+                        [@cms_content_list count='4' typeId='1' orderBy='3' titLen='10' channelId='76'  channelOption='1']
+                        [#list tag_list as a]
+                           <li><a href="${a.url}">[@text_cut s=a.title len=titLen /]</a>
+                           </li>
+						[/#list]
+                        [/@cms_content_list]
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 pull-left">
+                <div class="panel study-thumb-list">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">更进一步</h1>
+                        [@cms_channel id='75']
+                        <a class="panel-title-more" href="${tag_bean.url}" target="_blank">更多</a>
+                        [/@cms_channel]
+                    </div>
+                    <div class="panel-body">
+                     <ul class="article_thumbnail">
+						#*
+                     	  [@cms_content_list count='4' orderBy='3' titLen='10' channelId='75'  channelOption='1']
+                          [#list tag_list as a]
+                          [#if a.titleImg??]
+						  <li>
+						    <a href="${a.url}" target="_blank"><img class="thumb" src="${a.titleImg!site.defImg}" alt="${a.title}"></a>
+						    <a href="${a.url}" target="_blank"><h4 class="title-label">[@text_cut s=a.title len=titLen /]</h4></a>
+						  </li>
+						  [/#if]
+						  [/#list]
+                          [/@cms_content_list]
+						  *#
+						</ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 pull-right">
+                <div class="panel">
+                    <div class="panel-body">
+                        <ul class="article">
+
+                            [@cms_content_list count='4' typeId='1' orderBy='3' titLen='10' channelId='75'  channelOption='1']
+                        	[#list tag_list as a]
+                            <li><a href="${a.url}">[@text_cut s=a.title len=titLen /]</a>
+                           	</li>
+							[/#list]
+                        	[/@cms_content_list]
+							
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

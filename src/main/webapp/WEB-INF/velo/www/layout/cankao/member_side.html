@@ -1,0 +1,70 @@
+<div class="panel" id="avatar">
+    <div class="panel-body">
+        <div class="avatar">
+			<a href="$!{ctx}/member/profile.do">
+				#if(!$user.avatar)
+				<img src="$!{ctx}/images/avatar_default.png" class="avatar-image" />
+				#else
+				<img src="/common/download/${user.avatar}.do" class="avatar-image" />
+				#end
+			</a>
+            <h3>$!user.cnName<small>$!role.roleCnName</small></h3>
+        </div>
+        <ul class="avatar-info">
+            <li>帐号：$!user.userName</li>
+            <li>公司：$!company.companyName</li>
+            <li>认证：<span class="icons #if($!user.emailIsValidate==1)passed #end icons-verify-email"></span><span class="icons #if($user.mobileIsValidate==1) passed #end icons-verify-mobile"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="panel" id="nav-menu">
+    <div class="panel-body">
+        <ul class="nav nav-stacked">
+			#if($authorityList.size()>0)
+				#foreach($authorityBean in $authorityList)
+					<li #if($ab.url==$!authorityBean.url) class="active" #end>
+					<a href="$!{ctx}$!authorityBean.url" class="">
+							<span class="$!authorityBean.icon"></span>
+								$!authorityBean.name
+						</a>
+					</li>
+				#end
+			#end
+			
+			<li class="">
+                <a href="$tool.getCmsPrefix()study/index.htm" target="_blank">
+                    <span class="icons-course"></span>
+                    课程
+                </a>
+            </li>
+            <li class="">
+                <a  href="$tool.getCmsPrefix()periodical/index.htm" target="_blank">
+                    <span class="icons-periodical"></span>
+                    期刊
+                </a>
+            </li>
+            
+            <li class="">
+                <a href="$tool.getCmsPrefix()news/index.htm" class="" target="_blank">
+                    <span class="icons-news"></span>
+                    资讯
+                </a>
+            </li>
+			
+            <li class="">
+                <a href="#" class="" >
+                    <span class="icons-iasp"></span>
+                    机构间服务
+                </a>
+            </li>
+            <li class="">
+                <a href="#" class="" >
+                    <span class="icons-bbs"></span>
+                    论坛
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+ 

@@ -1,0 +1,152 @@
+html,body{width: 100%;height: 100%;font-size:14px;}
+/**  login.html **/
+.module-login-page{position: relative;height:100%;width:100%;}
+.login-panel .panel-heading .glyphicon-user{margin-right: 10px;}
+.login-panel{position: absolute;top:15%;left:35%;width:400px;}
+.login-panel .form-toolbar{text-align: center;}
+.login-panel .form-toolbar .btn{margin:0 5px;}
+.login-panel .rememberMe{margin-right: 5px;}
+
+/**  public style fixed  **/
+.table-toolbar{margin:10px 0;}
+.form-toolbar{text-align:center;margin:30px auto;clear:both;}
+.glyphicon {
+    margin:0 5px;
+}
+
+.panel-heading{position: relative;}
+.panel-heading .panel-heading-more{position: absolute;right:10px;top:10px;}
+
+.marginTop30{
+	margin-top:30px;
+}
+div.form-control{height:auto}
+.form-group input.error{border:red 1px solid;}
+.form-group label.error{color:red;}
+.bs-header .header-search{width:400px;}
+.bs-footer{background: #f2f2f2;padding-top:10px;border-top:#ddd 1px solid;}
+.fileinput-button input{ position: absolute; top: 0; right: 0; margin: 0; opacity: 0; -ms-filter: 'alpha(opacity=0)'; font-size: 200px; direction: ltr; cursor: pointer; }
+#warp{
+	position: relative;
+}
+table th .glyphicon-sort{color:#000;}
+table th .glyphicon{float:right;cursor: pointer;}
+
+.hiddenIframe{display:none;}
+.clear{clear:both;content:".";}
+
+.ico-big{width:64px;height:64px;}
+.ico-middle{width:32px;height:32px;}
+.ico{width:16px;height:16px;}
+
+/** 首页 **/
+
+/** 数据统计 **/
+
+#panel-data-count .list-group-item{padding:0;}
+#panel-data-statistics .list-group-item-heading,
+#panel-data-count .list-group-item-heading
+{width:75%;display: inline-block;line-height: 25px;vertical-align: top;text-align: right;}
+#panel-data-statistics .list-group-item-text,
+#panel-data-count .list-group-item-text{color:#fe9364;font-weight:bold;text-indent: 10px;width:24%;display: inline-block;margin-left:-4px;line-height: 25px;vertical-align: top;}
+#panel-data-count .list-group-item-text{line-height: 42px;}
+#panel-data-count .list-group-item-heading{margin-bottom: 0;background-color:#e7f3fa;font-weight: bold;line-height:42px;padding-right:10px;}
+#panel-data-statistics .panel-body .list-group-item{background-color:#f9f9f9;}
+
+/** qa-panel Q&A **/
+#panel-qa-list{}
+/** 产品列表 **/
+.member-product{}
+#panel-product-list .list-group-item{position: static;margin:0;padding:10px 0;broder-radius: 0;}
+#panel-product-list .list-group-item-heading{position: relative;}
+#panel-product-list .list-group-item-more{position: absolute;right:10px;top:10px;}
+
+/** 自动完成框 **/
+.twitter-typeahead{
+	width: 100%;
+}
+.tt-hint[readonly]{
+	color: #C3C1B7;
+}
+.tt-dropdown-menu{
+	width: 570px;
+	max-height: 150px;
+    overflow-y: auto;
+	margin-top: 12px;
+	padding: 8px 10px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	-webkit-border-radius: 8px;
+	    -moz-border-radius: 8px;
+	        border-radius: 8px;
+	-webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+	    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+	        box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #0097cf;
+}
+.img-list-panel *,
+.img-list-panel *:before,
+.img-list-panel *:after {
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  /* Firefox */
+  -webkit-box-sizing: content-box;
+  /* Safari */
+}
+.img-list-panel .img-list-item {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.img-list-panel .img-list-item .con-desc {
+  font-size: 12px;
+  text-align: center;
+}
+.img-list-panel .img-list-item .thumbnail {
+  padding: 0;
+  border-radius: 0;
+  margin: 0;
+  position: relative;
+  cursor: pointer;
+}
+.img-list-panel .img-list-item .lightbox {
+  display: none;
+}
+.img-list-panel .img-list-item .lightbox .lightbox-caption {
+  bottom: -1px;
+}
+.img-list-panel .img-list-item .lightbox .close {
+  position: absolute;
+  right: 0;
+}
+.img-list-panel a[data-toggle='lightbox'] img {
+  width: 120px;
+  height: 72px;
+}
+.img-list-panel .img-list-item .lightbox-content img {
+  height: 100%;
+  width: 100%;
+}
+.icons-enlarge {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+.icons-dl {
+  margin: 0;
+}
+.icons-correct {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  display: none;
+}
+#errDiv {
+  padding-top: 10px;
+  display: none;
+}

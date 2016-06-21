@@ -1,0 +1,81 @@
+#set($layout="manager/layout/template.html")
+#msgAlertShow($!msgList)
+
+<div class="bs-body module" data-module="module.autocomplete">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">用户积分账号</h3>
+        </div>
+        <div class="panel-body">
+        	<form name= score role="form" class="form-horizontal validateForm" action="$!{ctx}/manager/score/save.do"  method="post">
+				<!-- input type -->
+					 <input type="hidden" name="userId2" value="$!{myBean.userId}"/>
+					  <input type="hidden" name="page" value="$!{page}"/>
+					  <input type="hidden" name="searchname" value="$!{searchname}"/>
+			     <!--  
+			     <div class="form-group">
+					<label  class="col-sm-2 control-label">用户ID</label>
+					<div class="col-sm-10" id="product-intention">
+						<input type="hidden" class="pid" name="intentionId" value="$!{messageBean.intentionId}">
+						<input class="typeahead form-control" type="text" placeholder="如：预约1:1:4产品"  data-param-status="0"
+						#foreach($item in $listMap)
+						#if($!{messageBean.intentionId}== $item.intention_id)
+						value = "$!{item.intention_name}"
+						#end
+						#end
+						>
+						<span class="help-block">请从下拉框中选择意向<font color="red">(不支持直接填写)</font></span>
+					</div>
+				</div>-->
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">用户ID</label>
+					<div class="col-sm-10">
+						<input type="text"  name="userId" class="form-control" data-rule-maxlength="50" data-msg-maxlength="内容不能超过50个字" 
+						placeholder="填写账户" value="$!myBean.userId"  
+						data-rule-required="true"  data-message-required="内容是必填项"    />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">状态</label>
+					<div class="col-sm-10">
+						<select  type="text" name="state" class="form-control"   >
+								<option value ="1"  #if($!myBean.state ==1)selected="selected" #end >启用</option>
+						  		<option value ="2"  #if($!myBean.state ==2)selected="selected" #end>冻结</option>
+						  		<option value ="3"  #if($!myBean.state ==3)selected="selected" #end >已删除</option>
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">积分数</label>
+					<div class="col-sm-10">
+						<input type="text"  name="scoreNum" class="form-control" data-rule-maxlength="10" data-msg-maxlength="内容不能超过10个字" 
+						placeholder="" value="$!myBean.scoreNum"  
+						 data-rule-integer="true"  data-message-integer="只能是整数"    />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">红运币数</label>
+					<div class="col-sm-10">
+						<input type="text"  name="goodLuckCoinNum" class="form-control" data-rule-maxlength="10" data-msg-maxlength="内容不能超过10个字" 
+						placeholder="" value="$!myBean.goodLuckCoinNum"  
+						data-rule-integer="true"  data-message-integer="只能是整数"   />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				
+				<div class="form-toolbar">
+					<button type="submit" class="btn btn-primary">保存</button>
+					<button type="reset" class="btn btn-default">重置</button>
+				</div>
+			</form>	
+        </div>
+    </div>
+</div>
+
+

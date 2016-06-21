@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理系统</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	#parse("manager/layout/static.html")
+</head>
+<body>
+	<div class="warp">
+		#parse('manager/layout/header.html')
+		<section class="ui-main">
+			<div class="container">
+				#parse('manager/layout/breadcrumb.html')
+				$screen_content
+			</div>
+		</section>
+		#parse('manager/layout/footer.html')
+	</div>
+	#parse('manager/layout/modal.html')
+</body>
+</html>

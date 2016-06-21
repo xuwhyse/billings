@@ -1,0 +1,87 @@
+<!-- 介绍页面 -->
+#set($layout="/www/layout/layout.html") #set($pageClass="homs")
+#set($title = "HOMS介绍-金融投资云平台")
+<div class="banner-container">
+    <div class="container">
+        <img src="$!{ctx}/images/homs/intro_banner.png" alt="金融投资云平台"/>
+        <a href="$!{ctx}/member/trialreq.do" class="try-link"></a>
+        <a href="#" data-toggle="modal" data-target="#myModal" class="panel-title-more"><span class="icons-player"></span>快速了解HOMS</a>
+    </div>
+</div>
+<div class="portlet-container">
+    <div class="bar-container">
+        <div class="container">
+        <img src="$!{ctx}/images/homs/intro_1.png" alt="" />
+        </div>
+    </div>
+    <div class="bar-container">
+        <div class="container">
+        <img src="$!{ctx}/images/homs/intro_2.png" alt="" />
+        </div>
+    </div>
+    <div class="bar-container">
+        <div class="container">
+        <img src="$!{ctx}/images/homs/intro_3.png" alt="" />
+        </div>
+    </div>
+    <div class="bar-container">
+        <div class="container">
+        <img src="$!{ctx}/images/homs/intro_4.png" alt="" />
+        </div>
+    </div>
+<!-- 四个图标显示 -->
+    <div class="item-container">
+        <div class="container">
+            <div class="col-df col-df-4" >
+                <a href="$!{ctx}/www/homs/intro_detail.do#intro_1">
+                    <div class="icons icons-service icons-service-1">
+                    </div>
+                    <p>账户管理</p>
+                </a>
+            </div>
+            <div class="col-df col-df-4">
+                <a href="$!{ctx}/www/homs/intro_detail.do#intro_2">
+                    <div class="icons icons-service icons-service-2">
+                    </div>
+                    <p>资产管理</p>
+                </a>
+            </div>
+            <div class="col-df col-df-4">
+                <a href="$!{ctx}/www/homs/intro_detail.do#intro_3">
+                    <div class="icons icons-service icons-service-3">
+                    </div>
+                    <p>风险控制</p>
+                </a>
+            </div>
+            <div class="col-df col-df-4">
+                <a href="$!{ctx}/www/homs/intro_detail.do#intro_4">
+                    <div class="icons icons-service icons-service-4">
+                    </div>
+                    <p>云服务</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-color:transparent;">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="youkuplayer" style="width:560px;height:480px;">&nbsp;</div>
+                <script type="text/javascript" src="http://player.youku.com/jsapi">
+                    window.player = new YKU.Player('youkuplayer',
+                    {
+                        styleid: '0',
+                        client_id: '8b6099e5bdd2fa87',
+                        vid: 'XNzQyNTA2MzE2',
+                        autoplay: false
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>

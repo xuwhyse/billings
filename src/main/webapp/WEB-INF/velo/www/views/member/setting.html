@@ -1,0 +1,48 @@
+#set($layout="/www/layout/member_layout.html") #set($pageClass="usercenter")
+#msgAlertShow($!msgList)
+<div class="member-portlet clearfix">
+    <div class="member-header">
+		<h2 class="module-name">
+			个人设置
+		</h2>
+        <ul class="nav nav-tabs">
+            <li><a href="$!{ctx}/member/profile.do">基本资料</a>
+            </li>
+            <li><a href="$!{ctx}/member/modify_password.do">密码修改</a>
+            </li>
+            <li class="active"><a href="$!{ctx}/member/setting.do">帐户管理</a>
+            </li>
+        </ul>
+    </div>
+    <div class="member-body">
+
+        <div class="panel" id="account-panel">
+            <div class="panel-heading">
+                <h1 class="panel-title">帐号列表</h1>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>帐号</th>
+                            <th>角色</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	#foreach($bean in $pg.result)
+                    		#set($index = $velocityCount - 1)
+                    		<tr>
+                    			<td>$!bean.cnName</td>
+                    			<td>$!bean.userName</td>
+                    			<td>$!roleList.get($index)</td>
+                    		</tr>
+                    	#end
+                    </tbody>
+                </table>
+                #pagination($!{pg.pageCount} $!{pg.pageIndex})
+            </div>
+        </div>
+
+    </div>
+</div>

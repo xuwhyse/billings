@@ -1,0 +1,294 @@
+#set($layout="/www/layout/member_layout.html") #set($pageClass="member")
+<div class="member-portlet clearfix">
+    <div class="member-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel" id="bill-tip">
+                    <div class="panel-body">
+						<span class="pull-left"><div class="icons-cal"></div>服务周期：#if($!currentBillBean.contractPeriod)$!currentBillBean.contractPeriod#else无#end</span>
+                        <span class=" pull-right"><div class="icons-telphone"></div>账单服务电话：0571-28829689</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row col-md-resize">
+            <div class="col-md-8 pull-left col-md-content">
+                <div class="panel" id="bill-detail">
+                    <div class="panel-heading">
+						<div class="panel-title">
+                            <div class="dropdown">
+                                账单明细
+                                #if($datelist.size()>0)
+                                <a data-toggle="dropdown" href="#">$!periodictime期 <span class="icons-menu-more"></span></a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    #foreach($time in $datelist)
+                                    <li role="presentation" #if($time==$datetime) class="active" #end >
+                                        <a href="$!{ctx}/member/bill.do?datetime=$!time" tabindex="-1" role="menuitem"  >$!time期</a>
+                                    </li>
+                                    #end
+                                </ul>
+                                #end
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+						#if($!currentBillBean)
+						<dl class="property-list property-primary">
+						  <dt class="inner_full">本期应付金额:
+						 <span class="money">#if($!currentBillBean.currentPeriodMoney==-9999.99)/#else$!currentBillBean.currentPeriodMoney #end</span>
+						  </dt>
+						</dl>
+						<dl class="property-list property-primary">
+						  <dt class="inner_full">结算模式:$!currentBillBean.settlementPattern</dt>
+			
+						</dl>
+						#if($!currentBillBean.stockTechServiceRate)
+						<dl class="property-list">
+						  <dt>股票技术服务费率:</dt>
+						  <dd>$!currentBillBean.stockTechServiceRate</dd>
+						</dl>
+						#end
+						#if($!currentBillBean.futuresTechServiceRate)
+						<dl class="property-list">
+						  <dt>期货技术服务费率:</dt>
+						  <dd>$!currentBillBean.futuresTechServiceRate </dd>
+						</dl>
+						#end
+						#if($!currentBillBean.bondTechServiceRate)
+						<dl class="property-list">
+						  <dt>债券技术服务费率:</dt>
+						  <dd>$!currentBillBean.bondTechServiceRate </dd>
+						</dl>
+						#end
+						#if($!currentBillBean.brokerTechServiceRate)
+						<dl class="property-list">
+						  <dt>券商账户技术服务费率:</dt>
+						  <dd>$!currentBillBean.brokerTechServiceRate</dd>
+						</dl>
+						#end
+						#if($!currentBillBean.trustTechServiceRate)
+						<dl class="property-list">
+						  <dt>信托账户技术服务费率:</dt>
+						  <dd>$!currentBillBean.trustTechServiceRate </dd>
+						</dl>
+						#end
+						<dl class="property-list">
+						  <dt>技术服务费保底:</dt>
+						  <dd>#if($!currentBillBean.techServiceMin==-9999.99)/#else$!currentBillBean.techServiceMin 元#end</dd>
+						</dl>
+						<dl class="property-list">
+						  <dt>当月技术服务费:</dt>
+						  <dd>#if($!currentBillBean.techServiceMoney==-9999.99)/#else$!currentBillBean.techServiceMoney 元#end</dd>
+						</dl>
+						<dl class="property-list">
+						  <dt>合同期预付款:</dt>
+						  <dd>#if($!currentBillBean.contractAdvance==-9999.99)/#else$!currentBillBean.contractAdvance 万元#end</dd>
+						</dl>
+						<dl class="property-list">
+						  <dt>合同期预付款结余:</dt>
+						  <dd>#if($!currentBillBean.contractAdvanceSurplus==-9999.99)/#else$!currentBillBean.contractAdvanceSurplus 元#end</dd>
+						</dl>
+						<dl class="property-list">
+						  <dt>合同期技术服务费总额:</dt>
+						  <dd>#if($!currentBillBean.contractPeriodTechServiceSum==-9999.99)/#else$!currentBillBean.contractPeriodTechServiceSum 元#end</dd>
+						</dl>
+						<dl class="property-list">
+						  <dt>合同期总成交金额:</dt>
+						  <dd>#if($currentBillBean.contractPeriodSum==-9999.99)/#else$!{currentBillBean.contractPeriodSum} 万元#end</dd>
+						</dl>
+						<dl class="property-list">
+						  <dt>逾期滞纳金比例:</dt>
+						  <dd>$!currentBillBean.overdueFineRate</dd>
+						</dl>
+						<dl class="property-list">
+						  <dt>逾期滞纳金:</dt>
+						  <dd>#if($!currentBillBean.overdueFineMoney==-9999.99)/#else$!currentBillBean.overdueFineMoney 元#end</dd>
+						</dl>
+						<dl class="property-list">
+						  <dt>最迟付款日:</dt>
+						  <dd>#m_date($!currentBillBean.lastPayDate)</dd>
+						</dl>
+						
+						#else
+						$!info	
+						#end
+                    </div>
+                </div>
+                <div class="panel" id="current-bill">
+                    <div class="panel-heading">
+						<div class="panel-title">
+							消费明细</div>
+                    </div>
+					
+                    <div class="panel-body">
+						  $!info
+						
+                        <script src="$!{ctx}/thirdparty/Highcharts-4/js/highcharts.js" type="text/javascript"></script>
+						#if($categories!="[]" || $data!="[]")
+                        <div class="near1-chart-content" style="width:100%;height:100%">
+                          
+                        </div>
+						
+                        <script>
+                            jQuery(document).ready(function($)
+                            {
+                                $(".history-date").on('change', function(e)
+                                {
+                                    var target = e.currentTarget,
+                                        $target = $(target),
+                                        form = $target.parents("form");
+                                    $(form).trigger("submit");
+                                });
+                                $('.near1-chart-content').highcharts(
+                                {
+                                    title:
+                                    {
+                                        text: '消费明细'
+                                    },
+                                    subtitle:
+                                    {
+                                        text: '总额：￥ #if($!currentBillBean.techServiceMoney==-9999.99)/#else$!currentBillBean.techServiceMoney#end'
+                                    },
+                                    xAxis:
+                                    {
+                                        categories: $!categories
+                                    },
+                                    yAxis:
+                                    {
+                                        min: 0,
+                                        title:
+                                        {
+                                            text: '技术服务费(￥)'
+                                        },
+                                        plotLines: [
+                                        {
+                                            value: 0,
+                                            width: 1,
+                                            color: '#808080'
+                                        }]
+                                    },
+                                    tooltip:
+                                    {
+                                       formatter:function(){
+												return  '技术服务费(￥):' + this.y + '<br/>委托笔数:'+this.point.ds+ '<br/>成交笔数:'+this.point.dos;
+												}
+                                    },
+                                    legend:
+                                    {
+                                        layout: 'vertical',
+                                        align: 'buttom',
+                                        borderWidth: 0
+                                    },
+                                    series: [
+                                    {
+									   name: '技术服务费',
+                                       data: $!data
+                                    }]
+                                });
+                            });
+                        </script>
+						#end
+
+
+                    </div>
+                </div>
+			
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="panel-title">近6期技术服务费走势</div>
+                    </div>
+                    <div class="panel-body">
+						$!pinfo
+						#if($pcategories!="[]" || $pdata!="[]")
+                        <div class="near6-chart-content" style="width:100%;height:100%">
+                           
+                        </div>
+                        <script>
+                            jQuery(document).ready(function($)
+                            {
+                                $('.near6-chart-content').highcharts(
+                                {
+                                    width: 300,
+                                    height: 185,
+                                    title:
+                                    {
+                                        text: '近6期技术服务费走势'
+                                    },
+                                    subtitle:
+                                    {
+                                        text: '总额:￥$totalPeriodMoney'
+                                    },
+                                    xAxis:
+                                    {
+                                        categories: $pcategories
+                                    },
+                                    yAxis:
+                                    {
+                                        min: 0,
+                                        title:
+                                        {
+                                            text: '技术服务费(￥)'
+                                        },
+                                        plotLines: [
+                                        {
+                                            value: 0,
+                                            width: 1,
+                                            color: '#808080'
+                                        }]
+                                    },
+                                    tooltip:
+                                    {
+                                        valuePrefix: '￥'
+                                    },
+                                    legend:
+                                    {
+                                        layout: 'vertical',
+                                        align: 'buttom',
+                                        borderWidth: 0
+                                    },
+                                    series: [
+                                    {
+                                        name: '技术服务费',
+                                        data: $pdata
+                                    }]
+                                });
+                            });
+                        </script>
+						#end
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 pull-right col-md-side">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="panel-title">付款说明</div>
+                    </div>
+                    <div class="panel-body">
+                        <dl class="property-list">
+                            <dt>收款单位：</dt>
+                            <dd>恒生电子股份有限公司</dd>
+                            <dt>开户银行：</dt>
+                            <dd>招行银行杭州分行</dd>
+                            <dt>银行账号：</dt>
+                            <dd>5719 0448 9410 101</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="panel" id="bill-helper">
+                    <div class="panel-heading">
+                        <div class="panel-title">账单服务指南</div>
+                    </div>
+                    <div class="panel-body">
+                        <p>请您按照合同约定付费日期，在限定日期范围内付费。付费后请妥善保管付费凭证，以备核查。<br /><br /> 如需帮助，请联系我们。
+						<br />电话：0571-28829689  
+                        <br />联系地址：杭州市滨江区江南大道3588号恒生大厦7楼
+                        <br />邮编：310053
+						</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

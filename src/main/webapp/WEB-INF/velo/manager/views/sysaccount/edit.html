@@ -1,0 +1,44 @@
+#set($layout="manager/layout/template.html")
+#msgAlertShow($!msgList)
+
+<div class="bs-body module" data-module="module.autocomplete">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">系统账号</h3>
+        </div>
+        <div class="panel-body">
+        	<form name= sysAccount role="form" class="form-horizontal validateForm" action="$!{ctx}/manager/sysaccount/save.do"  method="post">
+				<!-- input type -->
+					 <input type="hidden" name="sysAccountId2" value="$!myBean.sysAccountId"/>
+					  <input type="hidden" name="page" value="$!{page}"/>
+					  <input type="hidden" name="searchname" value="$!{searchname}"/>
+				
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">账户名</label>
+					<div class="col-sm-10">
+						<input type="text"  name="accountName" class="form-control" data-rule-maxlength="50" data-msg-maxlength="内容不能超过50个字" 
+						placeholder="填写账户" value="$!myBean.accountName"  
+						data-rule-required="true"  data-message-required="内容是必填项"    />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">密码</label>
+					<div class="col-sm-10">
+						<input type="text"  name="accountPwd" class="form-control" data-rule-maxlength="50" data-msg-maxlength="内容不能超过50个字" 
+						placeholder="填写密码" value="$!myBean.accountPwd"  
+						data-rule-required="true"  data-message-required="内容是必填项"    />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				
+				<div class="form-toolbar">
+					<button type="submit" class="btn btn-primary">保存</button>
+					<button type="reset" class="btn btn-default">重置</button>
+				</div>
+			</form>	
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.social4j.dao.DiscoverItemMapper" >
+  <resultMap id="BaseResultMap" type="com.social4j.model.DiscoverItem" >
+    <id column="discover_item_id" property="discoverItemId" jdbcType="INTEGER" />
+    <result column="discover_type" property="discoverType" jdbcType="INTEGER" />
+    <result column="discover_code" property="discoverCode" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="described" property="described" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="region" property="region" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="BIGINT" />
+    <result column="updateTime" property="updatetime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    discover_item_id, discover_type, discover_code, title, image, described, sort, link, 
+    region, createTime, updateTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.social4j.model.DiscoverItemCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from discover_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from discover_item
+    where discover_item_id = #{discoverItemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from discover_item
+    where discover_item_id = #{discoverItemId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.social4j.model.DiscoverItemCriteria" >
+    delete from discover_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.social4j.model.DiscoverItem" >
+    insert into discover_item (discover_item_id, discover_type, discover_code, 
+      title, image, described, 
+      sort, link, region, 
+      createTime, updateTime)
+    values (#{discoverItemId,jdbcType=INTEGER}, #{discoverType,jdbcType=INTEGER}, #{discoverCode,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{described,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{link,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.social4j.model.DiscoverItem" >
+    insert into discover_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="discoverItemId != null" >
+        discover_item_id,
+      </if>
+      <if test="discoverType != null" >
+        discover_type,
+      </if>
+      <if test="discoverCode != null" >
+        discover_code,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="described != null" >
+        described,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="link != null" >
+        link,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="discoverItemId != null" >
+        #{discoverItemId,jdbcType=INTEGER},
+      </if>
+      <if test="discoverType != null" >
+        #{discoverType,jdbcType=INTEGER},
+      </if>
+      <if test="discoverCode != null" >
+        #{discoverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="described != null" >
+        #{described,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="link != null" >
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.social4j.model.DiscoverItemCriteria" resultType="java.lang.Integer" >
+    select count(*) from discover_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update discover_item
+    <set >
+      <if test="record.discoverItemId != null" >
+        discover_item_id = #{record.discoverItemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.discoverType != null" >
+        discover_type = #{record.discoverType,jdbcType=INTEGER},
+      </if>
+      <if test="record.discoverCode != null" >
+        discover_code = #{record.discoverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.described != null" >
+        described = #{record.described,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null" >
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.link != null" >
+        link = #{record.link,jdbcType=VARCHAR},
+      </if>
+      <if test="record.region != null" >
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null" >
+        updateTime = #{record.updatetime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update discover_item
+    set discover_item_id = #{record.discoverItemId,jdbcType=INTEGER},
+      discover_type = #{record.discoverType,jdbcType=INTEGER},
+      discover_code = #{record.discoverCode,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
+      described = #{record.described,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
+      link = #{record.link,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=BIGINT},
+      updateTime = #{record.updatetime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.social4j.model.DiscoverItem" >
+    update discover_item
+    <set >
+      <if test="discoverType != null" >
+        discover_type = #{discoverType,jdbcType=INTEGER},
+      </if>
+      <if test="discoverCode != null" >
+        discover_code = #{discoverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="described != null" >
+        described = #{described,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="link != null" >
+        link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where discover_item_id = #{discoverItemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.social4j.model.DiscoverItem" >
+    update discover_item
+    set discover_type = #{discoverType,jdbcType=INTEGER},
+      discover_code = #{discoverCode,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      described = #{described,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      link = #{link,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=BIGINT},
+      updateTime = #{updatetime,jdbcType=BIGINT}
+    where discover_item_id = #{discoverItemId,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.social4j.model.DiscoverItemCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from discover_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

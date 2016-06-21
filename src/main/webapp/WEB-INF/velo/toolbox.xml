@@ -1,0 +1,38 @@
+<toolbox>
+	<tool>
+		<key>date</key>
+		<scope>application</scope>
+		<class>org.apache.velocity.tools.generic.DateTool</class>
+		<parameter name="format" value="yyyy-MM-dd" />
+	</tool>
+	<tool>
+		<key>display</key>
+		<scope>application</scope>
+		<class>org.apache.velocity.tools.generic.DisplayTool</class>
+	</tool>
+	<tool>
+		<key>math</key>
+		<scope>application</scope>
+		<class>org.apache.velocity.tools.generic.MathTool</class>
+	</tool>
+	<tool>
+		<key>iter</key>
+		<scope>application</scope>
+		<class>org.apache.velocity.tools.generic.IteratorTool</class>
+	</tool>
+	<tool>
+		<key>sort</key>
+		<scope>application</scope>
+		<class>org.apache.velocity.tools.generic.SortTool</class>
+	</tool>
+	<tool>
+		<key>valueRange</key>
+		<scope>application</scope>
+		<class>com.hundsun.internet.billingsystem.common.velocity.ValueRange</class>
+	</tool>
+	<tool>
+		<key>tool</key>
+		<scope>application</scope>
+		<class>com.hundsun.internet.billingsystem.common.velocity.VelocityTool</class>
+	</tool>
+</toolbox>

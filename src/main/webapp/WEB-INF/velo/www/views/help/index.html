@@ -1,0 +1,103 @@
+#set($layout="/www/layout/layout.html")
+#set($pageClass="help")
+<link rel="stylesheet" href="/css/cms.css" />
+<div class="portlet-container">
+    <div class="site-shortcut">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 register-app">
+                    <a href="">
+                        <img src="/images/cms/cms_faq_03.png" alt="">
+						<div class="fouse icons-register-app">
+						</div>
+                    </a>
+                </div>
+                <div class="col-md-3 download-app">
+                    <a href="">
+                        <img src="/images/cms/cms_faq_09.png" alt="">
+                        <div class="fouse icons-buy-app">
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 study-app">
+                    <a href="">
+                        <img src="/images/cms/cms_faq_07.png" alt="">
+						<div class="fouse icons-study-app">
+						</div>
+                    </a>
+                </div>
+                <div class="col-md-3 buy-app">
+                    <a href="">
+                        <img src="/images/cms/cms_faq_05.png" alt="">
+                        <div class="fouse icons-download-app">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="col-md-4">
+        <div class="panel" id="keyword-panel">
+            <div class="panel-body">
+                <div class="key-search">
+                    <form action="" method="get">
+                        <input type="text" name="keyword" class="search-box" placeholder="请输入搜索关键字">
+                        <input type="submit" class="search-btn" value="搜索" />
+                    </form>
+                </div>
+                <div class="keyword-clound">
+                    <a href="">下载安装</a>
+                    <a href="">如何使用</a>
+                    <a href="">下载安装</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="panel" id="faq-catalog-panel">
+            <div class="panel-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="faq-type1" role="tab" data-toggle="tab">热门问题</a>
+                    </li>
+                    <li><a href="faq-type2" role="tab" data-toggle="tab">无法登陆</a>
+                    </li>
+                    <li><a href="faq-type3" role="tab" data-toggle="tab">手机客户端</a>
+                    </li>
+                    <li><a href="faq-type4" role="tab" data-toggle="tab">杀毒软件预警</a>
+                    </li>
+                    <li><a href="faq-type5" role="tab" data-toggle="tab">交易</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane faq-panel active" id="faq-type1">
+                        <ul class="article">
+                            <li data-answer="真的不知道,答案放在这里由JS处理">产生交易差额如何计算?<span></span></li>
+                            <li>产生交易差额如何计算?<span></span></li>
+                            <li>产生交易差额如何计算?<span></span></li>
+                            <li>产生交易差额如何计算?<span></span></li>
+                            <li>产生交易差额如何计算?<span></span></li>
+                            <li>产生交易差额如何计算?<span></span></li>
+                        </ul>
+                        <div class="answer-box">
+                            <div class="answer-box-head">
+                                <div class="icons-answer-head"></div>
+                            </div>
+                            <div class="answer-box-body">
+                                账户管理-费用统计，查看前一个交易日的累计佣金差。
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane faq-panel" id="faq-type2">x</div>
+                    <div class="tab-pane faq-panel" id="faq-type3">b</div>
+                    <div class="tab-pane faq-panel" id="faq-type4">.c</div>
+                    <div class="tab-pane faq-panel" id="faq-type5">d</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

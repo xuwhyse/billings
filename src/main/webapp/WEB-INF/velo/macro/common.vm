@@ -1,0 +1,142 @@
+###########################
+##      
+##  项目宏定义文件
+##
+##
+###########################
+
+## 信息提示框
+## String $text 提示正文内容
+## String $type 消息类型 
+##      success|info|warning|danger 五种类型，也可自定义类型，需要自行样式支持
+## Boolean $closeable 是否允许用户关闭
+#macro(pagination $pageCount $currentPageIndex $onePageCount)
+<ul class="pagination">
+	#set($tmp = $currentPageIndex - 1)
+    <li #if($tmp < 1) class="disabled" #end>
+				#if($tmp < 1)
+				<a href="javascript:void(0)" >&laquo;</a>
+				#else
+				<a href="$!{ctx}${paraObj.uri}?page=${tmp}&${paraObj.parasUrl}" >&laquo;</a>	
+				#end
+	</li>
+	
+	<li #if($currentPageIndex == 1) class="active" #end><a href="$!{ctx}${paraObj.uri}?page=1&${paraObj.parasUrl}">1</a></li>
+	
+	#if($currentPageIndex > 4) <li class="disabled"><a href="javascript:void(0)">...</a></li> #end
+
+	#foreach($index in [-2..2])	
+		#set($tmp = $currentPageIndex + $index)
+		#if($tmp > 1 && $tmp < $pageCount) 
+		<li #if($currentPageIndex == $tmp) class="active" #end >
+				<a href="$!{ctx}${paraObj.uri}?page=${tmp}&${paraObj.parasUrl}">${tmp}</a>
+		</li> 
+		#end
+	#end
+		
+	#if(($pageCount - $currentPageIndex) > 3) <li class="disabled"><a href="javascript:void(0)" >...</a></li> #end
+
+    #if($pageCount > 1)<li #if($currentPageIndex == $pageCount) class="active" #end><a href="$!{ctx}${paraObj.uri}?page=${pageCount}&${paraObj.parasUrl}">${pageCount}</a></li>#end
+
+	#set($tmp = $currentPageIndex + 1)
+    <li #if($tmp > $pageCount) class="disabled" #end>
+			#if($tmp > $pageCount) 
+			<a href="javascript:void(0)" >&raquo;</a>
+			#else
+			<a href="$!{ctx}${paraObj.uri}?page=$tmp&${paraObj.parasUrl}" >&raquo;</a>
+			#end
+	</li>
+</ul>
+#end
+
+#macro(msgAlertShow $msgList)
+	#set($msgStr = "")
+	#set($isError = false)
+	#if($msgList.size()>0)		
+		#foreach($msg in $msgList)
+			#set($msgStr = $msgStr + "<span>" + $msg.content + "</span>")
+			#if($msg.messageType == 2)
+				#set($isError = true)
+			#end
+		#end
+		<div id="page_message" class="page_mess_animate	#if($isError) page_mess_error #else page_mess_ok #end" style="overflow: hidden; display: block;">
+			$msgStr
+			<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+		</div>
+	#end
+#end
+
+#macro(subString $text $maxLength)
+    #if($text.length() > $maxLength)
+    	$text.substring(0,$maxLength)...
+    #else
+    	$text
+    #end
+#end
+
+#macro(m_datetime $datetime)
+#if ($datetime)$dateTool.format("yyyy-MM-dd HH:mm:ss",$datetime)#end
+#end
+
+#macro(m_datetimeNomm $datetime)
+#if($datetime)$dateTool.format("yyyy-MM-dd HH:mm",$datetime)#end
+#end
+
+#macro(m_date $datetime)
+#if ($datetime)$dateTool.format("yyyy-MM-dd",$datetime)#end
+#end
+
+#macro(m_datewithMM $datetime)
+#if ($datetime)$dateTool.format("yyyy-MM",$datetime)#end
+#end
+
+##set($values="22,222")
+##set($list=[{"label" : "1","value" : "2","group":"A"},{"label" : "111","value" : "222","group":"b"},{"label" : "11","value" : "22","group":"b"}])
+
+##toMap($lists,'lab','val','group')
+##select("mobile",$values,$list, 'size="3" multiple="true"')
+##radio("mobile",$values,$list,'data-rule-required="true"')
+##checkbox("mobile",$values,$list,'data-rule-required="true"')
+
+
+
+#macro(select $name $value $list $attr $cssClass)
+	<select name="$name" class="form-control $!cssClass" $!attr >
+		#set($groupLabel="un")
+		#foreach($item in $list)
+			
+			#if($groupLabel!=$item.group && $item.group)
+				#if($velocityCount!=1)
+				</optgroup>
+				#end
+				<optgroup label="$!{item.group}">
+				#set($groupLabel=$item.group)
+			#else
+				
+			#end
+			<option value="${item.value}" #if($value.split(",").indexOf(${item.value})>=0) selected #end
+			>${item.label}</option>
+			#if($velocityCount==$list.size())
+				</optgroup>
+			#end
+		#end
+	</select>
+#end
+
+#macro(radio $name $value $list $attr $cssClass)
+	#foreach($item in $list)
+	<label class="radio-inline">
+	   <input type="radio" name="$name" class="$!cssClass"  value="${item.value}" $!attr #if($value.split(",").indexOf(${item.value})>=0) checked #end >${item.label}
+	</label>
+	#end
+#end
+
+
+#macro(checkbox $name $value $list $attr $cssClass)
+	#foreach($item in $list)
+	<label class="checkbox-inline">
+	   <input type="checkbox" name="$name" class="$!cssClass"  value="${item.value}" $!attr  #if($value.split(",").indexOf(${item.value})>=0) checked #end >${item.label}
+	</label>
+	#end
+#end
+

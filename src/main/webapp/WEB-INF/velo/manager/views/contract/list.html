@@ -1,0 +1,68 @@
+#set($layout="manager/layout/template.html")
+
+<div class="bs-body">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">合同列表</h3>
+        </div>
+        <div class="panel-body">
+
+            <div class="btn-toolbar table-toolbar">
+                <div class="btn-group">
+                    <a href="$!{ctx}/manager/contract/add.do?$!{paraObj.parasUrl}&$!{paraObj.parasCusUrl}" class="btn btn-default btn-add">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        添加
+                    </a>
+
+                </div>
+                <form class="toolbar-form form-inline pull-right" role="search" action="$!{ctx}/manager/contract/list.do" method="POST">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="请输入关键字" name="searchName" value="$!{searchName}">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+            </div>
+
+
+            <table class="table table-hover table-bordered table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th width="180">产品名称</th>
+                        <th>合同状态</th>
+                        <th>资方机构</th>
+                        <th>投顾方机构</th>
+                        <th>创建时间</th>
+                        <th>最后修改时间</th>
+                        <th width="220">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    #foreach($cp in $cpList)
+                    <tr>
+                        <td>$velocityCount</td>
+                        <td>$!cp.prodName</td>
+                        <td>$!cp.contractStateString</td>
+                        <td>$!cp.capitalName</td>
+                        <td>$!cp.adviserName</td>
+                        <td>$!cp.createDatetimeString</td>
+                        <td>$!cp.updateDatetimeString</td>
+                        <td class="btn-column">
+                            <div class="btn-group btn-group-sm">
+                                <a href="$!{ctx}/manager/contract/modify.do?id=$!{cp.contractId}&$!{paraObj.parasUrl}&$!{paraObj.parasCusUrl}" class="btn btn-default btn-edit" role="button">
+                                    <span class="glyphicon glyphicon-edit"></span>修改
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    #end
+                </tbody>
+            </table>
+            <div class="form-toolbar">
+                <ul class="pagination">
+                    #pagination($pageCount $pageIndex)
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

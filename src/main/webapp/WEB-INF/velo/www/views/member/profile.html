@@ -1,0 +1,370 @@
+#set($layout="/www/layout/member_layout.html") #set($pageClass="usercenter") #msgAlertShow($!msgList)
+<div class="member-portlet clearfix">
+    <div class="member-header">
+        <h2 class="module-name">
+			个人设置
+		</h2>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="$!{ctx}/member/profile.do">基本资料</a>
+            </li>
+            <li><a href="$!{ctx}/member/modify_password.do">密码修改</a>
+            </li>
+            #if($roleHomsEnName=="ROLE_HOMS_ADMIN")
+            <li><a href="$!{ctx}/member/setting.do">帐户管理</a>
+            </li>
+            #end
+        </ul>
+    </div>
+    <div class="member-body">
+        <div class="panel" id="info-panel">
+            <div class="panel-body">
+                <div class="col-md-6 baseinfo">
+                    <div class="avatar-box">
+						<a href="javascript:;" class="upload-avatar">
+							#if(!$bean.avatar)
+							<img src="/images/avatar_default.png" />
+							#else
+							<img src="/common/download/${bean.avatar}.do" />
+							#end
+						</a>
+                    </div>
+                    <ul class="property-list">
+                        <li>
+                            <label for="">姓名:</label>$!bean.cnName #if($roleHomsEnName=="ROLE_HOMS_ADMIN")
+                            <span class="icons-user-group icons-user-admin"></span>
+                            #elseif($roleHomsEnName=="ROLE_HOMS_VIP")
+                            <span class="icons-user-group icons-user-vip"></span>
+                            #else
+                            <span class="icons-user-group icons-user-normal"></span>
+                            #end
+                        </li>
+                        <li>
+                            <label for="">公司:</label>$!companyBean.companyName</li>
+                    </ul>
+                </div>
+                <div class="col-md-6  accountinfo">
+                    <ul class="property-list">
+                        <li>
+                            <label for="">帐号:</label>$!bean.userName <a href="/member/modify_password.do" style="margin-left:10px;">修改密码</a>
+                        </li>
+                        <li>
+                            <label for="">安全等级:</label>$!valueRange.value("pwd.level","$bean.pwdLevel")</li>
+                        <li>
+                            <label for="">HOMS帐号:</label>$!bean.homsAccount</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel" id="verify-tabs">
+            <div class="panel-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active">
+                        <a href="#mobile-verify" role="tab" data-toggle="tab">
+                            <div class="icons-mobile-verify"></div>
+                            <h5>手机认证</h5>
+                            <p class="extra"></p>
+                            <p> <span class="icons-verify-field #if($bean.mobileIsValidate==1) pass #end"></span>$!valueRange.value("isValid","$bean.mobileIsValidate","未认证")</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#email-verify" role="tab" data-toggle="tab">
+                            <div class="icons-email-verify"></div>
+                            <h5>邮箱认证</h5>
+                            <p class="extra"></p>
+                            <p><span class="icons-verify-field #if($bean.emailIsValidate==1) pass #end"></span>$!valueRange.value("isValid","$bean.emailIsValidate","未认证")</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#profile-verify" role="tab" data-toggle="tab">
+                            <div class="icons-profile-verify"></div>
+                            <h5>个人信息</h5>
+                            <p><span class="icons-verify-field #if($userIsCompleted==1) pass #end"></span>$!valueRange.value("isCompleted","$userIsCompleted")</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#company-verify" role="tab" data-toggle="tab">
+                            <div class="icons-company-verify"></div>
+                            <h5>公司信息</h5>
+                            <p><span class="icons-verify-field #if($companyBean.isIdentification==1) pass #end"></span>$!valueRange.value("isValid","$companyBean.isIdentification","未认证")</p>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="mobile-verify">
+                        <form class="validatorForm syncForm" id="profileMobile" method="GET" action="$!{ctx}/member/mobile_active.do">
+                            <fieldset>
+                                <legend>手机绑定</legend>
+                                <div class="row" #if($bean.mobileIsValidate!=1)hidden="hidden" #end>
+                                    <div class="form-group col-md-6">
+                                        <label class="field-label col-md-4">手机号码:</label>
+                                        <div class="input-group col-md-8">$!bean.mobile<span>已绑定</span>
+                                        <!-- <a style="cursor:pointer" id="updateMobile"><span>修改</span></a> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="mobileModifyRow" #if($bean.mobileIsValidate==1)hidden="hidden" #end>
+                                    <div class="form-group col-md-6">
+                                        <label class="field-label col-md-4">手机号码:</label>
+                                        <div class="input-group col-md-8">
+                                            <input type="text" class="form-control" name="mobile" id="mobile" value="" placeholder="请输入手机号码" data-rule-mobileto="#mobileValicodeButton" data-msg-mobileto="手机格式不正确！" data-rule-mobile="true" data-rule-maxlength="11" data-msg-maxlength="手机号码不能超过11位" data-msg-mobile="手机号码格式不正确" data-rule-required="true" data-msg-required="手机号码不可为空！">
+                                            <span class="input-group-btn">
+                                                <button type="button" disabled="disabled" id="mobileValicodeButton" class="btn btn-default">获取手机验证码</button>
+                                            </span>
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="field-label col-md-4">验证码:</label>
+                                        <div class="input-group col-md-8">
+                                            <input type="text" class="form-control" name="mobileValicode" id="mobileValicode" value="" placeholder="请输入验证码" data-rule-maxlength="6" data-msg-maxlength="验证码长度不能超过6位！" data-rule-required="true" data-msg-required="验证码不可为空！">
+                                            <span class="input-group-btn">
+                                                <input type="submit" class="btn btn-primary" value="绑定" />
+                                            </span>
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="email-verify">
+                        <form class="validatorForm syncForm" id="profileEmail" method="GET" action="$!{ctx}/member/email_binding.do">
+                            <fieldset>
+                                <legend>邮箱绑定</legend>
+                                <div class="row" #if($bean.emailIsValidate!=1)hidden="hidden" #end>
+                                    <div class="form-group col-md-8">
+                                        <label class="field-label col-md-4">邮箱:</label>
+                                        <div class="input-group col-md-8">$!bean.email<span>已绑定</span><a style="cursor:pointer" id="updateEmail"><span>修改</span></a></div>
+                                    </div>
+                                </div>
+                                <div class="row" id="emailModifyRow" #if($bean.emailIsValidate==1)hidden="hidden" #end>
+                                    <div class="form-group col-md-6">
+                                        <label class="field-label col-md-4">邮箱地址:</label>
+                                        <div class="input-group col-md-8">
+                                            <input class="form-control" type="text" name="email" value="" data-rule-email="true" data-msg-email="邮箱格式不正确" data-rule-required="true" data-msg-required="邮箱不能为空">
+                                            <span class="input-group-btn">
+                                             <input type="submit" class="btn btn-primary" value="绑定" />
+                                            </span>
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="profile-verify">
+                        <form name="profileUser" id="profileUser" method="POST" action="$!{ctx}/member/updateForm.do" class="validatorForm syncForm">
+                            <input type="hidden" name="urlToken" value="$!urlToken">
+                            <fieldset>
+                                <legend>个人信息</legend>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="field-label col-md-4">姓名:</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" type="text" name="cnName" value="$!bean.cnName" data-rule-maxlength="20" data-msg-maxlength="姓名不能超过20个字">
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="field-label col-md-4">职位:</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" type="text" name="jobPosition" value="$!bean.jobPosition" data-rule-maxlength="50" data-msg-maxlength="职位不能超过50个字">
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="field-label col-md-4">办公电话:</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" type="text" name="workPhone" value="$!bean.workPhone" data-rule-maxlength="20" data-msg-maxlength="办公电话不能超过20位" data-rule-pattern="^[0-9+-]*$" data-msg-pattern="办公电话格式不正确">
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="field-label col-md-4">QQ:</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" type="text" name="qq" value="$!bean.qq" data-rule-maxlength="20" data-msg-maxlength="QQ不能超过20位" data-rule-pattern="^\d*$" data-msg-pattern="QQ只能是数字">
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="field-label col-md-2">联系地址:</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="text" name="address" value="$!bean.address" data-rule-maxlength="200" data-msg-maxlength="联系地址不能超过200个字">
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-toolbar">
+                                    <input type="submit" id="userSubmit" class="btn btn-primary" value="保存" />
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="company-verify">
+                        <form name="profileCompany" class="validatorForm syncForm" id="profileCompany" method="POST" action="$!{ctx}/member/updateCompanyForm.do">
+                            <input type="hidden" name="urlToken" value="$!urlToken">
+                            <input type="hidden" name="companyId" value="$!companyBean.companyId">
+                            <fieldset>
+                                <legend>公司信息</legend>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="field-label col-md-4">公司名称:</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" title="公司名称不能修改" disabled="disabled" type="text" name="companyName" value="$!companyBean.companyName" data-rule-maxlength="100" data-msg-maxlength="公司名称不能超过100个字">
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="field-label col-md-4">邮政邮编:</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" type="text" name="postalCode" value="$!companyBean.postalCode" data-rule-maxlength="6" data-msg-maxlength="邮政邮编不能超过6位" data-rule-pattern="^(\d{6})?$" data-msg-pattern="邮政邮编不是6位数字" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end>
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="field-label col-md-2">公司地址:</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="text" name="companyAddress" value="$!companyBean.companyAddress" data-rule-maxlength="200" data-msg-maxlength="公司地址不能超过200个字" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end>
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="field-label col-md-2">投资市场:</label>
+                                        <div class="col-md-10">
+                                            <div class="checkbox-group">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="investMarket" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="INVEST_MARKET_SSE" #foreach($investMarket in $companyBean.investMarket.split( ","))#if($investMarket=="INVEST_MARKET_SSE" )checked#end#end>$dictCache.getDictValueByName("INVEST_MARKET_SSE")
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="investMarket" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="INVEST_MARKET_SZSE" #foreach($investMarket in $companyBean.investMarket.split( ","))#if($investMarket=="INVEST_MARKET_SZSE" )checked#end#end>$dictCache.getDictValueByName("INVEST_MARKET_SZSE")
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="investMarket" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="INVEST_MARKET_IBME" #foreach($investMarket in $companyBean.investMarket.split( ","))#if($investMarket=="INVEST_MARKET_IBME" )checked#end#end>$dictCache.getDictValueByName("INVEST_MARKET_IBME")
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="investMarket" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="INVEST_MARKET_OTC" #foreach($investMarket in $companyBean.investMarket.split( ","))#if($investMarket=="INVEST_MARKET_OTC" )checked#end#end>$dictCache.getDictValueByName("INVEST_MARKET_OTC")</label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="investMarket" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="INVEST_MARKET_IME" #foreach($investMarket in $companyBean.investMarket.split( ","))#if($investMarket=="INVEST_MARKET_IME" )checked#end#end>$dictCache.getDictValueByName("INVEST_MARKET_IME")</label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="investMarket" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="INVEST_MARKET_CFFE" #foreach($investMarket in $companyBean.investMarket.split( ","))#if($investMarket=="INVEST_MARKET_CFFE" )checked#end#end>$dictCache.getDictValueByName("INVEST_MARKET_CFFE")</label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="investMarket" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="INVEST_MARKET_SHFE" #foreach($investMarket in $companyBean.investMarket.split( ","))#if($investMarket=="INVEST_MARKET_SHFE" )checked#end#end>$dictCache.getDictValueByName("INVEST_MARKET_SHFE")
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="investMarket" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="INVEST_MARKET_ZFE" #foreach($investMarket in $companyBean.investMarket.split( ","))#if($investMarket=="INVEST_MARKET_ZFE" )checked#end#end>$dictCache.getDictValueByName("INVEST_MARKET_ZFE")</label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="investMarket" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="INVEST_MARKET_DCE" #foreach($investMarket in $companyBean.investMarket.split( ","))#if($investMarket=="INVEST_MARKET_DCE" )checked#end#end>$dictCache.getDictValueByName("INVEST_MARKET_DCE")</label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="investMarket" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="INVEST_MARKET_OTHER" #foreach($investMarket in $companyBean.investMarket.split( ","))#if($investMarket=="INVEST_MARKET_OTHER" )checked#end#end>$dictCache.getDictValueByName("INVEST_MARKET_OTHER")
+                                                </label>
+                                                <input type="text" class="other-field" name="investMarketOther" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="$!companyBean.investMarketOther" data-rule-maxlength="50" data-msg-maxlength="其他投资市场不能超过50个字">
+                                            </div>
+                                            <div class="help-block">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="field-label col-md-2">业务类型:</label>
+                                        <div class="col-md-10">
+                                            <div class="checkbox-group">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="bisType" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="BIS_TYPE_STOCK" #foreach($bisType in $companyBean.bisType.split( ","))#if($bisType=="BIS_TYPE_STOCK" )checked#end#end>$dictCache.getDictValueByName("BIS_TYPE_STOCK")</label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="bisType" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="BIS_TYPE_FUND" #foreach($bisType in $companyBean.bisType.split( ","))#if($bisType=="BIS_TYPE_FUND" )checked#end#end>$dictCache.getDictValueByName("BIS_TYPE_FUND")</label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="bisType" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="BIS_TYPE_BOND" #foreach($bisType in $companyBean.bisType.split( ","))#if($bisType=="BIS_TYPE_BOND" )checked#end#end>$dictCache.getDictValueByName("BIS_TYPE_BOND")</label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="bisType" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="BIS_TYPE_BUYBACK" #foreach($bisType in $companyBean.bisType.split( ","))#if($bisType=="BIS_TYPE_BUYBACK" )checked#end#end>$dictCache.getDictValueByName("BIS_TYPE_BUYBACK")</label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="bisType" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="BIS_TYPE_WARRANT" #foreach($bisType in $companyBean.bisType.split( ","))#if($bisType=="BIS_TYPE_WARRANT" )checked#end#end>$dictCache.getDictValueByName("BIS_TYPE_WARRANT")</label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="bisType" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="BIS_TYPE_SIF" #foreach($bisType in $companyBean.bisType.split( ","))#if($bisType=="BIS_TYPE_SIF" )checked#end#end>$dictCache.getDictValueByName("BIS_TYPE_SIF")</label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="bisType" #if($roleHomsEnName!="ROLE_HOMS_ADMIN")disabled="disabled"#end value="BIS_TYPE_CF" #foreach($bisType in $companyBean.bisType.split( ","))#if($bisType=="BIS_TYPE_CF" )checked#end#end>$dictCache.getDictValueByName("BIS_TYPE_CF")</label>
+                                            </div>
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                #if($roleHomsEnName=="ROLE_HOMS_ADMIN")
+                                <div class="form-toolbar">
+                                    <input type="submit" class="btn btn-primary" value="保存" />
+                                </div>
+                                #end
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-img"></div><div class="modal-notice"></div>
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" modal-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">提示信息</h4>
+            </div>
+            <form action="/member/upload_avatar.do" method="post" id="avatarForm" name="avatarForm" enctype="multipart/form-data" role="form">
+            <div class="modal-upload">
+                <a href="javascript:void(0);">
+                <span class="avatar-btn">点击选择图片</span>
+                <input type="file" id="avatarImg" name="avatarImg"></a>
+                <span class="help-block">图片文件最大5M，支持jpg、jpeg、png的图片格式</span>
+            </div>
+            </form>
+            <div class="modal-body">
+               <div class="new-avatar">
+                    <h6>新的头像</h6>
+                    <div class="avatar-img"><img class="new-img" src="$!{ctx}/images/avatar_default.png"></div>
+               </div>
+               <div class="old-avatar">
+                   <h6>当前头像</h6>
+                   <div class="avatar-img"><img class="old-img" src=""></div>
+               </div>
+            </div>
+            <form action="/member/update_avatar.do" method="post">
+            <div class="modal-footer">
+                <input type="hidden" id="avatarId" name="avatarId">
+                <input type="submit" class="btn btn-primary" value="保存">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

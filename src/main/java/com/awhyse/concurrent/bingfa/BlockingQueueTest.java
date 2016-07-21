@@ -63,8 +63,8 @@ public class BlockingQueueTest {
 				for(int i=0;i<14;i++){
 					try {
 						System.err.println("add："+(i+1)+"  size"+blockingQueueShare.size());
-						blockingQueueShare.put(i+1);//如果满了，会发生notFull阻塞；成功发出notEmpty信号，通知来消费
-					} catch (InterruptedException e) {
+						blockingQueueShare.offer(i+1);//如果满了，会发生notFull阻塞；成功发出notEmpty信号，通知来消费
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
@@ -74,9 +74,11 @@ public class BlockingQueueTest {
 			
 			@Override
 			public void run() {
+				int i=0;
 				while(true){
 					try {
 						//将会在take处等待，直到等待队列非空条件收到信息
+						System.err.println(i++);
 						System.err.println("xiaofei："+blockingQueueShare.take());
 					} catch (InterruptedException e) {
 						e.printStackTrace();
@@ -84,10 +86,10 @@ public class BlockingQueueTest {
 				}
 			}
 		});
-//		prodThread.setName("prodThread");
-//		prodThread.start();
-//		consThread.setName("consThread");
-//		consThread.start();
+		prodThread.setName("prodThread");
+		prodThread.start();
+		consThread.setName("consThread");
+		consThread.start();
 	}
 	/**
 	 * 生产者不停放入队列，直到满，reenterLock发出等待队列空的条件信号阻塞

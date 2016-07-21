@@ -6,3 +6,5 @@
 *.xml
 *.container
 *.name
+*.class
+target/

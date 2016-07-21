@@ -27,7 +27,7 @@
 	<properties>
 		<spring.version>4.0.6.RELEASE</spring.version>
 		<spring.security.version>3.2.3.RELEASE</spring.security.version>
-		<jackson.version>1.8.4</jackson.version>
+		<jackson.version>1.9.13</jackson.version>
 		<junit.version>4.11</junit.version>
 		<common-loggin.version>1.1.1</common-loggin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,7 +67,7 @@
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
-			<version>4.1.0.CR4</version>
+			<version>4.1.2.Final</version>
 		</dependency>
 		<!-- 先写spring顺序要注意 -->
 		<dependency>
@@ -179,14 +179,26 @@
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
-			<version>${jackson.version}</version>
+			<version>1.9.13</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${jackson.version}</version>
+			<version>1.9.13</version>
 		</dependency>
 		
+		 <!-- Jackson 
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.7.5</version>
+		</dependency>
+		-->
 		<!--  
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

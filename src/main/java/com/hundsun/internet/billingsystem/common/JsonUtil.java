@@ -1,14 +1,18 @@
 package com.hundsun.internet.billingsystem.common;
 
 import java.io.IOException;
+import java.util.HashMap;
 
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+
+
 
 public class JsonUtil {
 
 	static ObjectMapper objectMapper = new ObjectMapper();
+	static{
+//		objectMapper.setSerializationInclusion(Include.NON_NULL);
+	}
 
 	/**
 	 * @author xunmin
@@ -16,30 +20,19 @@ public class JsonUtil {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub  
-//		BillingsDetailInfoBean Ob = new BillingsDetailInfoBean();
-//		Ob.setAccount("隧道股份");
-//		Ob.setTotalMoney(345);
-//		BillingsOperBean bill = new BillingsOperBean();
-//		bill.setAccount("dgf");
-//		bill.setGoodLuckCoinNum(12534);
-//		for(int i=0;i<50;i++)
-//			Ob.getListWaterBills().add(bill);
-//		String str = ObToJson(Ob);
-//		System.err.println(str);
-//		BillingsDetailInfoBean  tar = (BillingsDetailInfoBean) JsonToOb(str, BillingsDetailInfoBean.class);
-//		System.err.println(tar.getListWaterBills().get(0).getAccount());
+		HashMap<String, Object>  map = new HashMap<String, Object>(3);
+		map.put("123", "124");
+		map.put("1222", null);
+		String str = ObToJson(map);
+		System.err.println(str);
 	}
 
 	public static Object JsonToOb(String json,Class<?> Ob) {
 		Object tar = null;
 		try {
 			tar = objectMapper.readValue(json, Ob);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return tar;

@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 1.理解java中断:  一个线程正在运行时（包括阻塞），被另外一个线程通知中断（就是被设置了中断标示为true）。该线程知道要中断了，合适时间检测到，
  * 并且按照自己的中断逻辑进行线程的中断。并不是一下子就被另外的线程给干掉了.
  * 
- * 2.理解死锁: 对象需要执行一个事情比如转账，需要同时获得两把以上的锁。在并发的情况下不做任何处理，1线程获取A等待B锁 2线程获取B等待A锁
+ * 2.理解死锁: 至少两个线程，至少竞争两个以上资源.对象需要执行一个事情比如转账，需要同时获得两把以上的锁。在并发的情况下不做任何处理，1线程获取A等待B锁 2线程获取B等待A锁
  * 1,2都不会自我中断，都不会释放资源-》 死锁。 线程废了。 ->线程要有超时，自我中断+获取锁要有顺序（一次性获取所有资源，不要获取一半，获取锁要有顺序）
  * 
  * 3.线程并发争夺锁的时候有三种情况: 1.没有就阻塞 2.没有就返回(非阻塞) 3.没有就等一段时间，然后返回
@@ -33,9 +33,57 @@ public class ReentrantLockConditionTest {
 	static boolean isBOver = false;
 
 	public static void main(String[] args) {
-//		conditionTestNotifySm();
-		reentrantLockReEnterTest();
+		conditionTestNotifySm();
+//		reentrantLockReEnterTest();
+//		joinThread3();
 		
+	}
+	/**
+	 * 让3个线程串行执行
+	 * 
+	 * author:xumin 
+	 * 2016-6-30 下午5:53:02
+	 */
+	private static void joinThread3() {
+		// TODO Auto-generated method stub
+		//1.思路，公平锁，保证请求顺序
+		final ReentrantLock reentrantLock = new ReentrantLock(true);//公平锁
+		final Runnable A = new Runnable() {
+			//跟sy那个关键字没啥区别,死等
+			@Override
+			public void run() {
+				reentrantLock.lock();//lock是阻塞的
+				try{
+					System.err.println("C OVER");
+				}finally{
+					reentrantLock.unlock();
+				}
+			}
+		};
+		final Runnable B = new Runnable() {
+			//跟sy那个关键字没啥区别,死等
+			@Override
+			public void run() {
+				reentrantLock.lock();//lock是阻塞的
+				try{
+					System.err.println("C OVER");
+				}finally{
+					reentrantLock.unlock();
+				}
+			}
+		};
+		final Runnable C = new Runnable() {
+			//跟sy那个关键字没啥区别,死等
+			@Override
+			public void run() {
+				reentrantLock.lock();//lock是阻塞的
+				try{
+					System.err.println("C OVER");
+				}finally{
+					reentrantLock.unlock();
+				}
+			}
+		};
 	}
 	/**
 	 * 这个就是可重入的意思
@@ -113,18 +161,16 @@ public class ReentrantLockConditionTest {
 			//跟sy那个关键字没啥区别,死等
 			@Override
 			public void run() {
-				reentrantLock.lock();//lock是阻塞的
-				try{
-					if(isAOver){
-						System.err.println("A已经完成了，释放锁你们继续");
-						condAHasOver.notify();
-						return;
+				while(!isAOver){
+					reentrantLock.lock();//lock是阻塞的
+					try{
+						System.err.println("123");
+						isAOver =true;
+						condAHasOver.signal();//这句话只告诉reentrantLock.lock()处的某个因为condAHasOver.wait()的线程可以执行了
+						System.err.println("condAHasOver");
+					}finally{
+						reentrantLock.unlock();
 					}
-					System.err.println("123");
-					isAOver =true;
-					condAHasOver.notify();//这句话只告诉reentrantLock.lock()处的某个因为condAHasOver.wait()的线程可以执行了
-				}finally{
-					reentrantLock.unlock();
 				}
 			}
 		};
@@ -132,28 +178,22 @@ public class ReentrantLockConditionTest {
 			//跟sy那个关键字没啥区别,死等
 			@Override
 			public void run() {
-				reentrantLock.lock();//lock是阻塞的
-				try{
-					if(isBOver){
-						condBHasOver.notify();
-						System.err.println("B已经完成了，释放锁你们继续");
-						return;
-					}
-					if(!isAOver){
-						System.err.println("B等待A完成，条件condAHasOver.wait");
-						condAHasOver.wait();
-					}
-					else{
+				while(!isBOver){
+					reentrantLock.lock();//lock是阻塞的
+					try{
+						System.err.println("B获得锁并等待A");
+						condAHasOver.await();//线程释放锁
 						System.err.println("678");
 						isBOver = true;
-						condBHasOver.notify();
+						condBHasOver.signal();
+					}catch(Exception e){
+						
 					}
-				}catch(Exception e){
-					
+					finally{
+						reentrantLock.unlock();
+					}
 				}
-				finally{
-					reentrantLock.unlock();
-				}
+				System.err.println("B结束");
 			}
 		};
 		
@@ -163,13 +203,9 @@ public class ReentrantLockConditionTest {
 			public void run() {
 				reentrantLock.lock();//lock是阻塞的
 				try{
-					if(!isBOver || !isAOver){
-						System.err.println("C等待A,B完成，条件condBHasOver.wait");
-						condBHasOver.wait();
-					}
-					else{
+					System.err.println("c获得锁并等待B");
+						condBHasOver.await();//执行finally了
 						System.err.println("9 10 11");
-					}
 				}catch(Exception e){
 					
 				}
@@ -178,10 +214,10 @@ public class ReentrantLockConditionTest {
 				}
 			}
 		};
-		for(int i=0;i<2;i++){
-			executorService.submit(A);
-			executorService.submit(B);
+		for(int i=0;i<3;i++){
 			executorService.submit(C);
+			executorService.submit(B);
+			executorService.submit(A);
 		}
 		executorService.shutdown();
 	}

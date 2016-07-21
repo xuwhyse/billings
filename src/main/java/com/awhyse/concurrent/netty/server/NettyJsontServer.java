@@ -1,6 +1,9 @@
 package com.awhyse.concurrent.netty.server;
 
-import com.hundsun.internet.billingsystem.bean.util.UserBean;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.hundsun.internet.billingsystem.common.JsonUtil;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -13,50 +16,50 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.SelfSignedCertificate; 
+
+
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.json.JsonObjectDecoder;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 
 /**
  * 
  * author:xumin 
  * 2016-3-29 下午2:48:36
  */
-public class NettyServer {
+public class NettyJsontServer {
 	
 	 static final boolean SSL = System.getProperty("ssl") != null;
-	 static final int PORT = Integer.parseInt(System.getProperty("port", "8880"));
+	 int port = 8870;
 	 
-	/**
-	 * 
-	 * @param args
-	 * @throws Exception
-	 * author:xumin 
-	 * 2016-3-30 下午3:34:45
-	 */
-	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		// Configure SSL.
-        final SslContext sslCtx;
-        if (SSL) {
-            SelfSignedCertificate ssc = new SelfSignedCertificate();
-            sslCtx = SslContext.newServerContext(ssc.certificate(), ssc.privateKey());
-        } else {
-            sslCtx = null;
-        }
-        //处理I/O操作的多线程事件环 即为Netty4里的线程池
+	public NettyJsontServer(int port) {
+		this.port = port;
+	}
+	public void init() {
+		 //处理I/O操作的多线程事件环 即为Netty4里的线程池
 		EventLoopGroup bossGroup = new NioEventLoopGroup(1);//接收发来的连接请求 
         EventLoopGroup workerGroup = new NioEventLoopGroup();//用于处理boss接受并且注册给worker的连接中的信息
-
-        try{
+		// Configure SSL.
+		 final SslContext sslCtx;
+		
+		 try{
+	        if (SSL) {
+	            SelfSignedCertificate ssc = new SelfSignedCertificate();
+	            sslCtx = SslContext.newServerContext(ssc.certificate(), ssc.privateKey());
+	        } else {
+	            sslCtx = null;
+	        }
+       
 			ServerBootstrap bootstrap = new ServerBootstrap();
 			bootstrap.group(bossGroup, workerGroup);
 			bootstrap.channel(NioServerSocketChannel.class);
 			bootstrap.option(ChannelOption.SO_BACKLOG, 128).handler(new LoggingHandler(LogLevel.INFO));
+			//-------------------------------------------------------------------
 			bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
 	
 				@Override
@@ -66,27 +69,49 @@ public class NettyServer {
 	                 if (sslCtx != null) {
 	                     p.addLast(sslCtx.newHandler(ch.alloc()));
 	                 }
-//	                 p.addLast(new LoggingHandler(LogLevel.INFO));//注册日志打印
-	                 p.addLast(new ObjectEncoder());//addLast添加到队列ChannelHandler尾部
-	                 p.addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
-	                 p.addLast(new HelloWorldServerHandler());
+//		                 p.addLast(new LoggingHandler(LogLevel.INFO));//注册日志打印
+	                 //最大json的长度,注意！！
+//	                 p.addLast(new JsonObjectDecoder(1024));
+	                 
+//	                 p.addLast(new LineBasedFrameDecoder(1024));//没有这个，就会发过来什么，收到什么
+	                 p.addLast(new StringDecoder());//addLast添加到队列ChannelHandler尾部
+	                 p.addLast(new StringEncoder());
+	                 p.addLast(new JsonServerHandler());
 				}
 			});
+			//--------------------------------------------------------------------
 			bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
 			// Start the server.
-	        ChannelFuture f = bootstrap.bind(PORT).sync();
+	        ChannelFuture f = bootstrap.bind(port).sync();
 	        // Wait until the server socket is closed.
 	        f.channel().closeFuture().sync();
-        }finally{
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
+        finally{
         	// Shut down all event loops to terminate all threads.
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
 	}
+	/**
+	 * 
+	 * @param args
+	 * @throws Exception
+	 * author:xumin 
+	 * 2016-3-30 下午3:34:45
+	 */
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+		NettyJsontServer server = new NettyJsontServer(8870);
+		server.init();
+	}
+
+
 
 }
 
-class HelloWorldServerHandler extends ChannelInboundHandlerAdapter {
+class JsonServerHandler extends ChannelInboundHandlerAdapter {
 	 	@Override
 	    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
 	       System.err.println("channelRegistered");
@@ -111,11 +136,18 @@ class HelloWorldServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
     	System.err.println("server channelReadComplete");
-    	UserBean user = new UserBean();
-    	System.err.println("");
-    	System.err.println("");
-    	System.err.println("");
-    	ctx.write(user);//ctx直接写入队列池，调用多少次将会在客户端循环调用多少次的channelRead
+//    	Map<String, Object>  map = new HashMap<String, Object>(2);
+//    	map.put("111", "111协议");
+//    	map.put("222", "data");
+//    	String json = JsonUtil.ObToJson(map);
+//    	json = json+"\t\n";
+//    	ctx.write(json);//ctx直接写入队列池，调用多少次将会在客户端循环调用多少次的channelRead
+//    	
+//    	map.put("111", "122协议");
+//    	map.put("333", "data");
+//    	json = JsonUtil.ObToJson(map);
+//    	json = json+"\t\n";
+//    	ctx.write(json);
     	
         ctx.flush();//这句flush后直接把ctx写入的消息池发送给远程客户端
     }

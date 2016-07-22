@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import com.hundsun.internet.billingsystem.bean.util.UserBean;
-import com.social4j.model.Discover;
+import com.billings.billingsystem.bean.util.UserBean;
+
 /*
  * ArrayBlockingQueue和LinkedBlockingQueue： 后者生产和消费是锁分离。 前者因为开销小，用了同一个锁。 前者消费生产不开销，后者会开销对象
  * 其中主要用到put和take方法，put方法在队列满的时候会阻塞直到有队列成员被消费，

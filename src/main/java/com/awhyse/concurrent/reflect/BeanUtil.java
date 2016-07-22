@@ -4,8 +4,9 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.billings.billingsystem.bean.util.MyScoreBean;
 
-import com.hundsun.internet.billingsystem.bean.util.MyScoreBean;
+
 
 
 public class BeanUtil {

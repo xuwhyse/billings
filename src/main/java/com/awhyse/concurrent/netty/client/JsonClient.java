@@ -3,7 +3,8 @@ package com.awhyse.concurrent.netty.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.hundsun.internet.billingsystem.common.JsonUtil;
+import com.billings.billingsystem.common.JsonUtil;
+
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;

@@ -1,6 +1,7 @@
 package com.awhyse.concurrent.netty.server;
 
-import com.hundsun.internet.billingsystem.bean.util.UserBean;
+
+import com.billings.billingsystem.bean.util.UserBean;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

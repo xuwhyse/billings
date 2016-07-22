@@ -14,7 +14,7 @@
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 		
     
-	<context:component-scan base-package="com.hundsun.internet.ihoms2" />
+	<context:component-scan base-package="com.whyse.internet.ihoms2" />
 	<!-- <mvc:annotation-driven validator="validator" conversion-service="conversion-service"/> -->
 	
 	<bean id="utf8Charset" class="java.nio.charset.Charset"
@@ -43,19 +43,19 @@
 	    <!-- 日志log 拦截器 -->
 	    <mvc:interceptor>
 	    	<mvc:mapping path="/**" />
-	       <bean class="com.hundsun.internet.ihoms2.interceptor.LogInterceptor"></bean>
+	       <bean class="com.whyse.internet.ihoms2.interceptor.LogInterceptor"></bean>
 	    </mvc:interceptor>
 	    
 	    <!-- 消息组件 拦截器 -->
 	    <mvc:interceptor>
 	       <mvc:mapping path="/**" />
-	       <bean class="com.hundsun.internet.ihoms2.interceptor.MessageInterceptor"></bean>
+	       <bean class="com.whyse.internet.ihoms2.interceptor.MessageInterceptor"></bean>
 	    </mvc:interceptor>
 	 
 		<!-- Token 拦截器 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<bean class="com.hundsun.internet.ihoms2.interceptor.TokenInterceptor"></bean>
+			<bean class="com.whyse.internet.ihoms2.interceptor.TokenInterceptor"></bean>
 		</mvc:interceptor>
 	    
 	</mvc:interceptors>
@@ -290,7 +290,7 @@
 	<!-- myBatis文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
 		<property name="dataSource" ref="dataSource" />  
-		<!--  <property name="mapperLocations" value="classpath:com/hundsun/internet/ihoms2/mapping/*Mapper.xml" />  -->
+		<!--  <property name="mapperLocations" value="classpath:com/whyse/internet/ihoms2/mapping/*Mapper.xml" />  -->
 		<property name="mapperLocations">
 			<list>
 				<value>classpath*:**/*Mapper.xml</value>
@@ -299,7 +299,7 @@
 	</bean>  
   
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
-		<property name="basePackage" value="com.hundsun.internet.ihoms2.dao" />  
+		<property name="basePackage" value="com.whyse.internet.ihoms2.dao" />  
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />  
 	</bean>
     

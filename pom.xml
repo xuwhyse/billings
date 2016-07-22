@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.hundsun.homs</groupId>
+  <groupId>com.xuwhyse</groupId>
   <artifactId>billingsystem</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <!-- 少写这个就不能识别正确编译过去 -->
@@ -12,7 +12,7 @@
        <developer>
 	       	<id>xumin</id>
 	       	<name>徐岷</name>
-	       	<email>xunmin@hundsun.com</email>
+	       	<email>xuwhyse@163.com</email>
        </developer>
    </developers>
     

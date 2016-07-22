@@ -16,7 +16,7 @@
 	http://www.springframework.org/schema/task
 	http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 		
-    <context:component-scan base-package="com.hundsun.internet.billingsystem.service" />
+    <context:component-scan base-package="com.whyse.internet.billingsystem.service" />
     <!-- schema/tx要放在后面 -->
 	<task:annotation-driven/>
     <!-- 读取配置文件,下面就可以使用  classpath:jdbc.properties-->
@@ -66,7 +66,7 @@
 	<!-- myBatis生成的接口和xml实例化后放到spring容器中作为实现，重要 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
 		<property name="dataSource" ref="dataSource" />  
-		<!--  <property name="mapperLocations" value="classpath:com/hundsun/internet/ihoms2/mapping/*Mapper.xml" />  -->
+		<!--  <property name="mapperLocations" value="classpath:com/whyse/internet/ihoms2/mapping/*Mapper.xml" />  -->
 		<property name="mapperLocations">
 			<list>
 				<value>classpath*:**/*Mapper.xml</value>  <!-- 实例化xml然后根据接口于spring关联 -->
@@ -75,7 +75,7 @@
 	</bean>  
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
 	    <!-- 接口包 --> 
-		<property name="basePackage" value="com.hundsun.internet.billingsystem.dao" />  
+		<property name="basePackage" value="com.whyse.internet.billingsystem.dao" />  
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />  
 	</bean>
 	

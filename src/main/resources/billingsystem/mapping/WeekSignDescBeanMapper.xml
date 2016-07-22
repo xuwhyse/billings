@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hundsun.internet.billingsystem.dao.WeekSignDescBeanMapper" >
-  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.WeekSignDescBean" >
+<mapper namespace="com.whyse.internet.billingsystem.dao.WeekSignDescBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.whyse.internet.billingsystem.model.WeekSignDescBean" >
     <id column="Id" property="id" jdbcType="BIGINT" />
     <result column="WeekId" property="weekid" jdbcType="INTEGER" />
     <result column="SignNumMon" property="signnummon" jdbcType="INTEGER" />
@@ -78,7 +78,7 @@
     Id, WeekId, SignNumMon, SignNumTue, SignNumWed, SignNumThur, SignNumFri, SignNumSat, 
     SignNumSun, LotteryNum, LotteryState, UpdateTime, CreateTime
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hundsun.internet.billingsystem.model.WeekSignDescBeanCriteria" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.whyse.internet.billingsystem.model.WeekSignDescBeanCriteria" >
     select
     <if test="distinct" >
       distinct
@@ -102,13 +102,13 @@
     delete from pris_weeksigndesc
     where Id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.WeekSignDescBeanCriteria" >
+  <delete id="deleteByExample" parameterType="com.whyse.internet.billingsystem.model.WeekSignDescBeanCriteria" >
     delete from pris_weeksigndesc
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.WeekSignDescBean" >
+  <insert id="insert" parameterType="com.whyse.internet.billingsystem.model.WeekSignDescBean" >
     insert into pris_weeksigndesc (Id, WeekId, SignNumMon, 
       SignNumTue, SignNumWed, SignNumThur, 
       SignNumFri, SignNumSat, SignNumSun, 
@@ -120,7 +120,7 @@
       #{lotterynum,jdbcType=INTEGER}, #{lotterystate,jdbcType=SMALLINT}, #{updatetime,jdbcType=BIGINT}, 
       #{createtime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.WeekSignDescBean" >
+  <insert id="insertSelective" parameterType="com.whyse.internet.billingsystem.model.WeekSignDescBean" >
     insert into pris_weeksigndesc
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -205,7 +205,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.WeekSignDescBeanCriteria" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.whyse.internet.billingsystem.model.WeekSignDescBeanCriteria" resultType="java.lang.Integer" >
     select count(*) from pris_weeksigndesc
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -277,7 +277,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.WeekSignDescBean" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.whyse.internet.billingsystem.model.WeekSignDescBean" >
     update pris_weeksigndesc
     <set >
       <if test="weekid != null" >
@@ -319,7 +319,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.WeekSignDescBean" >
+  <update id="updateByPrimaryKey" parameterType="com.whyse.internet.billingsystem.model.WeekSignDescBean" >
     update pris_weeksigndesc
     set WeekId = #{weekid,jdbcType=INTEGER},
       SignNumMon = #{signnummon,jdbcType=INTEGER},
@@ -335,7 +335,7 @@
       CreateTime = #{createtime,jdbcType=BIGINT}
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <select resultMap="BaseResultMap" parameterType="com.hundsun.internet.billingsystem.model.WeekSignDescBeanCriteria" id="selectByExampleWithRowbounds" >
+  <select resultMap="BaseResultMap" parameterType="com.whyse.internet.billingsystem.model.WeekSignDescBeanCriteria" id="selectByExampleWithRowbounds" >
     select
     <if test="distinct" >
       distinct

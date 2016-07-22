@@ -28,11 +28,11 @@
 	<tool>
 		<key>valueRange</key>
 		<scope>application</scope>
-		<class>com.hundsun.internet.billingsystem.common.velocity.ValueRange</class>
+		<class>com.whyse.internet.billingsystem.common.velocity.ValueRange</class>
 	</tool>
 	<tool>
 		<key>tool</key>
 		<scope>application</scope>
-		<class>com.hundsun.internet.billingsystem.common.velocity.VelocityTool</class>
+		<class>com.whyse.internet.billingsystem.common.velocity.VelocityTool</class>
 	</tool>
 </toolbox>

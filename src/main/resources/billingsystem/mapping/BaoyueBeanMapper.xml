@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hundsun.internet.billingsystem.dao.BaoyueBeanMapper">
-  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+<mapper namespace="com.whyse.internet.billingsystem.dao.BaoyueBeanMapper">
+  <resultMap id="BaseResultMap" type="com.whyse.internet.billingsystem.model.BaoyueBean">
     <id column="Id" jdbcType="BIGINT" property="id" />
     <result column="PackageId" jdbcType="BIGINT" property="packageid" />
     <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
@@ -75,7 +75,7 @@
     Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
     latestPublishTime
   </sql>
-  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -99,13 +99,13 @@
     delete from baoyue_packagebook
     where Id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+  <delete id="deleteByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria">
     delete from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insert" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
       CreateTime, UpdateTime, RemoveTime, 
       Status, Sort, Finished, 
@@ -115,7 +115,7 @@
       #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
       #{latestpublishtime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insertSelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -182,7 +182,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
     select count(*) from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -242,7 +242,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKeySelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     <set>
       <if test="packageid != null">
@@ -275,7 +275,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKey" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     set PackageId = #{packageid,jdbcType=BIGINT},
       SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
@@ -288,7 +288,7 @@
       latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -302,7 +302,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <resultMap id="BaseResultMap" type="com.whyse.internet.billingsystem.model.BaoyueBean">
     <id column="Id" jdbcType="BIGINT" property="id" />
     <result column="PackageId" jdbcType="BIGINT" property="packageid" />
     <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
@@ -376,7 +376,7 @@
     Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
     latestPublishTime
   </sql>
-  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -400,13 +400,13 @@
     delete from baoyue_packagebook
     where Id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+  <delete id="deleteByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria">
     delete from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insert" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
       CreateTime, UpdateTime, RemoveTime, 
       Status, Sort, Finished, 
@@ -416,7 +416,7 @@
       #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
       #{latestpublishtime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insertSelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -483,7 +483,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
     select count(*) from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -543,7 +543,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKeySelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     <set>
       <if test="packageid != null">
@@ -576,7 +576,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKey" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     set PackageId = #{packageid,jdbcType=BIGINT},
       SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
@@ -589,7 +589,7 @@
       latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -603,7 +603,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <resultMap id="BaseResultMap" type="com.whyse.internet.billingsystem.model.BaoyueBean">
     <id column="Id" jdbcType="BIGINT" property="id" />
     <result column="PackageId" jdbcType="BIGINT" property="packageid" />
     <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
@@ -677,7 +677,7 @@
     Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
     latestPublishTime
   </sql>
-  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -701,13 +701,13 @@
     delete from baoyue_packagebook
     where Id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+  <delete id="deleteByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria">
     delete from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insert" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
       CreateTime, UpdateTime, RemoveTime, 
       Status, Sort, Finished, 
@@ -717,7 +717,7 @@
       #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
       #{latestpublishtime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insertSelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -784,7 +784,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
     select count(*) from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -844,7 +844,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKeySelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     <set>
       <if test="packageid != null">
@@ -877,7 +877,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKey" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     set PackageId = #{packageid,jdbcType=BIGINT},
       SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
@@ -890,7 +890,7 @@
       latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -904,7 +904,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <resultMap id="BaseResultMap" type="com.whyse.internet.billingsystem.model.BaoyueBean">
     <id column="Id" jdbcType="BIGINT" property="id" />
     <result column="PackageId" jdbcType="BIGINT" property="packageid" />
     <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
@@ -978,7 +978,7 @@
     Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
     latestPublishTime
   </sql>
-  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -1002,13 +1002,13 @@
     delete from baoyue_packagebook
     where Id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+  <delete id="deleteByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria">
     delete from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insert" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
       CreateTime, UpdateTime, RemoveTime, 
       Status, Sort, Finished, 
@@ -1018,7 +1018,7 @@
       #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
       #{latestpublishtime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insertSelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -1085,7 +1085,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
     select count(*) from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -1145,7 +1145,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKeySelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     <set>
       <if test="packageid != null">
@@ -1178,7 +1178,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKey" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     set PackageId = #{packageid,jdbcType=BIGINT},
       SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
@@ -1191,7 +1191,7 @@
       latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -1205,7 +1205,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <resultMap id="BaseResultMap" type="com.whyse.internet.billingsystem.model.BaoyueBean">
     <id column="Id" jdbcType="BIGINT" property="id" />
     <result column="PackageId" jdbcType="BIGINT" property="packageid" />
     <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
@@ -1279,7 +1279,7 @@
     Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
     latestPublishTime
   </sql>
-  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -1303,13 +1303,13 @@
     delete from baoyue_packagebook
     where Id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+  <delete id="deleteByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria">
     delete from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insert" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
       CreateTime, UpdateTime, RemoveTime, 
       Status, Sort, Finished, 
@@ -1319,7 +1319,7 @@
       #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
       #{latestpublishtime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insertSelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -1386,7 +1386,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
     select count(*) from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -1446,7 +1446,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKeySelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     <set>
       <if test="packageid != null">
@@ -1479,7 +1479,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKey" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     set PackageId = #{packageid,jdbcType=BIGINT},
       SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
@@ -1492,7 +1492,7 @@
       latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -1506,7 +1506,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <resultMap id="BaseResultMap" type="com.whyse.internet.billingsystem.model.BaoyueBean">
     <id column="Id" jdbcType="BIGINT" property="id" />
     <result column="PackageId" jdbcType="BIGINT" property="packageid" />
     <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
@@ -1580,7 +1580,7 @@
     Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
     latestPublishTime
   </sql>
-  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -1604,13 +1604,13 @@
     delete from baoyue_packagebook
     where Id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+  <delete id="deleteByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria">
     delete from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insert" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
       CreateTime, UpdateTime, RemoveTime, 
       Status, Sort, Finished, 
@@ -1620,7 +1620,7 @@
       #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
       #{latestpublishtime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insertSelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -1687,7 +1687,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
     select count(*) from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -1747,7 +1747,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKeySelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     <set>
       <if test="packageid != null">
@@ -1780,7 +1780,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKey" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     set PackageId = #{packageid,jdbcType=BIGINT},
       SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
@@ -1793,7 +1793,7 @@
       latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -1807,7 +1807,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <resultMap id="BaseResultMap" type="com.whyse.internet.billingsystem.model.BaoyueBean">
     <id column="Id" jdbcType="BIGINT" property="id" />
     <result column="PackageId" jdbcType="BIGINT" property="packageid" />
     <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
@@ -1881,7 +1881,7 @@
     Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
     latestPublishTime
   </sql>
-  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -1905,13 +1905,13 @@
     delete from baoyue_packagebook
     where Id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+  <delete id="deleteByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria">
     delete from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insert" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
       CreateTime, UpdateTime, RemoveTime, 
       Status, Sort, Finished, 
@@ -1921,7 +1921,7 @@
       #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
       #{latestpublishtime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insertSelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -1988,7 +1988,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
     select count(*) from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -2048,7 +2048,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKeySelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     <set>
       <if test="packageid != null">
@@ -2081,7 +2081,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKey" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     set PackageId = #{packageid,jdbcType=BIGINT},
       SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
@@ -2094,7 +2094,7 @@
       latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -2108,7 +2108,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <resultMap id="BaseResultMap" type="com.whyse.internet.billingsystem.model.BaoyueBean">
     <id column="Id" jdbcType="BIGINT" property="id" />
     <result column="PackageId" jdbcType="BIGINT" property="packageid" />
     <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
@@ -2182,7 +2182,7 @@
     Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
     latestPublishTime
   </sql>
-  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -2206,13 +2206,13 @@
     delete from baoyue_packagebook
     where Id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+  <delete id="deleteByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria">
     delete from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insert" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
       CreateTime, UpdateTime, RemoveTime, 
       Status, Sort, Finished, 
@@ -2222,7 +2222,7 @@
       #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
       #{latestpublishtime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insertSelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -2289,7 +2289,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
     select count(*) from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -2349,7 +2349,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKeySelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     <set>
       <if test="packageid != null">
@@ -2382,7 +2382,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKey" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     set PackageId = #{packageid,jdbcType=BIGINT},
       SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
@@ -2395,7 +2395,7 @@
       latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -2409,7 +2409,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <resultMap id="BaseResultMap" type="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <resultMap id="BaseResultMap" type="com.whyse.internet.billingsystem.model.BaoyueBean">
     <id column="Id" jdbcType="BIGINT" property="id" />
     <result column="PackageId" jdbcType="BIGINT" property="packageid" />
     <result column="SourceUuid" jdbcType="VARCHAR" property="sourceuuid" />
@@ -2483,7 +2483,7 @@
     Id, PackageId, SourceUuid, CreateTime, UpdateTime, RemoveTime, Status, Sort, Finished, 
     latestPublishTime
   </sql>
-  <select id="selectByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -2507,13 +2507,13 @@
     delete from baoyue_packagebook
     where Id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria">
+  <delete id="deleteByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria">
     delete from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insert" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook (Id, PackageId, SourceUuid, 
       CreateTime, UpdateTime, RemoveTime, 
       Status, Sort, Finished, 
@@ -2523,7 +2523,7 @@
       #{status,jdbcType=SMALLINT}, #{sort,jdbcType=INTEGER}, #{finished,jdbcType=TINYINT}, 
       #{latestpublishtime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <insert id="insertSelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     insert into baoyue_packagebook
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -2590,7 +2590,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultType="java.lang.Integer">
     select count(*) from baoyue_packagebook
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -2650,7 +2650,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKeySelective" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     <set>
       <if test="packageid != null">
@@ -2683,7 +2683,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBean">
+  <update id="updateByPrimaryKey" parameterType="com.whyse.internet.billingsystem.model.BaoyueBean">
     update baoyue_packagebook
     set PackageId = #{packageid,jdbcType=BIGINT},
       SourceUuid = #{sourceuuid,jdbcType=VARCHAR},
@@ -2696,7 +2696,7 @@
       latestPublishTime = #{latestpublishtime,jdbcType=BIGINT}
     where Id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.hundsun.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.whyse.internet.billingsystem.model.BaoyueBeanCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct

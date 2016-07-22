@@ -66,7 +66,7 @@
 
 		<!--  generate Mapper 最后生成由xml定义的接口类
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.hundsun.internet.billingsystem.dao" targetProject="src\main\java">
+			targetPackage="com.whyse.internet.billingsystem.dao" targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		-->

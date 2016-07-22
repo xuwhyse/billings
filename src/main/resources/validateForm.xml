@@ -3,8 +3,8 @@
 
 <validateForm>
 	<context>http://localhost:8080/</context>
-	<beanrootpath>src/main/java/com/hundsun/internet/ihoms2/form/</beanrootpath>
-	<packagerootpath>com.hundsun.internet.ihoms2.form</packagerootpath>
+	<beanrootpath>src/main/java/com/billings/ihoms2/form/</beanrootpath>
+	<packagerootpath>com.billings.ihoms2.form</packagerootpath>
 	<urls>
 		<!--
 		<url>manager/usermng/add.do</url>

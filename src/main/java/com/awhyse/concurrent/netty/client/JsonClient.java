@@ -17,8 +17,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
-import io.netty.handler.codec.json.JsonObjectDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.ssl.SslContext;
@@ -38,6 +36,7 @@ public class JsonClient {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		 // Configure SSL.git
+
         final SslContext sslCtx;
         if (SSL) {
             sslCtx = SslContext.newClientContext(InsecureTrustManagerFactory.INSTANCE);
@@ -82,8 +81,7 @@ public class JsonClient {
 //=====================================
 class JsonClientHandler extends ChannelInboundHandlerAdapter {
 	 
- 
- 
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
     	System.err.println("channelActive");
@@ -101,7 +99,7 @@ class JsonClientHandler extends ChannelInboundHandlerAdapter {
     	if(msg instanceof String){
     		String str = (String) msg;
     		Map<String, Object>  map = new HashMap<String, Object>(8);
-    		map = (Map<String, Object>) JsonUtil.JsonToOb(str, map.getClass());
+            map  = (Map<String, Object>) JsonUtil.JsonToOb(str, map.getClass());
     		System.out.println(map);
     	}
     }

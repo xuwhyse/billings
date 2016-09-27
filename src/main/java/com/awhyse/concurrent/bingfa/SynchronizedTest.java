@@ -19,6 +19,9 @@ public class SynchronizedTest {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		synchronized("123"){
+			
+		}
 		final SynchronizedTest ob = new SynchronizedTest();
 		
 		Runnable runnable = new Runnable() {

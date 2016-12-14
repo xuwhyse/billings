@@ -1,17 +1,5 @@
 package com.awhyse.concurrent.netty.client;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import javax.net.ssl.SSLException;
-
-import com.alibaba.fastjson.JSON;
-import com.awhyse.concurrent.netty.server.NettyJsontServer;
-import com.billings.billingsystem.common.JsonUtil;
-
-
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -23,20 +11,34 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.codec.serialization.ClassResolvers;
+import io.netty.handler.codec.serialization.ObjectDecoder;
+import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 
-public class JsonClient {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import javax.net.ssl.SSLException;
+
+import org.apache.commons.lang.math.RandomUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.awhyse.concurrent.netty.server.lengthbase.NettyLengthDefServer;
+import com.awhyse.concurrent.netty.server.lengthbase.NettyLengthDefServerHelp;
+import com.billings.billingsystem.common.JsonUtil;
+
+public class LengthBaseClient {
 
 	static final boolean SSL = System.getProperty("ssl") != null;
     static final String HOST = System.getProperty("host", "127.0.0.1");
-    static final int PORT = NettyJsontServer.port;
+    static final int PORT = NettyLengthDefServer.port;
 	private String title;
-	static ExecutorService executorService = Executors.newFixedThreadPool(3);
 
-	public JsonClient(String title) {
+	public LengthBaseClient(String title) {
 		this.title = title;
 	}
 
@@ -48,11 +50,12 @@ public class JsonClient {
 	 */
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
+		ExecutorService executorService = Executors.newFixedThreadPool(2);
 		Runnable run = new Runnable() {
 			
 			@Override
 			public void run() {
-				JsonClient c1 = new JsonClient("这个消息会增长+");
+				LengthBaseClient c1 = new LengthBaseClient("这个消息会增长+");
 				try {
 					c1.init();
 				} catch (Exception e) {
@@ -65,7 +68,7 @@ public class JsonClient {
 			
 			@Override
 			public void run() {
-				JsonClient c2 = new JsonClient("BBBBBBBBBB-");
+				LengthBaseClient c2 = new LengthBaseClient("BBBBBBBBBB-");
 				try {
 					c2.init();
 				} catch (Exception e) {
@@ -101,11 +104,11 @@ public class JsonClient {
                         if (sslCtx != null) {
                             p.addLast(sslCtx.newHandler(ch.alloc(), HOST, PORT));
                         }
-//                         p.addLast(new LineBasedFrameDecoder(1024));
-	   	                 p.addLast(new StringDecoder());//addLast添加到队列ChannelHandler尾部
-	   	                 p.addLast(new StringEncoder());
-//                         p.addLast(new JsonObjectDecoder(1024));
-                         p.addLast(new JsonClientHandler(title));
+//	   	                 p.addLast(new StringDecoder());//addLast添加到队列ChannelHandler尾部
+//	   	                 p.addLast(new StringEncoder());
+	   	                 p.addLast(new ObjectEncoder());//addLast添加到队列ChannelHandler尾部
+		                 p.addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
+                         p.addLast(new LengthBaseClientHandler(title));
                     }
                 });
  
@@ -123,12 +126,12 @@ public class JsonClient {
 
 }
 //=====================================
-class JsonClientHandler extends ChannelInboundHandlerAdapter {
+class LengthBaseClientHandler extends ChannelInboundHandlerAdapter {
 	 
     private String title;
 
 
-	public JsonClientHandler(String title) {
+	public LengthBaseClientHandler(String title) {
     	this.title = title;
 	}
 
@@ -139,8 +142,9 @@ class JsonClientHandler extends ChannelInboundHandlerAdapter {
     	Map<String, Object> map = new HashMap<String, Object>(2);
     	map.put("123", "hello jsonServer");
     	String msg = JsonUtil.ObToJson(map);
-//    	msg +="\t\n";
-        ctx.writeAndFlush(msg);//向服务器写入数据
+    	byte[] myPack = NettyLengthDefServerHelp.getMyEncodePack(msg);
+//    	System.out.println(new String(myPack));
+        ctx.writeAndFlush(myPack);//向服务器写入数据
         doJobTest(ctx);
     }
  
@@ -152,11 +156,15 @@ class JsonClientHandler extends ChannelInboundHandlerAdapter {
 			@Override
 			public void run() {
 				String str = title;
+				int index = 0;
 				while(true){
 					try {
-						Thread.sleep(3500);
-						ctx.writeAndFlush(str);
-						str +=str;
+						int time = (RandomUtils.nextInt(6)+1)*1000;
+						Thread.sleep(time);
+						byte[] myPack = NettyLengthDefServerHelp.getMyEncodePack(str);
+						ctx.writeAndFlush(myPack);
+//						str +=str+index;
+						index++;
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

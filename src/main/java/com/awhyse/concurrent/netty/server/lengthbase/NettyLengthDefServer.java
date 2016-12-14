@@ -1,11 +1,4 @@
-package com.awhyse.concurrent.netty.server;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import scala.Array;
+package com.awhyse.concurrent.netty.server.lengthbase;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -18,26 +11,26 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.serialization.ClassResolvers;
+import io.netty.handler.codec.serialization.ObjectDecoder;
+import io.netty.handler.codec.serialization.ObjectEncoder;
+import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
-
 /**
+ * 自定义包头，包含长度这种.和异构语言交互
  * 
- * author:xumin 2016-3-29 下午2:48:36
+ * author:xumin 
+ * 2016-10-13 下午4:34:09
  */
-public class NettyJsontServer {
+public class NettyLengthDefServer {
 
 	static final boolean SSL = System.getProperty("ssl") != null;
 	public static int port = 8870;
 
-	public NettyJsontServer(int port) {
-		this.port = port;
-	}
 
 	public void init() {
 		// 处理I/O操作的多线程事件环 即为Netty4里的线程池
@@ -68,6 +61,10 @@ public class NettyJsontServer {
 			// -------------------------------------------------------------------
 			bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
 
+				final static private int maxFrameLength=1024*640;
+				final static private int lengthFieldOffset = 0;
+				final static private int lengthFieldLength = 4;
+
 				@Override
 				protected void initChannel(SocketChannel ch) throws Exception {
 					// SocketChannel客户端注册进来，相关对象的绑定
@@ -75,16 +72,17 @@ public class NettyJsontServer {
 					if (sslCtx != null) {
 						p.addLast(sslCtx.newHandler(ch.alloc()));
 					}
-					// p.addLast(new
-//					 LoggingHandler(LogLevel.INFO));//注册日志打印,开启可以看到更多解析信息
 					// 最大json的长度,注意！！
-					// p.addLast(new JsonObjectDecoder(1024));
+//					 p.addLast(new LoggingHandler(LogLevel.INFO));//注册日志打印,开启可以看到更多解析信息
 
-					// p.addLast(new
-					// LineBasedFrameDecoder(1024));//没有这个，就会发过来什么，收到什么
-					p.addLast(new StringDecoder());// addLast添加到队列ChannelHandler尾部
-					p.addLast(new StringEncoder());
-					p.addLast(new JsonServerHandler());
+//					 p.addLast(new StringDecoder());// addLast添加到队列ChannelHandler尾部
+//					 p.addLast(new StringEncoder());
+//					 p.addLast(new LengthFieldBasedFrameDecoder(maxFrameLength, lengthFieldOffset , 
+//							 lengthFieldLength , lengthFieldOffset, lengthFieldLength));
+				
+					p.addLast(new ObjectEncoder());//addLast添加到队列ChannelHandler尾部
+	                p.addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
+					p.addLast(new LengthServerHandler());
 				}
 			});
 			// --------------------------------------------------------------------
@@ -110,35 +108,41 @@ public class NettyJsontServer {
 	 */
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		NettyJsontServer server = new NettyJsontServer(port);
+		NettyLengthDefServer server = new NettyLengthDefServer();
 		server.init();
+//		byteTest();
+	}
+	/**
+	 * 包头8个字节
+	 * 包头{4个字节包体长度（不包含包头）|1个字节压缩类型（0为不压缩）|1字节加密类型（0为不加密）
+	 * |1个字节序列化方法（0为json）|1个字节保留} +包体。
+压缩方式可以采用开源的压缩库比如zlib，对于某些比较小的消息不压缩，比如心跳之类的。
+加密可以采用DES加密。报文体一般先压缩后加密
+
+	 * author:xumin 
+	 * 2016-10-13 下午5:16:50
+	 */
+	private static void byteTest() {
+		String a = "我";
+		byte[] tar = NettyLengthDefServerHelp.getMyEncodePack(a);
+		for(byte temp : tar){
+			System.out.println(temp);
+		}
 	}
 
 }
 
-class JsonServerHandler extends ChannelInboundHandlerAdapter {
-
-	//这样能防止超长字符窜多次调用，乱码的问题
-	Map<String, Map<String, Object>> packageMap = new HashMap<String, Map<String, Object>>(
-			100);
+class LengthServerHandler extends ChannelInboundHandlerAdapter {
 
 	// ======这两个方法可以管理连接================
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-		String id = ctx.channel().id().asShortText();// 这个id可以做key，区分不同连线
-		Map<String, Object> map = new HashMap<String, Object>(2);
-		map.put("length", 0);
-		List<Object>  list = new ArrayList<Object>(5);
-		map.put("list", list);
-		packageMap.put(id, map);
-		System.out.println("channelRegistered:" + id);// channelRegistered:a86f543a
+		NettyLengthDefServerHelp.channelRegistered(ctx);
 	}
 
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-		String id = ctx.channel().id().asShortText();// 这个id可以做key，区分不同连线
-		packageMap.remove(id);
-		System.out.println("channelUnregistered:" + id);// channelUnregistered:a86f543a
+		NettyLengthDefServerHelp.channelUnregistered(ctx);
 	}
 
 	// ===================================================
@@ -152,39 +156,14 @@ class JsonServerHandler extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
-
-		String id = ctx.channel().id().asShortText();// 这个id可以做key，区分不同连线
-		Map<String, Object>  map = packageMap.get(id);
-		int lengthR = (Integer) map.get("length");
-		List<Object>  list = (List<Object>) map.get("list");
-		byte[] obj = msg.toString().getBytes();//获取字节，1byte 1字节
-		int length = lengthR+obj.length;
-		map.put("length", length);
-		list.add(obj);
-		System.out.println("server channelRead:" + id + "  length:" + length);
-		// System.out.println(msg);
+		NettyLengthDefServerHelp.channelRead(ctx,msg);
 	}
 
 	@Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
     	System.err.println("server channelReadComplete");
-    	String id = ctx.channel().id().asShortText();//这个id可以做key，区分不同连线
-    	Map<String, Object>  map = packageMap.get(id);
-    	int lengthR = (Integer) map.get("length");
-		List<Object>  list = (List<Object>) map.get("list");
-		byte[]  bytes = new byte[lengthR];
-		int destPos = 0;
-		for(Object item : list){
-			byte[] tar = (byte[]) item;
-			System.arraycopy(tar, 0, bytes, destPos, tar.length);
-			destPos += tar.length;
-		}
-		System.out.println(new String(bytes));
-		//----清理数据--------------
-		map.put("length", 0);
-		list.clear();
-		//-----------------------
-        ctx.flush();//这句flush后直接把ctx写入的消息池发送给远程客户端
+    	NettyLengthDefServerHelp.decodeAndDispatch(ctx);
+//        ctx.flush();//这句flush后直接把ctx写入的消息池发送给远程客户端
     }
 
 	@Override

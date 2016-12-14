@@ -11,12 +11,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.awhyse.util.FileUtils;
+
 public class JdbcDriver {
 
 	static List<String>  urlList = new ArrayList<String>();
 	static{
-		seturlList("jdbc:mysql://172.17.5.71:6000/pris_test_new","pris_test_18888","pris_test_18888");//172.17.5.71:6000适配层套接字非真实mysql
-		seturlList("jdbc:mysql://10.120.154.111:6000/yuedu-online","pris_product","pris_product");
+//		seturlList("jdbc:mysql://172.17.5.71:6000/pris_test_new","pris_test_18888","pris_test_18888");//172.17.5.71:6000适配层套接字非真实mysql
+//		seturlList("jdbc:mysql://10.120.154.111:6000/yuedu-online","pris_product","pris_product");
+		
+		seturlList("jdbc:mysql://192.168.4.152:3306/LTS_China","tqt001","tqt001");
 	}
 	private static Connection connection;
 	private static int test=0,online=1;
@@ -29,6 +33,10 @@ public class JdbcDriver {
 	}
 	
 	public static void main(String[] args){
+		noSW();//不开事务
+//		hasSW();//开启事务，注意失败一个sql就回回滚全部
+	}
+	private static void hasSW() {
 		try{
 			Class.forName("com.mysql.jdbc.Driver");// 动态加载mysql驱动
 			connection = DriverManager.getConnection(urlList.get(test));
@@ -53,7 +61,71 @@ public class JdbcDriver {
 			}
 		}
 	}
-	//=================
+
+	private static void noSW() {
+		try{
+			Class.forName("com.mysql.jdbc.Driver");// 动态加载mysql驱动
+			connection = DriverManager.getConnection(urlList.get(test));
+//			connection.setAutoCommit(false);
+			//=========里面是自由代码,增删改查===================
+//			select1();
+			readFileAndInsert();
+			//============================================
+//			connection.commit();
+		}catch (Exception  e) {
+			try {
+				if(connection!=null)
+					connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally{
+			try {
+				if(connection!=null)
+					connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	//===================================================================
+	/**
+	 * 读取文件，并插入数据库
+	 * author:xumin 
+	 * 2016-12-14 下午5:06:25
+	 */
+	private static void readFileAndInsert() {
+		// TODO Auto-generated method stub
+		String path = "C:/Users/whyse/Desktop/任务/小T/dce_future_puzzles.dce_future_puzzles";
+		List<String> listStr = FileUtils.readFileByLines(path);
+		long createTime = System.currentTimeMillis();
+		
+		for(String line : listStr){
+			try{
+				String[]  strs = line.split(" ");
+				String exchangeCode = strs[0];
+				String shortSymbol = strs[1];
+				String tradeDay = strs[2];
+				
+				String sql = "INSERT INTO xiaot_questions(exchangeCode,shortSymbol,tradeDay,createTime) " +
+						"VALUES ('" +
+						exchangeCode +
+						"','" +
+						shortSymbol +
+						"','" +
+						tradeDay +
+						"'," +
+						createTime +
+						")";
+				int ret = uDorAddorDel(sql);
+//				System.err.println(ret);
+			}catch(Exception e){
+				
+			}
+		}
+	}
+
 	private static void select1() throws SQLException {
 		String sql = "SELECT 1";
 		List<Map<String, Object>>  list = queryForList(sql);
@@ -66,9 +138,16 @@ public class JdbcDriver {
 	 * @return
 	 * @throws SQLException
 	 */
-	private static int uDorAddorDel(String sql) throws SQLException {
-		PreparedStatement ps = connection.prepareStatement(sql);
-		return ps.executeUpdate();
+	private static int uDorAddorDel(String sql){
+		PreparedStatement ps;
+		int res = 0;
+		try {
+			ps = connection.prepareStatement(sql);
+			res = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 	/**
 	 * 查询语句调用

@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 /**
  * 加解密可以复原
- * 
+ * 为了更好的在互联网上传输
  * author:xumin 
  * 2016-10-20 上午11:17:11
  */

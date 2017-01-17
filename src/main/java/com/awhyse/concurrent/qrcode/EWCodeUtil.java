@@ -52,9 +52,10 @@ public class EWCodeUtil {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String content = "谦卑者为尊贵,这个要记住";
-		String path = "C:/Users/Administrator/Desktop/任务记录";
+		String path = "G:/";
 		try {
-			encode(content, path+"/iap.png", path, true);
+			encode(content, path);
+//			encode(content, path+"/iap.png", path, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

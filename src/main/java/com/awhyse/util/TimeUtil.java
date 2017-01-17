@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 public class TimeUtil {
 
@@ -20,7 +21,6 @@ public class TimeUtil {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
 		System.err.println(getDay(1));
 		
 	}

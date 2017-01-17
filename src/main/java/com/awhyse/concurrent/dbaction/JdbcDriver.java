@@ -100,7 +100,7 @@ public class JdbcDriver {
 		String path = "C:/Users/whyse/Desktop/任务/小T/dce_future_puzzles.dce_future_puzzles";
 		List<String> listStr = FileUtils.readFileByLines(path);
 		long createTime = System.currentTimeMillis();
-		
+		int count=0;
 		for(String line : listStr){
 			try{
 				String[]  strs = line.split(" ");
@@ -123,6 +123,9 @@ public class JdbcDriver {
 			}catch(Exception e){
 				
 			}
+			count++;
+//			if(count>5)
+//				break;
 		}
 	}
 

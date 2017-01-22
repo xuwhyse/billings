@@ -36,7 +36,6 @@
 		<velocity.version>1.7</velocity.version>
 		<velocity.tools.version>2.0</velocity.tools.version>
 		<mysql.connector.version>5.1.27</mysql.connector.version>
-		<slf4j.version>1.7.6</slf4j.version>
 		<commons.dbcp.version>1.4</commons.dbcp.version>
 		<mybatis.version>3.2.5</mybatis.version>
 		<mybatis.sping.version>1.2.2</mybatis.sping.version>
@@ -88,12 +87,6 @@
             <version>${spring.version}</version>
         </dependency>
 
-		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-all</artifactId>
-			<version>5.13.4</version>
-		</dependency>
-		
 		<!-- datasources -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -119,11 +112,39 @@
 			<version>${velocity.tools.version}</version>
 		</dependency>
 		
-		<!-- log4g -->
+		<!-- logback -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.10</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.2</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-all</artifactId>
+			<version>5.13.4</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		
 		<!-- mybatis -->
@@ -234,6 +255,12 @@
 	    <groupId>com.nativelibs4java</groupId>
 	    <artifactId>jnaerator</artifactId>
 	    <version>0.12</version>
+		<exclusions>
+			<exclusion>
+				<artifactId>slf4j-api</artifactId>
+				<groupId>org.slf4j</groupId>
+			</exclusion>
+		</exclusions>
 	</dependency>
 	
 	<!-- akka相关 -->
@@ -267,6 +294,12 @@
 			<groupId>com.typesafe.akka</groupId>
 			<artifactId>akka-slf4j_2.11</artifactId>
 			<version>2.3.9</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		
 	</dependencies>
@@ -283,8 +316,8 @@
 				<version>3.1</version>
 				<configuration>
 					<encoding>${project.build.sourceEncoding}</encoding>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<optimize>true</optimize>
 					<compilerArguments>
                          <verbose />

@@ -8,3 +8,4 @@
 *.name
 *.class
 target/
+logs/

@@ -78,6 +78,7 @@
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.7.3" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" level="project" />
+    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.15" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okhttp3:okhttp:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.11.0" level="project" />
@@ -112,7 +113,6 @@
     <orderEntry type="library" name="Maven: com.typesafe.akka:akka-kernel_2.11:2.3.9" level="project" />
     <orderEntry type="library" name="Maven: com.typesafe.akka:akka-cluster_2.11:2.3.9" level="project" />
     <orderEntry type="library" name="Maven: com.typesafe.akka:akka-remote_2.11:2.3.9" level="project" />
-    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:2.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.uncommons.maths:uncommons-maths:1.2.2a" level="project" />
     <orderEntry type="library" name="Maven: com.typesafe.akka:akka-slf4j_2.11:2.3.9" level="project" />
   </component>

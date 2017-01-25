@@ -1,4 +1,4 @@
-package com.awhyse.concurrent.netty.decandenc;
+package com.awhyse.concurrent.netty.decandenc.lengthbaseUtil;
 
 public class ByteAndInt {
 
@@ -9,8 +9,8 @@ public class ByteAndInt {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		byte[] temp = toByteArray(9,4);
-		System.err.println(toInt(temp));
+		byte[] temp = toByteArray(123413349,4);
+		System.err.println(toInt(temp,0,4));
 	}
 	/**
 	 * 将int转化成指定长度的byte数组
@@ -40,6 +40,16 @@ public class ByteAndInt {
 	        iOutcome += (bLoop & 0xFF) << (8 * temp);
 	    }
 	    return iOutcome;
+	}
+	public static int toInt(byte[] bRefArr,int startPos,int endPos) {
+		int iOutcome = 0;
+		byte bLoop;
+		for (int i = startPos;  i<endPos; i++) {
+			bLoop = bRefArr[i];
+			int temp = endPos-i-1;
+			iOutcome += (bLoop & 0xFF) << (8 * temp);
+		}
+		return iOutcome;
 	}
 
 }

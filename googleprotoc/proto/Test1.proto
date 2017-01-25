@@ -1,0 +1,11 @@
+syntax = "proto3";
+package protobuf;
+option java_package = "com.awhyse.concurrent.netty.google.protobuf";
+option java_outer_classname = "PeopleBuf";
+
+//protoc googleprotoc/proto/People.proto --java_out=googleprotoc/protoBuf  //终端生成java命令
+
+message PeopleMsg{
+    int32 age =1;
+    string name = 2;
+}

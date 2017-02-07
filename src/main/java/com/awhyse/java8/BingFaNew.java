@@ -10,6 +10,8 @@ import java.util.concurrent.atomic.LongAdder;
 /**
  * 主要是concurrenthashmap 的改进  map.mappingCount() 获取long size
  * forEachEntry  遍历每项
+ * map
+ * reduce: 就是遍历各种key对应的结果，再遍历一次处理，结果将会多线程fork/join获得
  * 提供原子更新操作
  * 批量操作，map reduce等
  * @author whyse
@@ -22,8 +24,8 @@ public class BingFaNew {
     public static void main(String[] args) {
 //        replaceCAS();
 //        wordIncrement();
-//        mapReduce();
-//        arraySort();
+        mapReduce();
+        arraySort();
         mapForEach();
     }
 
@@ -123,15 +125,15 @@ public class BingFaNew {
         第二个方法参数是转化器： 就是统计的值需要经过一个计算和转化才能被返回可统计的类型参数
         第三个方法参数:  参数是v1:上一次结果返回值  v2:下一次转化器的返回值。 如果是第一次，则上一次结果是第一个转化值
          */
-        String count = map.reduceValues(Long.MAX_VALUE,(LongAdder v)->{return v.toString();},
-                (String v1,String v2)->{return v1+v2+"_";});
+        String count = map.reduceValues(Long.MAX_VALUE,(v)->{return v.toString();},
+                (v1,v2)->{return v1+v2+"_";});
         logger.info(count.toString());
 
         /*
         这个例子更高级，过滤key，然后把结果累计处理。难能可贵是结果阻塞，过程多线程处理的
         对统计相当有杀伤力
          */
-        Long str = map.reduceKeys(1,(String key)->{
+        Long str = map.reduceKeys(1,(key)->{
                     if (key.startsWith("key")) {
                         return map.get(key).longValue();
                     }

@@ -1,12 +1,15 @@
 package com.awhyse.concurrent.bingfa;
 
+import com.billings.billingsystem.bean.util.UserBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
-import com.billings.billingsystem.bean.util.UserBean;
+import java.util.concurrent.TimeUnit;
 
 /*
  * ArrayBlockingQueue和LinkedBlockingQueue： 后者生产和消费是锁分离。 前者因为开销小，用了同一个锁。 前者消费生产不开销，后者会开销对象
@@ -21,6 +24,7 @@ import com.billings.billingsystem.bean.util.UserBean;
  */
 public class BlockingQueueTest {
 
+	static Logger logger = LoggerFactory.getLogger(BlockingQueueTest.class);
 	//这个有些操作是阻塞，有些操作是超时后返回
 	/**
 	 * @param args
@@ -28,7 +32,29 @@ public class BlockingQueueTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 //		simpleTest();
-		springMVCMNTest();
+//		springMVCMNTest();
+		poolAndPut();
+	}
+
+	private static void poolAndPut() {
+		int aa = 1;
+		while(aa<2){
+			if(aa<2){
+				continue;
+			}
+			aa++;
+		}
+		final BlockingQueue<Integer> blockingQueueShare = new LinkedBlockingQueue<Integer>(2);
+		try {
+			blockingQueueShare.put(2);
+			blockingQueueShare.put(4);
+			for(int i=0;i<2;i++) {
+				int temp = blockingQueueShare.poll(2000, TimeUnit.MILLISECONDS);
+				logger.info(String.valueOf(temp));
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * 反射方法+对象传入

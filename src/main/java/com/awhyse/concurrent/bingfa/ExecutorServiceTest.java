@@ -17,7 +17,7 @@ import java.util.concurrent.TimeoutException;
 public class ExecutorServiceTest {
 
 	//这个实例告诉我们，线程池要设置
-	static ExecutorService executorService = Executors.newCachedThreadPool();//Executors.newFixedThreadPool(3);
+	public static ExecutorService executorService = Executors.newCachedThreadPool();//Executors.newFixedThreadPool(3);
 	/**
 	 * xumin  2015-7-8 上午10:47:02
 	 * @param args

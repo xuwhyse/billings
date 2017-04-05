@@ -11,6 +11,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 /**
+ * 稳定的长连接使用心跳判断超时。 客户端发起，服务端回复，客户端没收到而已选择重新建立建立连接
  * google protoBuf+自定义长度+优化协议。极其重要
  * Created by whyse
  * on 2017/1/24 10:12

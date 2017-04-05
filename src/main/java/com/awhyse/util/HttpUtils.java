@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class HttpUtils {
 
@@ -71,7 +72,10 @@ public class HttpUtils {
 	 * 2016-12-16 下午1:32:15
 	 */
 	public static String postJson(String url,String json) {
-		OkHttpClient okHttpClient = new OkHttpClient();
+		OkHttpClient okHttpClient = new OkHttpClient().newBuilder().
+				connectTimeout(5, TimeUnit.SECONDS)
+				.readTimeout(5,TimeUnit.SECONDS)
+				.build();
 		// 创建一个RequestBody(参数1：数据类型 参数2传递的json串)
 		RequestBody requestBody = RequestBody.create(JSONType, json);
 		// 创建一个请求对象

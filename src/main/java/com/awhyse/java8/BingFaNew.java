@@ -22,10 +22,10 @@ public class BingFaNew {
     static Logger logger = LoggerFactory.getLogger(BingFaNew.class);
 
     public static void main(String[] args) {
-//        replaceCAS();
-//        wordIncrement();
+        replaceCAS();
+        wordIncrement();
         mapReduce();
-        arraySort();
+//        arraySort();
         mapForEach();
     }
 
@@ -53,8 +53,7 @@ public class BingFaNew {
 
         //多线程遍历完毕
         map.forEachEntry(1,item->{
-            if(item.getValue().longValue()>2)
-                map.remove(item.getKey());
+            item.getValue().add(4);
         });
 
         logger.debug(map.toString());

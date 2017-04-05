@@ -8,7 +8,12 @@ public class SHAUtil {
 	private static final boolean hexcase = false;
     private static final String b64pad = "=";
     private static final int chrsz = 8;
-    // 得到字符串SHA-1值的方法
+    /**
+     * 得到字符串SHA-1值的方法
+     * @return
+     * @author whyse
+     * @Date 2017/2/7 16:32
+    */
     public static String hex_sha1(String s) {
         s = (s == null) ? "" : s;
         return binb2hex(core_sha1(str2binb(s), s.length() * chrsz));

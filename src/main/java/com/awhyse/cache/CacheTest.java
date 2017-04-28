@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class CacheTest {
     public static void main(String[] args) {
-        CacheMapXM map = new CacheMapXM();
+        CacheMapXM map = new CacheMapXM(3,5);
         Map<String,Object>  mapT = new HashedMap();
         mapT.put("sd","sdgfdh");
         map.put("key",mapT,30);

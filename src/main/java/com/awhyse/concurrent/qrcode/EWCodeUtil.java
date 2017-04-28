@@ -38,7 +38,7 @@ public class EWCodeUtil {
 	private static final String CHARSET = "utf-8";  
     private static final String FORMAT_NAME = "JPG";  
     // 二维码尺寸,注意如果二维码尺寸比较小，logo比较大，就扫描不出来，一般二维码是logo 4倍大小
-    private static final int QRCODE_SIZE = 400; //300
+    private static final int QRCODE_SIZE = 300; //(400,48KB),(1600,205)
     // LOGO宽度  
     private static final int WIDTH = 80;//60
     // LOGO高度  
@@ -51,7 +51,7 @@ public class EWCodeUtil {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String content = "谦卑者为尊贵,这个要记住";
+		String content = "zxvfdn:松德股份estxiaot.forexmaster.cn/xiaoth/xiaot/battle/guide?gameId=e911e066-bf18-4b7a-af2b-7228433f8d2f&num=4";
 		String path = "G:/";
 		try {
 			encode(content, path);
@@ -107,7 +107,7 @@ public class EWCodeUtil {
 	 */
 	private static BufferedImage getNormalQRCode(String content) throws WriterException {
 		Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();  
-        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);  
+        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
         hints.put(EncodeHintType.CHARACTER_SET, CHARSET);  
         hints.put(EncodeHintType.MARGIN, 1);  
         BitMatrix bitMatrix = new MultiFormatWriter().encode(content,  

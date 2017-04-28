@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 public class TimeUtil {
 
@@ -21,7 +20,12 @@ public class TimeUtil {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.err.println(getDay(1));
+		System.err.println(System.currentTimeMillis());
+		long t1 = 1493112203;
+		int t2 = 1000;
+		long time = t1*t2;
+		System.err.println(time);
+		System.err.println(getFadeLoginTimeByLong(time));
 		
 	}
 	public static String getYear() {

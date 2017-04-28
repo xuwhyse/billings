@@ -41,7 +41,7 @@
         <property name="logAbandoned" value="true" />
 		<!-- 以下三个字段保证回收失效连接，2分钟一次 -->
 		<property name="timeBetweenEvictionRunsMillis" value="120000" />
-		<property name="minEvictableIdleTimeMillis" value="180000" />
+		<property name="minEvictableIdleTimeMillis" value="1800000" />
 		<property name="numTestsPerEvictionRun"    value="10"  />
 		<property name="testWhileIdle" value="true" />
 		<property name="validationQueryTimeout"  value="1" />

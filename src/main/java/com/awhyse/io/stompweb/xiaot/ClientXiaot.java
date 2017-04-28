@@ -1,14 +1,14 @@
 package com.awhyse.io.stompweb.xiaot;
 
 import com.alibaba.fastjson.JSON;
-import com.awhyse.io.stompweb.client.StompSessionHandlerMyAdapter;
 import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
-import org.springframework.web.socket.WebSocketExtension;
+import org.springframework.messaging.simp.stomp.StompSessionHandler;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
@@ -16,9 +16,8 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import javax.websocket.ContainerProvider;
 import javax.websocket.WebSocketContainer;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by whyse
@@ -30,8 +29,12 @@ public class ClientXiaot {
     int userType;
     String headimgurl;
     String userName;
-    StompSession stompSession;
+    private StompSessionHandler stompSessionHandler;
     private static Logger logger = LoggerFactory.getLogger(ClientXiaot.class);
+    private StompSession stompSession;
+    private String url;
+    private WebSocketHttpHeaders headers;
+    private WebSocketStompClient webSocketStompClient;
 
     public ClientXiaot(String gameId, String userId, int userType, String headimgurl, String userName) {
         this.gameId = gameId;
@@ -42,12 +45,12 @@ public class ClientXiaot {
     }
 
     public void connect(String currentEnv) {
-        WebSocketHttpHeaders headers = new WebSocketHttpHeaders();
-        List listHead = new ArrayList<>(1);
-        listHead.add(new WebSocketExtension("permessage-deflate"));
-        listHead.add(new WebSocketExtension("client_max_window_bits"));
-        headers.setSecWebSocketExtensions(listHead);
-        headers.set("Accept-Encoding", "gzip, deflate, sdch");
+        headers = new WebSocketHttpHeaders();
+//        List listHead = new ArrayList<>(1);
+//        listHead.add(new WebSocketExtension("permessage-deflate"));
+//        listHead.add(new WebSocketExtension("client_max_window_bits"));
+//        headers.setSecWebSocketExtensions(listHead);
+//        headers.set("Accept-Encoding", "gzip, deflate, sdch");
 //        headers.put("sdgfhgf",listHead);
 
         WebSocketContainer webSocketContainer = ContainerProvider.getWebSocketContainer();
@@ -55,22 +58,30 @@ public class ClientXiaot {
         webSocketContainer.setDefaultMaxBinaryMessageBufferSize(512*1024);
 
         StandardWebSocketClient standardWebSocketClient = new StandardWebSocketClient(webSocketContainer);
-        WebSocketStompClient webSocketStompClient = new WebSocketStompClient(standardWebSocketClient);
+        webSocketStompClient = new WebSocketStompClient(standardWebSocketClient);
 
-//        ThreadPoolTaskScheduler te = new ThreadPoolTaskScheduler();
-//        te.setPoolSize(1);
-//        te.setThreadNamePrefix("wss-heartbeat-thread-");
-//        te.initialize();
-//        int heartBeatTime = 1000*10;
-//        webSocketStompClient.setTaskScheduler(te); // for heartbeats
+        ThreadPoolTaskScheduler te = new ThreadPoolTaskScheduler();
+        te.setPoolSize(1);
+        te.setThreadNamePrefix("wss-heartbeat-thread-");
+        te.initialize();
+        int heartBeatTime = 1000*10;
+//        webSocketStompClient.setDefaultHeartbeat(new long[]{heartBeatTime,heartBeatTime});//设置心跳时间
+        //new DefaultManagedTaskScheduler()
+        webSocketStompClient.setTaskScheduler(te); // for heartbeats
+        stompSessionHandler = new StompSessionHandlerMyAdapter(this);
 
         webSocketStompClient.setInboundMessageSizeLimit(1024*1024);//64*1024
+        url = "ws://" +currentEnv;
 
-        String url = "ws://" +currentEnv;
+        doConnect();
+    }
 
+    public void doConnect() {
         try {
-            stompSession = webSocketStompClient.connect(url,headers, new StompSessionHandlerMyAdapter()).get();
-        } catch (Exception e) {
+            stompSession = webSocketStompClient.connect(url,headers, stompSessionHandler).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
     }
@@ -122,8 +133,8 @@ public class ClientXiaot {
             }
 
             public void handleFrame(StompHeaders stompHeaders, Object o) {
-                String str  = new String((byte[]) o);
-                logger.info("===>>>>  "+des+"__"+ str);
+//                String str  = new String((byte[]) o);
+//                logger.info("===>>>>  "+des+"__"+ str);
             }
         });
     }
@@ -179,6 +190,60 @@ public class ClientXiaot {
 
     public void subListInfoSimple() {
         String des = "/topic/game/listInfoSimple/"+gameId;
+        stompSession.subscribe(des, new StompFrameHandler() {
+
+            public Type getPayloadType(StompHeaders stompHeaders) {
+                return byte[].class;
+            }
+
+            public void handleFrame(StompHeaders stompHeaders, Object o) {
+//                logger.info("===>>>>  "+des+"__"+ new String((byte[]) o));
+            }
+        });
+    }
+
+    public void subGameEnd() {
+        String des = "/topic/game/end/"+gameId;
+        stompSession.subscribe(des, new StompFrameHandler() {
+
+            public Type getPayloadType(StompHeaders stompHeaders) {
+                return byte[].class;
+            }
+
+            public void handleFrame(StompHeaders stompHeaders, Object o) {
+                logger.info("===>>>>  "+des+"__"+ new String((byte[]) o));
+            }
+        });
+    }
+
+    public void subGameStart(boolean isStartedThenOver) {
+        String des = "/topic/game/start/"+gameId;
+        stompSession.subscribe(des, new StompFrameHandler() {
+
+            public Type getPayloadType(StompHeaders stompHeaders) {
+                return byte[].class;
+            }
+
+            public void handleFrame(StompHeaders stompHeaders, Object o) {
+                logger.info("===>>>>  "+des+"__"+ new String((byte[]) o));
+                if(isStartedThenOver) {
+                    doGameOver();
+                }
+            }
+        });
+    }
+
+    private void doGameOver() {
+        Map<String,Object> mapReady = new HashedMap(6);
+        mapReady.put("gameId",gameId);
+        mapReady.put("userId",userId);
+        mapReady.put("state",1);
+
+        sendToServer("/queue/game/end",JSON.toJSONString(mapReady));
+    }
+
+    public void subClientInfo() {
+        String des = "/topic/game/ClientInfo/"+gameId;
         stompSession.subscribe(des, new StompFrameHandler() {
 
             public Type getPayloadType(StompHeaders stompHeaders) {

@@ -27,8 +27,8 @@ public class TestXiaot {
 
     //----------比赛id和环境这边配置即可--------------------
     static String currentEnv = local;
-    static String gameId = "0bbe1327-920d-44ec-9bbc-1c867eae42e5";
-    static int clientSize = 7;
+    static String gameId = "0e08e9c3-f9b6-4fe5-a32c-7bce31d8b831";
+    static int clientSize = 1;
     //--------------------------------------------------
     static List<ClientXiaot>  listXiaot = new ArrayList<>(500);
 
@@ -51,11 +51,14 @@ public class TestXiaot {
         listXiaot.add(clientXiaot);
         clientXiaot.connect(currentEnv);
 
-        clientXiaot.subReadyInfoTest();
-        clientXiaot.subListInfoLimit();
+//        clientXiaot.subReadyInfoTest();
+//        clientXiaot.subListInfoLimit();
         clientXiaot.subListInfoSimple();
-        clientXiaot.subListInfoTest();
+//        clientXiaot.subListInfoTest();
         clientXiaot.subTimePointTest();
+        clientXiaot.subGameEnd();
+//        clientXiaot.subClientInfo();
+        clientXiaot.subGameStart(false);
         clientXiaot.doReady();//必须要准备，准备后进入
 
     }

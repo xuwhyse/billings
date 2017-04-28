@@ -1,5 +1,6 @@
 package com.awhyse.io.stompweb.client;
 
+import com.awhyse.io.stompweb.xiaot.StompSessionHandlerMyAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
@@ -29,12 +30,12 @@ public class Test {
         StandardWebSocketClient standardWebSocketClient = new StandardWebSocketClient();
         WebSocketStompClient webSocketStompClient = new WebSocketStompClient(standardWebSocketClient);
         String dev = "devxiaot.forexmaster.cn/xiaots";
-        String local = "localhost:12306/dev";
-        String url = "ws://" +dev;
+        String local = "localhost:12306/xiaots";
+        String url = "ws://" +local;
 
         try {
             StompSession stompSession = webSocketStompClient.connect(url,headers,
-                    new StompSessionHandlerMyAdapter()).get();
+                    new StompSessionHandlerMyAdapter(null)).get();
 
             stompSession.subscribe("/user/queue/test/send", new StompFrameHandler() {
 

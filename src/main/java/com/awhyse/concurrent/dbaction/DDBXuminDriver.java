@@ -91,6 +91,7 @@ public class DDBXuminDriver {
 	private static void testBasicDataSourceJDBCTemp(final BasicDataSource ds) {
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 		final JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
+		jdbcTemplate.execute("sql");
 		Runnable runnable = new Runnable() {
 
 			@Override

@@ -15,7 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class TestTwoMy {
     static Logger logger = LoggerFactory.getLogger(TestTwoMy.class);
-    static ExecutorService executorService = Executors.newFixedThreadPool(3);
+    public static ExecutorService executorService = Executors.newFixedThreadPool(3);
     static volatile  int  order = 1;
     static volatile  int  index = 0;
     public static void main(String[] args) {

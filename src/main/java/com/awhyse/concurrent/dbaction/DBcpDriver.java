@@ -23,9 +23,9 @@ mysql.pass=pris_test_18888
  *@author hzxumin15
  *2015-4-21下午3:49:32
  */
-public class DDBXuminDriver {
+public class DBcpDriver {
 
-	static Logger logger = LoggerFactory.getLogger(DDBXuminDriver.class);
+	static Logger logger = LoggerFactory.getLogger(DBcpDriver.class);
 	static Map<String, List<String>>  dataMap = new HashMap<String, List<String>>();
 	static{
 		setDataMap("jdbc:mysql://192.168.4.152/TA_DS_TEST","tqt001","tqt001","test");//172.17.5.71:6000适配层套接字非真实mysql

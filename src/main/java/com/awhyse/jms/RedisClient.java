@@ -138,6 +138,55 @@ public class RedisClient {
         return 0l;
     }
 
+    /**
+     * 对key设置过期时间，或者更新这个时间。 对一级Key都可行
+     * @param key
+     * @param second 秒数
+     * @return
+     */
+    public static Long expire(String key,int second) {
+        Long value = null;
+        Jedis jedis = null;
+        try {
+            pool = getPool();
+            jedis = pool.getResource();
+            value = jedis.expire(key,second);
+//            jedis.ttl(key)//查看生存时间
+        } catch (Exception e) {
+            logger.info("+++++++++"+e.getMessage());
+            e.printStackTrace();
+        } finally {
+            // 返还到连接池,新的方法
+            if(jedis!=null)
+                jedis.close();
+        }
+        return value;
+    }
+
+    /**
+     * 判断key是否存在
+     * @param key
+     * @return
+     */
+    public static boolean exists(String key) {
+        boolean value = false;
+        Jedis jedis = null;
+        try {
+            pool = getPool();
+            jedis = pool.getResource();
+            value = jedis.exists(key);
+//            jedis.ttl(key)//查看生存时间
+        } catch (Exception e) {
+            logger.info("+++++++++"+e.getMessage());
+            e.printStackTrace();
+        } finally {
+            // 返还到连接池,新的方法
+            if(jedis!=null)
+                jedis.close();
+        }
+        return value;
+    }
+
     public static Object getex(String key) {
         Object result = null;
         Jedis jedis = null;

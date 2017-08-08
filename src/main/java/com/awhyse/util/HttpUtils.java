@@ -2,16 +2,16 @@ package com.awhyse.util;
 
 import com.alibaba.fastjson.JSON;
 import okhttp3.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class HttpUtils {
 
+	static Logger logger = LoggerFactory.getLogger(HttpUtils.class);
 	private static final MediaType MEDIA_TYPE_JSON = MediaType
 			.parse("application/x-www-form-urlencoded; charset=utf-8");// mdiatype
 																		// 这个需要和服务端保持一致
@@ -62,26 +62,38 @@ public class HttpUtils {
 		
 		String url = "http://localhost:8880/";
 //		String retStr =  NetUtil.sendPost("http://localhost:8080/im/xiaotDoScore", str);
-		postJson(url, str);
+		Map<String,String> mapHeards = new HashMap<>(2);
+		postJson(url,mapHeards,mapTar);
 	}
+
 	/**
-	 * 
-	 * @param url  "http://192.168.0.102:8080/TestProject/JsonServlet"
-	 * @param json
-	 * author:xumin 
-	 * 2016-12-16 下午1:32:15
+	 *
+	 * @param url 请求的地址
+	 * @param mapHeards  可以为null
+	 * @param mapBody  不能为null,请求体
+	 * @return 成功就返回   失败返回null
 	 */
-	public static String postJson(String url,String json) {
+	public static String postJson(String url,Map<String,String> mapHeards,Map<String, Object> mapBody) {
+		//注意这个超时时间
 		OkHttpClient okHttpClient = new OkHttpClient().newBuilder().
-				connectTimeout(5, TimeUnit.SECONDS)
-				.readTimeout(5,TimeUnit.SECONDS)
+				connectTimeout(7, TimeUnit.SECONDS)
+				.readTimeout(7,TimeUnit.SECONDS)
+				.writeTimeout(7,TimeUnit.SECONDS)
 				.build();
 		// 创建一个RequestBody(参数1：数据类型 参数2传递的json串)
-		RequestBody requestBody = RequestBody.create(JSONType, json);
+		RequestBody requestBody = RequestBody.create(JSONType,JSON.toJSONString(mapBody));
 		// 创建一个请求对象
-		Request request = new Request.Builder()
-				.url(url)
-				.post(requestBody).build();
+		Request request = null;
+		if(mapHeards==null) {
+			request = new Request.Builder()
+					.url(url)
+					.post(requestBody).build();
+		}else{
+			request = new Request.Builder()
+					.url(url)
+					.headers(SetHeaders(mapHeards))
+					.post(requestBody).build();
+		}
 		// 发送请求获取响应
 		try {
 			Response response = okHttpClient.newCall(request).execute();
@@ -97,6 +109,26 @@ public class HttpUtils {
 		}
 		return null;
 
+	}
+	//----------------------------------------------------------------------
+
+	/**
+	 * http请求头，string string的入参map
+	 * @param headersParams
+	 * @return
+	 */
+	private static Headers SetHeaders(Map<String, String> headersParams){
+		Headers headers=null;
+		Headers.Builder headersbuilder=new Headers.Builder();
+
+		Iterator<String> iterator = headersParams.keySet().iterator();
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			headersbuilder.add(key, headersParams.get(key));
+//			logger.info("get http", "get_headers==="+key+"===="+headersParams.get(key));
+		}
+		headers = headersbuilder.build();
+		return headers;
 	}
 
 }

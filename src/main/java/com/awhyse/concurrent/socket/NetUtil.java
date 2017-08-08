@@ -1,19 +1,14 @@
 package com.awhyse.concurrent.socket;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 /**
  * 
  * @author xumin 2015-6-17 上午11:57:20
@@ -32,6 +27,7 @@ public class NetUtil {
 //		bean.setGoodLuckCoinNum(12);
 //		bean.setScoreNum(45);
 //		Map<String, String> map = ob.raise(bean);
+        String strs = "{\"tradedate\":\"2017-05-18\",\"keytime\":\"May 18, 2017 4:09:00 PM\",\"datatime\":\"May 18, 2017 4:09:59 PM\",\"symbol\":\"00700.HK\",\"open\":264.0,\"high\":264.0,\"low\":264.0,\"close\":264.0,\"volume\":1400400,\"turnover\":1.436683415E10,\"totalVolume\":5.4039295E7}";
 //		System.err.println(map.toString());
     }
     /**

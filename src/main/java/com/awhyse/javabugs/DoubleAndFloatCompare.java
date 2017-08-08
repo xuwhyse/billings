@@ -4,7 +4,6 @@ import com.awhyse.util.DoubleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,20 +15,19 @@ import java.util.List;
 public class DoubleAndFloatCompare {
     static Logger logger = LoggerFactory.getLogger(DoubleAndFloatCompare.class);
     public static void main(String[] args) {
-        sort();
-//        errorTest1();
+//        sort();
+        errorTest1();
 
     }
 
     private static void errorTest1() {
-//        System.err.println((3.3==3.3);//false
+        System.err.println(3*1.1);//false
         //----------------------------------
         System.err.println("++："+ DoubleUtils.add(3,1.1));
         System.err.println("--："+DoubleUtils.sub(3,1.1));
         System.err.println("**："+DoubleUtils.mul(3,1.1));
         System.err.println("//："+DoubleUtils.div(3,1.1));
         //-------------------------------
-        BigDecimal d1 = new BigDecimal(Double.toString(3.3));
     }
 
     private static void sort() {

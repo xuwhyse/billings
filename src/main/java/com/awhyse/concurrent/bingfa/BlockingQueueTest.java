@@ -5,7 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -29,11 +31,43 @@ public class BlockingQueueTest {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 //		simpleTest();
 //		springMVCMNTest();
-		poolAndPut();
+//		poolAndPut();
+		queueOpts();
+	}
+
+	private static void queueOpts() throws InterruptedException {
+		BlockingQueue<Integer> blockingQueueShare = new LinkedBlockingQueue<Integer>();
+		for(int i=0;i<20;i++)
+			blockingQueueShare.put(i);
+
+		ExecutorServiceTest.executorService.execute(()->{
+			while(true) {
+				try {
+					Thread.sleep(3000);
+					for (int i = 0; i < 9; i++)
+						blockingQueueShare.put(i);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+
+		});
+
+		while(true) {
+			List<Integer> list = new ArrayList<>(7);
+			blockingQueueShare.drainTo(list,7);
+			for (Integer i : list) {
+				logger.info("_" + i);
+			}
+			logger.info("size :"+blockingQueueShare.size());
+			if(blockingQueueShare.isEmpty()){
+				logger.info("_" + blockingQueueShare.take());
+			}
+		}
 	}
 
 	private static void poolAndPut() {

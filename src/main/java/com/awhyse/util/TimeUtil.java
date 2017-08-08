@@ -1,12 +1,18 @@
 package com.awhyse.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class TimeUtil {
 
+	static Logger logger = LoggerFactory.getLogger(TimeUtil.class);
 	static DateFormat formatDate=new SimpleDateFormat("yyyyMMdd");
 	static DateFormat fadeLoginFormatDate=new SimpleDateFormat("yyyy/MM/dd HH:mm");
 	static DateFormat formatYear=new SimpleDateFormat("yyyy");
@@ -14,19 +20,19 @@ public class TimeUtil {
 	static DateFormat formatTime=new SimpleDateFormat("HH:mm:ss");
 	static DateFormat formatTime2=new SimpleDateFormat("HHmmss");
 	/**
+	 * String dateInString = "Jul 3, 2017 10:27:00 AM"; formatter.parse(dateInString);
+	 */
+	static SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy h:m:s aa", Locale.ENGLISH);
+	/**
 	 * @param args
 	 * author:xumin 
 	 * 2016-4-22 下午8:01:21
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		// TODO Auto-generated method stub
-		System.err.println(System.currentTimeMillis());
-		long t1 = 1493112203;
-		int t2 = 1000;
-		long time = t1*t2;
-		System.err.println(time);
-		System.err.println(getFadeLoginTimeByLong(time));
-		
+		System.currentTimeMillis();
+		Date date = new Date(150003000*10000);
+		System.out.print(date.toString()+"    "+System.currentTimeMillis());
 	}
 	public static String getYear() {
 		Date date=new Date();

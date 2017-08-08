@@ -9,6 +9,13 @@ import org.slf4j.LoggerFactory;
  */
 public class AopTestImpl implements AopTestI {
     static Logger logger = LoggerFactory.getLogger(AopTestImpl.class);
+
+    public static void main(String[] args) {
+        double aa = 0.0;
+        if(aa==0){
+            logger.info("dsffd");
+        }
+    }
     @Override
     public int a() {
         logger.info("a did");

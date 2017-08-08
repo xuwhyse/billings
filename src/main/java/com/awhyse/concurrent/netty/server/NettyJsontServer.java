@@ -1,5 +1,6 @@
 package com.awhyse.concurrent.netty.server;
 
+import com.awhyse.concurrent.bingfa.ExecutorServiceTest;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -11,11 +12,9 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import io.netty.handler.timeout.IdleStateHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -25,6 +24,7 @@ public class NettyJsontServer {
 
 	static final boolean SSL = System.getProperty("ssl") != null;
 	public static int port = 8870;
+	private  static final Logger log = LoggerFactory.getLogger(NettyJsontServer.class);
 
 	public NettyJsontServer(int port) {
 		this.port = port;
@@ -32,13 +32,13 @@ public class NettyJsontServer {
 
 	public void init() {
 		// 处理I/O操作的多线程事件环 即为Netty4里的线程池
-		EventLoopGroup bossGroup = new NioEventLoopGroup(1);// 接收发来的连接请求
+		EventLoopGroup bossGroup = new NioEventLoopGroup(5);// 接收发来的连接请求
 		/*
 		 * DEFAULT_EVENT_LOOP_THREADS = Math.max(1, SystemPropertyUtil.getInt(
 		 * "io.netty.eventLoopThreads", Runtime.getRuntime()
 		 * .availableProcessors() * 2)); 源码默认值
 		 */
-		EventLoopGroup workerGroup = new NioEventLoopGroup();// 用于处理boss接受并且注册给worker的连接中的信息
+		EventLoopGroup workerGroup = new NioEventLoopGroup(5);// 用于处理boss接受并且注册给worker的连接中的信息
 		// Configure SSL.
 		final SslContext sslCtx;
 
@@ -75,6 +75,10 @@ public class NettyJsontServer {
 					// LineBasedFrameDecoder(1024));//没有这个，就会发过来什么，收到什么
 					p.addLast(new StringDecoder());// addLast添加到队列ChannelHandler尾部
 					p.addLast(new StringEncoder());
+					//启动读线程和写线程去观测被调用的read，write的次数。然而如果在read里面有个长任务卡住
+					p.addLast("idleStateHandler", new IdleStateHandler(HeartBeatHandler.readerIdleTimeSeconds,
+							HeartBeatHandler.writerIdleTimeSeconds, 0));
+					p.addLast("idleHandler", new HeartBeatHandler());
 					p.addLast(new JsonServerHandler());
 				}
 			});
@@ -109,29 +113,19 @@ public class NettyJsontServer {
 
 class JsonServerHandler extends ChannelInboundHandlerAdapter {
 
-	//这样能防止超长字符窜多次调用，乱码的问题
-	Map<String, Map<String, Object>> packageMap = new HashMap<String, Map<String, Object>>(
-			100);
-
+	private  static final Logger log = LoggerFactory.getLogger(JsonServerHandler.class);
 	// ======这两个方法可以管理连接================
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
 		String id = ctx.channel().id().asShortText();// 这个id可以做key，区分不同连线
-		Map<String, Object> map = new HashMap<String, Object>(2);
-		map.put("length", 0);
-		List<Object>  list = new ArrayList<Object>(5);
-		map.put("list", list);
-		packageMap.put(id, map);
-		System.out.println("channelRegistered:" + id);// channelRegistered:a86f543a
+		log.info("channelRegistered:" + id);// channelRegistered:a86f543a
 	}
 
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
 		String id = ctx.channel().id().asShortText();// 这个id可以做key，区分不同连线
-		packageMap.remove(id);
-		System.out.println("channelUnregistered:" + id);// channelUnregistered:a86f543a
+		log.info("channelUnregistered:" + id);// channelUnregistered:a86f543a
 	}
-
 	// ===================================================
 	/**
 	 * 注意这边数据可能接收到的还没完全，channelReadComplete才是接受完全，可以解析了
@@ -145,44 +139,31 @@ class JsonServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 
 		String id = ctx.channel().id().asShortText();// 这个id可以做key，区分不同连线
-		Map<String, Object>  map = packageMap.get(id);
-		int lengthR = (Integer) map.get("length");
-		List<Object>  list = (List<Object>) map.get("list");
-		byte[] obj = msg.toString().getBytes();//获取字节，1byte 1字节
-		int length = lengthR+obj.length;
-		map.put("length", length);
-		list.add(obj);
-		System.out.println("server channelRead:" + id + "  length:" + length);
-		// System.out.println(msg);
+		log.info("<<<<<===========server channelRead:" + id + "  msg:" + msg);
+		ExecutorServiceTest.executorService.submit(()->{
+			try {
+				Thread.currentThread().sleep(9*1000);
+				log.info("========dodo===server channelRead:" + id + "  msg:" + msg);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		});
+
 	}
 
-	@Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
-    	System.err.println("server channelReadComplete");
-    	String id = ctx.channel().id().asShortText();//这个id可以做key，区分不同连线
-    	Map<String, Object>  map = packageMap.get(id);
-    	int lengthR = (Integer) map.get("length");
-		List<Object>  list = (List<Object>) map.get("list");
-		byte[]  bytes = new byte[lengthR];
-		int destPos = 0;
-		for(Object item : list){
-			byte[] tar = (byte[]) item;
-			System.arraycopy(tar, 0, bytes, destPos, tar.length);
-			destPos += tar.length;
-		}
-		System.out.println(new String(bytes));
-		//----清理数据--------------
-		map.put("length", 0);
-		list.clear();
-		//-----------------------
-        ctx.flush();//这句flush后直接把ctx写入的消息池发送给远程客户端
-    }
+//	@Override
+//    public void channelReadComplete(ChannelHandlerContext ctx) {
+//    	System.err.println("server channelReadComplete");
+//        ctx.flush();//这句flush后直接把ctx写入的消息池发送给远程客户端
+//    }
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		// Close the connection when an exception is raised.
-		System.err.println("server exceptionCaught");
+		log.info("server exceptionCaught");
 		cause.printStackTrace();
 		ctx.close();
 	}
+
 }
+//===================================

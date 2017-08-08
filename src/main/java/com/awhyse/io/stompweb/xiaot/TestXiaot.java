@@ -3,8 +3,6 @@ package com.awhyse.io.stompweb.xiaot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,7 +28,6 @@ public class TestXiaot {
     static String gameId = "0e08e9c3-f9b6-4fe5-a32c-7bce31d8b831";
     static int clientSize = 1;
     //--------------------------------------------------
-    static List<ClientXiaot>  listXiaot = new ArrayList<>(500);
 
     public static void main(String[] args) {
         String userId = "userId_";
@@ -48,7 +45,6 @@ public class TestXiaot {
     private static void newClient(String gameId, String userId, int userType, String headimgurl, String userName) {
 
         ClientXiaot clientXiaot = new ClientXiaot(gameId,userId,userType,headimgurl,userName);
-        listXiaot.add(clientXiaot);
         clientXiaot.connect(currentEnv);
 
 //        clientXiaot.subReadyInfoTest();

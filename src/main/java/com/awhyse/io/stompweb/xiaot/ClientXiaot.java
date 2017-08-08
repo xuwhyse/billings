@@ -65,7 +65,7 @@ public class ClientXiaot {
         te.setThreadNamePrefix("wss-heartbeat-thread-");
         te.initialize();
         int heartBeatTime = 1000*10;
-//        webSocketStompClient.setDefaultHeartbeat(new long[]{heartBeatTime,heartBeatTime});//设置心跳时间
+        webSocketStompClient.setDefaultHeartbeat(new long[]{heartBeatTime,heartBeatTime});//设置心跳时间
         //new DefaultManagedTaskScheduler()
         webSocketStompClient.setTaskScheduler(te); // for heartbeats
         stompSessionHandler = new StompSessionHandlerMyAdapter(this);

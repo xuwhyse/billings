@@ -97,38 +97,62 @@ public class Quote {
 
     //==================================================
     public static Quote getQuoteByMap(HashMap<Integer, Object> in) {
+        System.out.println(in);//测试
+
+
+        int multiplier = 10000;
+        if(in.get(106)!=null){
+            multiplier = Integer.parseInt(in.get(106).toString());
+        }
         Quote item = new Quote();
         String symbol = new String((byte[])in.get(FDTFields.WindSymbolCode), CharsetUtil.UTF_8);
         item.symbol = symbol;
         item.timeRec = System.currentTimeMillis();
-        if(in.get(FDTFields.BidPrice)!=null)
-            item.bid = (long) in.get(FDTFields.BidPrice)*1.0/10000;
-        if(in.get(FDTFields.AskPrice)!=null)
-            item.ask = (long) in.get(FDTFields.AskPrice)*1.0/10000;
+        Object temp = in.get(FDTFields.BidPrice);
+        if(temp!=null)
+            item.bid = Long.parseLong(temp.toString())*1.0/multiplier;
+        temp = in.get(FDTFields.AskPrice);
+        if(temp!=null)
+            item.ask = Long.parseLong(temp.toString())*1.0/multiplier;
 //        item.bidVol = (double) in.get(FDTFields.BidVolume);
 //        item.askVol = (double) in.get(FDTFields.AskVolume);
-        if(in.get(FDTFields.Last)!=null)
-            item.last = (long)in.get(FDTFields.Last)*1.0/10000;//31：last
+        temp = in.get(FDTFields.Last);
+        if(temp!=null)
+            item.last = Long.parseLong(temp.toString())*1.0/multiplier;//31：last
 //        item.lastVol = (double) in.get(FDTFields.v);
-        if(in.get(FDTFields.Turnover)!=null)
-            item.turnover = (long) in.get(FDTFields.Turnover);//13
-        if(in.get(FDTFields.Volume)!=null)
-            item.totalVolume = (long) in.get(FDTFields.Volume);//14
+        temp = in.get(FDTFields.Turnover);
+        if(temp!=null)
+            item.turnover = Long.parseLong(temp.toString());//13
+        temp = in.get(FDTFields.Volume);
+        if(temp!=null)
+            item.totalVolume = Long.parseLong(temp.toString());//14
 
-        if(in.get(FDTFields.High)!=null)
-            item.high = (long)in.get(FDTFields.High)*1.0/10000;//32
-        if(in.get(FDTFields.Low)!=null)
-            item.low = (long) in.get(FDTFields.Low)*1.0/10000;//33
-        if(in.get(FDTFields.Open)!=null)
-            item.open = (long) in.get(FDTFields.Open)*1.0/10000;//25
-        if(in.get(FDTFields.PreClose)!=null)
-            item.preClose = (long) in.get(FDTFields.PreClose)*1.0/10000;//40
+        temp = in.get(FDTFields.High);
+        if(temp!=null)
+            item.high = Long.parseLong(temp.toString())*1.0/multiplier;//32
+        temp = in.get(FDTFields.Low);
+        if(temp!=null)
+            item.low = Long.parseLong(temp.toString())*1.0/multiplier;//33
+        temp = in.get(FDTFields.Open);
+        if(temp!=null)
+            item.open = Long.parseLong(temp.toString())*1.0/multiplier;//25
+        temp = in.get(FDTFields.PreClose);
+        if(temp!=null)
+            item.preClose = Long.parseLong(temp.toString())*1.0/multiplier;//40
 
         if(in.get(FDTFields.BidPriceArray)!=null) {
+//            Object obTemp = in.get(FDTFields.BidPriceArray);
             List<Long> temps = (List<Long>) in.get(FDTFields.BidPriceArray);
             List<Double> listTmep = new ArrayList<>(temps.size());
-            for(int i=0;i<temps.size();i++)
-                listTmep.add(temps.get(i)*1.0/10000);
+            for(int i=0;i<temps.size();i++) {
+                Object tempOb = temps.get(i);
+                long tempL = Long.parseLong(tempOb.toString());
+                if(tempL!=0) {
+                    listTmep.add(temps.get(i) * 1.0 / multiplier);
+                }else{
+                    listTmep.add(0.0);
+                }
+            }
             item.bids = listTmep;
         }
         if(in.get(FDTFields.BidVolumeArray)!=null) {
@@ -137,8 +161,15 @@ public class Quote {
         if(in.get(FDTFields.AskPriceArray)!=null) {
             List<Long> temps = (List<Long>) in.get(FDTFields.AskPriceArray);
             List<Double> listTmep = new ArrayList<>(temps.size());
-            for(int i=0;i<temps.size();i++)
-                listTmep.add(temps.get(i)*1.0/10000);
+            for(int i=0;i<temps.size();i++) {
+                Object tempOb = temps.get(i);
+                long tempL = Long.parseLong(tempOb.toString());
+                if(tempL!=0) {
+                    listTmep.add(temps.get(i) * 1.0 / multiplier);
+                }else{
+                    listTmep.add(0.0);
+                }
+            }
             item.asks = listTmep;
         }
         if(in.get(FDTFields.AskVolumeArray)!=null) {

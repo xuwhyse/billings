@@ -1,5 +1,6 @@
 package com.awhyse.util;
 
+import com.billings.billingsystem.bean.util.MenuBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,10 +31,16 @@ public class TimeUtil {
 	 */
 	public static void main(String[] args) throws ParseException {
 		// TODO Auto-generated method stub
-		System.currentTimeMillis();
-		Date date = new Date(150003000*10000);
-		System.out.print(date.toString()+"    "+System.currentTimeMillis());
+		MenuBean menuBean = new MenuBean();
+		getBean(menuBean);
+		System.err.print("");
 	}
+
+	private static void getBean(MenuBean menuBean) {
+//		menuBean = new MenuBean();
+		menuBean.setMenuid("dfdg");
+	}
+
 	public static String getYear() {
 		Date date=new Date();
 		String time=formatYear.format(date);

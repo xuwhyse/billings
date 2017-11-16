@@ -1,6 +1,7 @@
 package com.awhyse.gateway;
 
 import com.awhyse.gateway.server.MkGWMsgReciver;
+import com.awhyse.gateway.server.impl.MkGWClientIMpl;
 import com.awhyse.gateway.transport.FDTFrameDecoder;
 import com.awhyse.gateway.transport.FDTFrameEncoder;
 import io.netty.bootstrap.Bootstrap;
@@ -14,9 +15,6 @@ import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +29,6 @@ public class MsgPackLiteDataClient {
 	private static String[] codeTableNeededMarkets = null;
 
 	private Channel channel = null;
-	List<String> listOrder = Collections.synchronizedList(new ArrayList<>(10));//;
 	public String gatewayHost;
 	public Integer gatewayPort;
 	private Integer buffingSize;
@@ -41,7 +38,9 @@ public class MsgPackLiteDataClient {
 	public volatile int clientState = 0;
 	public MsgPackLiteDataClient client = null;
 	public MkGWMsgReciver mkGWMsgReciver = null;
+	public MkGWClientIMpl mkGWClient = null;
 	public ChannelHandlerContext ctx;//写数据的,由底层返回填写
+
 
 	public MsgPackLiteDataClient() {
 		client = this;
@@ -130,22 +129,16 @@ public class MsgPackLiteDataClient {
 	 * @param str
 	 */
 	public  void sendRequest(String str) {
-		if(ctx==null){
-			//记录指令
-			listOrder.add(str);
-		}else{
-			ctx.writeAndFlush(str);
-			log.info(str);
-		}
+		ctx.writeAndFlush(str);
+		log.info(str);
 	}
 	/**
 	 * 激活回调，可以发命令了
 	 */
 	public void onActive() {
-		for(int i=0;i<listOrder.size();i++){
-			sendRequest(listOrder.get(i));
+		if(mkGWMsgReciver!=null){
+			mkGWMsgReciver.onActive();
 		}
-		listOrder.clear();
 	}
 	public static String addHashTail(String str,boolean bAddHash)
 	{

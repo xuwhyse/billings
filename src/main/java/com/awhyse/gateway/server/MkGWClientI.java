@@ -8,8 +8,6 @@ import java.util.List;
  * on 2017/8/4 17:31
  */
 public interface MkGWClientI {
-    int reqSubSymbols(List<String> listSymbol);
-    int reqUnSubSymbols(List<String> listSymbol);
     /**
      * @param ip
      * @param port
@@ -18,5 +16,18 @@ public interface MkGWClientI {
      * @param mkGWMsgReciver
      * @return
      */
-    int tryConnect(String ip, int port, String account, String pwd, MkGWMsgReciver mkGWMsgReciver);
+    int reqConnect(String ip, int port, String account, String pwd, MkGWMsgReciver mkGWMsgReciver);
+
+    /**
+     * 连接成功后，可以请求login
+     * @return
+     */
+    int reqLogin();
+    /**
+     * 批量订阅
+     * @param listSymbol
+     * @return
+     */
+    int reqSubSymbols(List<String> listSymbol);
+    int reqUnSubSymbols(List<String> listSymbol);
 }

@@ -15,8 +15,8 @@ import java.lang.reflect.Proxy;
  */
 public class CglibAndOtherMain {
     public static void main(String[] args) {
-        dtdl();
-//        cglibTest();
+//        dtdl();
+        cglibTest();
     }
 
     /**
@@ -43,7 +43,8 @@ public class CglibAndOtherMain {
                 target.getClass().getClassLoader(),
                 target.getClass().getInterfaces(),
                 handler);
+//        proxy.toString();
         proxy.a();
-        proxy.b();
+//        proxy.b();
     }
 }

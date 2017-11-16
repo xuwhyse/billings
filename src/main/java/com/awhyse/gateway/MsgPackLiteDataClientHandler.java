@@ -101,9 +101,17 @@ public class MsgPackLiteDataClientHandler extends ChannelInboundHandlerAdapter {
 				processData(in,false);
 			}
 		}else{
-			log.error("unknow read :"+arg1.toString());
+			String in = null;
+			if(arg1 instanceof String) {
+				in = (String)arg1;
+			} else if(arg1 instanceof byte[]){
+				in = new String((byte[])arg1,"UTF-8");
+			}else {
+				log.error("unknow read :" + arg1.toString());
+			}
+			client.mkGWClient.processOrder(in);
 		}
-		client.mkGWMsgReciver.onMsg(arg1);
+//		client.mkGWMsgReciver.onMsg(arg1);//测试的
 	}
 	/**
 	 * 处理上游gateway打过来的消息。比如分发行情到各订阅客户端
@@ -121,7 +129,7 @@ public class MsgPackLiteDataClientHandler extends ChannelInboundHandlerAdapter {
 			int iPacketType = ((Number)ob).intValue();
 
 			switch(iPacketType) {
-			case FDTFields.PacketArray :
+			case FDTFields.PacketArray : //2001
 				//如果是PacketArray的包，就拆开，并解析
 				ArrayList<HashMap<Integer,Object>> lst = (ArrayList<HashMap<Integer,Object>>)in.get(FDTFields.ArrayOfPacket);
 				if(lst != null) {
@@ -130,11 +138,12 @@ public class MsgPackLiteDataClientHandler extends ChannelInboundHandlerAdapter {
 					}					
 				}
 				break;
-			case FDTFields.WindIndexData :
+			case FDTFields.WindIndexData : //2016
 			case FDTFields.WindMarketData :	//2015这个是A股的类型，iPacketType
-			case FDTFields.HKStockData:
+			case FDTFields.HKStockData: //2028
 				if(in.containsKey(FDTFields.WindSymbolCode)) {					
 					String symbol = new String((byte[])in.get(FDTFields.WindSymbolCode), CharsetUtil.UTF_8);
+					//-------保留元数据---------------
 					HashMap<Integer,Object> mp = mapQuotation.get(symbol);
 					if(mp == null) {
 						mapQuotation.put(symbol, in);
@@ -142,9 +151,9 @@ public class MsgPackLiteDataClientHandler extends ChannelInboundHandlerAdapter {
 					} else {
 						mp.putAll(in);
 					}
+					//-------------------------
 					Quote quote = Quote.getQuoteByMap(mp);
-					System.err.println(quote.toString());
-//					client.mkGWMsgReciver.onQupte(arg1);
+					client.mkGWMsgReciver.onQupte(quote);
 				}
 				break;
 //			case FDTFields.WindFutureData :
@@ -160,15 +169,15 @@ public class MsgPackLiteDataClientHandler extends ChannelInboundHandlerAdapter {
 //				}
 //				break;
 			case FDTFields.WindCodeTable :
-				processCodeTable(in);
+//				processCodeTable(in);
 				break;				
-			case FDTFields.WindCodeTableResult :
-				//这个是获取codetable的
-				processCodeTableResult(in);				
+			case FDTFields.WindCodeTableResult ://2026
+				//这个是获取codetable的,新连上就会返回, 比如HK
+//				processCodeTableResult(in);
 				break;	
-			case FDTFields.SnapShotEnds :
+			case FDTFields.SnapShotEnds : //2027
 				break;
-			case FDTFields.Heartbeat :
+			case FDTFields.Heartbeat : //5
 				//心跳
 				break;
 			}
@@ -221,6 +230,8 @@ public class MsgPackLiteDataClientHandler extends ChannelInboundHandlerAdapter {
 	}
 	public static void processCodeTableResult(HashMap<Integer,Object> in) {
 		String market = null;
+		market = new String((byte[])in.get(FDTFields.SecurityExchange), CharsetUtil.UTF_8);
+		System.err.println(market);
 //		CascadingCodeTable cct =  null;
 //		long codesHashCode = 0;
 //		int dataCount = 0;

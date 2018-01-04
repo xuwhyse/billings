@@ -35,35 +35,22 @@ public class HttpUtils {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Map<String, Object> mapTar = new HashMap<String, Object>(8);
-		mapTar.put("returnRate", 0.0);
-		mapTar.put("volatility", 0);
-		mapTar.put("market", "FC");
-		mapTar.put("fdtId", "test");
+//		mapTar.put("cmd", "c=history('002415','2017-11-14');return c");
+		mapTar.put("cmd", "a=15\n" +
+				"if(a>10):\n" +
+				"    a=a-8\n" +
+				"else:\n" +
+				"    a=a-4\n" +
+				"return a");
 		
-		mapTar.put("exchangeCode", "DCE");
-		mapTar.put("symbol", "A");
-		mapTar.put("key", "DCE#A#2016-05-19");
-		
-		List<Map<String, Object>>  actions = new ArrayList<Map<String,Object>>(2);
-		mapTar.put("actions", actions);
-		
-		Map<String, Object> map = new HashMap<String, Object>(3);
-		map.put("timestamp", 1482912911901l);
-		map.put("side", "buy");
-		map.put("price", 878.5);
-		
-//		actions.add(map);
-		
-		
-		
-		String str = JSON.toJSONString(mapTar);
+//		String str = JSON.toJSONString(mapTar);
 //		str = URLEncoder.encode(str);
-		System.err.println(str);
+//		System.err.println(str);
 		
-		String url = "http://localhost:8880/";
+		String url = "http://localhost:8888/service";
 //		String retStr =  NetUtil.sendPost("http://localhost:8080/im/xiaotDoScore", str);
 		Map<String,String> mapHeards = new HashMap<>(2);
-		postJson(url,mapHeards,mapTar);
+		postJson(url,null,mapTar);
 	}
 
 	/**

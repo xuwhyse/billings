@@ -1,8 +1,6 @@
 package com.awhyse.concurrent.netty.client;
 
-import com.alibaba.fastjson.JSON;
 import com.awhyse.concurrent.netty.server.HeartBeatHandler;
-import com.awhyse.concurrent.netty.server.NettyJsontServer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -10,6 +8,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -17,8 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -29,7 +27,7 @@ public class JsonClient {
 	Logger logger = LoggerFactory.getLogger(JsonClient.class);
 	final boolean SSL = System.getProperty("ssl") != null;
 	final String HOST = System.getProperty("host", "127.0.0.1");
-	final int PORT = NettyJsontServer.port;
+	final int PORT = 8888;
 	private String title;
 	/**
 	 * 0:断开 1：连接
@@ -41,7 +39,7 @@ public class JsonClient {
 	public JsonClient(String title) {
 		this.title = title;
 		client = this;
-		watchTDStratr();
+//		watchTDStratr();
 	}
 
 	private void watchTDStratr() {
@@ -123,6 +121,7 @@ public class JsonClient {
                         if (sslCtx != null) {
                             p.addLast(sslCtx.newHandler(ch.alloc(), HOST, PORT));
                         }
+						p.addLast(new LoggingHandler(LogLevel.INFO));//注册日志打印,开启可以看到更多解析信息
 //                         p.addLast(new LineBasedFrameDecoder(1024));
 	   	                 p.addLast(new StringDecoder());//addLast添加到队列ChannelHandler尾部
 	   	                 p.addLast(new StringEncoder());
@@ -130,7 +129,7 @@ public class JsonClient {
 						p.addLast("idleStateHandler", new IdleStateHandler(HeartBeatHandler.readerIdleTimeSeconds,
 								HeartBeatHandler.writerIdleTimeSeconds, 0));
 						p.addLast("idleHandler", new HeartBeatHandler());
-						p.addLast(new ReconnetHandler(client));
+//						p.addLast(new ReconnetHandler(client));
 						p.addLast(new JsonClientHandler(title));
                     }
                 });
@@ -169,7 +168,7 @@ class JsonClientHandler extends ChannelInboundHandlerAdapter {
 //    	String msg = JsonUtil.ObToJson(map);
 ////    	msg +="\t\n";
 //        ctx.writeAndFlush(msg);//向服务器写入数据
-        doJobTest(ctx);
+//        doJobTest(ctx);
     }
  
  
@@ -204,9 +203,9 @@ class JsonClientHandler extends ChannelInboundHandlerAdapter {
     	try{
 	    	if(msg instanceof String){
 	    		String str = (String) msg;
-	    		Map<String, Object>  map = new HashMap<String, Object>(8);
-	    		map = JSON.parseObject(str, map.getClass());
-				logger.info(map.toString());
+//	    		Map<String, Object>  map = new HashMap<String, Object>(8);
+//	    		map = JSON.parseObject(str, map.getClass());
+				logger.info(str);
 
 //				Thread.currentThread().sleep(5*1000);
 	    	}

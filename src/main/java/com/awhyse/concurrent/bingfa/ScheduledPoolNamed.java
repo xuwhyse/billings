@@ -43,5 +43,6 @@ public class ScheduledPoolNamed {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor(threadFactory);
         // 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间
         service.scheduleAtFixedRate(runnable, 5, 2, TimeUnit.SECONDS);
+//        scheduleWithFixedDelay：上个任务结束后，再等一段时间执行
     }
 }

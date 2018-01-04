@@ -27,7 +27,7 @@ public class CglibAndOtherMain {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(AopCglib.class);//先设置超类,使用继承生成代理
         enhancer.setCallback(new CGlibMethodInterceptor());
-        AopCglib aopCglib = (AopCglib)enhancer.create();
+        AopCglib aopCglib = (AopCglib)enhancer.create();//
         aopCglib.a();//被拦截代理
         aopCglib.b();//能调用，但是调用了超类的方法，没有被切面拦截代理
     }

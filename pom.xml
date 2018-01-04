@@ -376,6 +376,13 @@
 			<version>5.5.2</version>
 		</dependency>
 
+		<!--fast序列化和反序列化+step协议-->
+		<dependency>
+			<groupId>org.openfast</groupId>
+			<artifactId>openfast</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
 
 	</dependencies>
 	

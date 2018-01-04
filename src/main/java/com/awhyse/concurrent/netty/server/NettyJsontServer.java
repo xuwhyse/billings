@@ -50,7 +50,6 @@ public class NettyJsontServer {
 			} else {
 				sslCtx = null;
 			}
-
 			ServerBootstrap bootstrap = new ServerBootstrap();// 这个是ServerBootstrap，跟普通的不一样
 			bootstrap.group(bossGroup, workerGroup);
 			bootstrap.channel(NioServerSocketChannel.class);

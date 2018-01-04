@@ -38,7 +38,6 @@ public class JsonWSClient {
 	}
 
 	public void init() throws Exception{
-		// TODO Auto-generated method stub
 		final SslContext sslCtx;
         if (SSL) {
             sslCtx = SslContext.newClientContext(InsecureTrustManagerFactory.INSTANCE);

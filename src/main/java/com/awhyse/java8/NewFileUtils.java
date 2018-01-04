@@ -30,8 +30,10 @@ public class NewFileUtils {
         Files.write(path,listStr);//写入几行
 
         Files.write(path,bytesFile);//写入文件
+//        Files.write(path,array, StandardOpenOption.APPEND);//追加
 
         Files.write(path,listStr, StandardOpenOption.APPEND);//追加
+        Files.write(path,"\r\n".getBytes(), StandardOpenOption.APPEND);//换行
 
     }
 }

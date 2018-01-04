@@ -21,7 +21,7 @@ public class ObjectClient {
 
 	static final boolean SSL = System.getProperty("ssl") != null;
     static final String HOST = System.getProperty("host", "127.0.0.1");
-    static final int PORT = Integer.parseInt(System.getProperty("port", "8870"));
+    static final int PORT = Integer.parseInt(System.getProperty("port", "8888"));
 
 	/**
 	 * author:xumin 
@@ -88,7 +88,6 @@ class HelloWorldClientHandler extends ChannelInboundHandlerAdapter {
     	System.err.println("channelRead");
     	System.err.println(msg);
     	ctx.write("client write:1");
-    	ctx.write("client write:2");
     }
  
  

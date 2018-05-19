@@ -3,7 +3,6 @@ package com.awhyse.gateway.transport;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import net.asdfa.msgpack.MsgPack;
 
 import java.util.List;
 
@@ -44,65 +43,65 @@ public class FDTFrameDecoder extends ByteToMessageDecoder {
 	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-		while(in.readableBytes() > (FDTPacket.PKT_HEAD_SIZE + FDTPacket.PKT_TAIL_SIZE)) {
-			//packet_head(5) + packet_tail(1)
-		
-		
-			in.markReaderIndex();
-			byte head_byte = in.readByte();
-			if(head_byte != FDTPacket.PKT_LEAD) {	
-				iReceivedBytes += 1;
-				iDropBytes += 1;
-				continue; //discard head byte that is not 0x02;
-			}
-			
-
-			int packetlen_hi = unsignedByteToInt(in.readByte());
-			int packetlen_low = unsignedByteToInt(in.readByte());
-			int packetlen = packetlen_low + packetlen_hi*256;
-			if(in.readableBytes() < (packetlen + FDTPacket.PKT_TAIL_SIZE)) {			
-				in.resetReaderIndex(); //more data needed;
-				break;
-			}
-			
-			byte byVer = in.readByte();
-			byte byPktNo = in.readByte();
-			byte byIsCompressed = in.readByte();//这个是压缩码标识
-			byte[] body_buf = new byte[packetlen - 3];
-			in.readBytes(body_buf);
-			byte tail_byte = in.readByte();
-			
-							
-			if(tail_byte != FDTPacket.PKT_END) {
-				//discard tail byte that is not 0x03, skill one byte, keep checking head byte(0x02)
-				in.resetReaderIndex();
-				in.readByte();
-				iReceivedBytes += 1;
-				iDropBytes += 1;
-				continue; 
-			}
-			
-			iPacketLen = packetlen + 4;
-			iReceivedBytes += iPacketLen; 
-			if(byIsCompressed == 0) {
-				try {
-					Object obj = MsgPack.unpack(body_buf);			
-					out.add(obj);
-				} catch(Exception e) {
-					throw new MsgPackException("Exception occurs at Unpack normal packet");
-				}
-			} else {
-				byte[] decompBuf = CompressUtil.decompress(body_buf);
-				try {
-					out.add(MsgPack.unpack(decompBuf));
-				} catch(Exception e) {
-					decompBuf = null;
-					throw new MsgPackException("Exception occurs at Unpack compressed packet");
-				}
-				decompBuf = null;
-			}
-			body_buf = null;			
-		}
+//		while(in.readableBytes() > (FDTPacket.PKT_HEAD_SIZE + FDTPacket.PKT_TAIL_SIZE)) {
+//			//packet_head(5) + packet_tail(1)
+//
+//
+//			in.markReaderIndex();
+//			byte head_byte = in.readByte();
+//			if(head_byte != FDTPacket.PKT_LEAD) {
+//				iReceivedBytes += 1;
+//				iDropBytes += 1;
+//				continue; //discard head byte that is not 0x02;
+//			}
+//
+//
+//			int packetlen_hi = unsignedByteToInt(in.readByte());
+//			int packetlen_low = unsignedByteToInt(in.readByte());
+//			int packetlen = packetlen_low + packetlen_hi*256;
+//			if(in.readableBytes() < (packetlen + FDTPacket.PKT_TAIL_SIZE)) {
+//				in.resetReaderIndex(); //more data needed;
+//				break;
+//			}
+//
+//			byte byVer = in.readByte();
+//			byte byPktNo = in.readByte();
+//			byte byIsCompressed = in.readByte();//这个是压缩码标识
+//			byte[] body_buf = new byte[packetlen - 3];
+//			in.readBytes(body_buf);
+//			byte tail_byte = in.readByte();
+//
+//
+//			if(tail_byte != FDTPacket.PKT_END) {
+//				//discard tail byte that is not 0x03, skill one byte, keep checking head byte(0x02)
+//				in.resetReaderIndex();
+//				in.readByte();
+//				iReceivedBytes += 1;
+//				iDropBytes += 1;
+//				continue;
+//			}
+//
+//			iPacketLen = packetlen + 4;
+//			iReceivedBytes += iPacketLen;
+//			if(byIsCompressed == 0) {
+//				try {
+//					Object obj = MsgPack.unpack(body_buf);
+//					out.add(obj);
+//				} catch(Exception e) {
+//					throw new MsgPackException("Exception occurs at Unpack normal packet");
+//				}
+//			} else {
+//				byte[] decompBuf = CompressUtil.decompress(body_buf);
+//				try {
+//					out.add(MsgPack.unpack(decompBuf));
+//				} catch(Exception e) {
+//					decompBuf = null;
+//					throw new MsgPackException("Exception occurs at Unpack compressed packet");
+//				}
+//				decompBuf = null;
+//			}
+//			body_buf = null;
+//		}
 	}
 	
 	public static int unsignedByteToInt(byte b) {  

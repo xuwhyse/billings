@@ -3,7 +3,6 @@ package com.awhyse.concurrent.netty.codec.fddt;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import net.asdfa.msgpack.MsgPack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,76 +41,71 @@ public class FDTFrameEncoder extends MessageToByteEncoder<Object> {
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Object obj, ByteBuf buf) throws Exception { // (3)
 
-		try
-		{
-			//MsgPackParser message = (MsgPackParser)object;
-			//int datalen = message.toByteArray().length;
-			//byte[] data = message.toByteArray();			
-			//String message = (String)obj;
-			//byte[] data = message.getBytes();
-			byte[] data;
-			boolean isCompressed = false;
-			try {
-				data = MsgPack.pack(obj);
-			}
-			catch(Exception e)
-			{
-				throw e;
-			}
-							
-			byte[] compressedData = null;
-			int compressedLen = 0,datalen = data.length + 2 + 1;
-			if(data.length >= FDTPacket.PKT_COMPRESS_SIZE ) {
-				isCompressed = true;				
-				compressedData = CompressUtil.compress(data);
-				compressedLen = compressedData.length; 
-				if(compressedLen >= data.length) {
-					isCompressed = false;
-					compressedData = null;
-				} else {
-					datalen = compressedLen + 2 + 1;
-				}
-			}
-			/*
-			if(obj instanceof String) {
-				data = ((String)obj).getBytes();
-			} else {
-				data = (byte[])obj;
-			}
-			*/
-			
-
-		   	byte byHead0, byHead1, byHead2;
-			byHead0 = (byte)(FDTPacket.PKT_LEAD);
-			byHead1 = (byte)(datalen/256);
-			byHead2 = (byte)(datalen%256);
-			
-			// LEAD BYTE
-			buf.writeByte(byHead0);
-			// PACKET LEN
-			buf.writeByte(byHead1);
-			buf.writeByte(byHead2);
-			// VER
-			buf.writeByte(1);
-			// PACKET NO
-			buf.writeByte(byPacketNo++);
-			
-			if(isCompressed) {
-				buf.writeByte(1);
-				buf.writeBytes(compressedData);
-			} else {
-				buf.writeByte(0);
-				buf.writeBytes(data);				
-			}
-			// TAIL BYTE
-			buf.writeByte(FDTPacket.PKT_END);
-			data = null;
-			compressedData = null;
-			//iSentBytes += datalen + 4;
-		}
-		catch(Exception e)
-		{
-			log.error(e.getMessage(),e);
-		}
+//		try
+//		{
+//			byte[] data;
+//			boolean isCompressed = false;
+//			try {
+//				data = MsgPack.pack(obj);
+//			}
+//			catch(Exception e)
+//			{
+//				throw e;
+//			}
+//
+//			byte[] compressedData = null;
+//			int compressedLen = 0,datalen = data.length + 2 + 1;
+//			if(data.length >= FDTPacket.PKT_COMPRESS_SIZE ) {
+//				isCompressed = true;
+//				compressedData = CompressUtil.compress(data);
+//				compressedLen = compressedData.length;
+//				if(compressedLen >= data.length) {
+//					isCompressed = false;
+//					compressedData = null;
+//				} else {
+//					datalen = compressedLen + 2 + 1;
+//				}
+//			}
+//			/*
+//			if(obj instanceof String) {
+//				data = ((String)obj).getBytes();
+//			} else {
+//				data = (byte[])obj;
+//			}
+//			*/
+//
+//
+//		   	byte byHead0, byHead1, byHead2;
+//			byHead0 = (byte)(FDTPacket.PKT_LEAD);
+//			byHead1 = (byte)(datalen/256);
+//			byHead2 = (byte)(datalen%256);
+//
+//			// LEAD BYTE
+//			buf.writeByte(byHead0);
+//			// PACKET LEN
+//			buf.writeByte(byHead1);
+//			buf.writeByte(byHead2);
+//			// VER
+//			buf.writeByte(1);
+//			// PACKET NO
+//			buf.writeByte(byPacketNo++);
+//
+//			if(isCompressed) {
+//				buf.writeByte(1);
+//				buf.writeBytes(compressedData);
+//			} else {
+//				buf.writeByte(0);
+//				buf.writeBytes(data);
+//			}
+//			// TAIL BYTE
+//			buf.writeByte(FDTPacket.PKT_END);
+//			data = null;
+//			compressedData = null;
+//			//iSentBytes += datalen + 4;
+//		}
+//		catch(Exception e)
+//		{
+//			log.error(e.getMessage(),e);
+//		}
 	}
 }

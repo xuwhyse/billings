@@ -3,10 +3,8 @@ package com.awhyse.java8;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -24,8 +22,20 @@ public class StreamAbout {
     public static void main(String[] args) {
 //        streamFilterCount();
 //        newSreamAsList();
-        streamMap();
+//        streamMap();
+
+        streamTOList();
     }
+
+    /**
+     * 将list中满足条件的抽离出来，组合成新的list,如果没有匹配的，返回空数组
+     */
+    private static void streamTOList() {
+        List<String> lines = Arrays.asList("spring", "node", "mkyong");
+        List<String>  newList = lines.stream().filter(item->item.startsWith("s")).collect(Collectors.toList());
+        System.err.print(newList);
+    }
+
     /**
      * map操作，操作原有stream的item，返回新的stream
      * 与filter不同：返回条件子集
@@ -36,7 +46,6 @@ public class StreamAbout {
         List<Integer> list = new ArrayList<>(6);
         for(int i=0;i<6;i++)
             list.add(i);
-
         Stream  stream = list.parallelStream().map(v->v+3);
         stream.forEach(item->logger.debug(String.valueOf(item)));
     }

@@ -36,7 +36,7 @@ public class DruidJdbcTempDriver{
      * @param pwd
      * @return
      */
-    private static JdbcTemplate getJdbcTemp(String dburl, String user, String pwd) {
+    public static JdbcTemplate getJdbcTemp(String dburl, String user, String pwd) {
         DruidDataSource ds = new DruidDataSource();
         ds.setUrl(dburl);//url,user,pass,initialSize
         ds.setUsername(user);

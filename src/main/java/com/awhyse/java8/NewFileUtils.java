@@ -20,10 +20,16 @@ public class NewFileUtils {
 
     //========================================================
     public static void main(String[] args) throws IOException {
-        String filePath = "C:\\Users\\whyse\\Desktop\\任务\\小T";
-        Path path = Paths.get(filePath,"puzzle.json");
+        String filePath = "/Users/whyse/Desktop/work/任务文件夹/短信后台/";
+        Path path = Paths.get(filePath,"testR.txt");
 
         List<String> listStr = Files.readAllLines(path);//按行读取文件
+
+        String TAB = "\t";
+        listStr.forEach(item->{
+            String[] strs = item.split(TAB);
+            System.err.print(12);
+        });
 
         byte[] bytesFile = Files.readAllBytes(path);
 

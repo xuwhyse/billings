@@ -24,6 +24,7 @@ public class ExecutorServiceTest {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		Executors.newFixedThreadPool(3);
 		Runnable runnable = new Runnable() {
 			
 			@Override

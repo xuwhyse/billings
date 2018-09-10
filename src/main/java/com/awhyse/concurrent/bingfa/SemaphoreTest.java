@@ -3,7 +3,7 @@ package com.awhyse.concurrent.bingfa;
 import java.util.concurrent.Semaphore;
 
 /**
- * 专门用于通知流量的
+ * 信号量: 专门用于通知流量的
  * Created by whyse
  * on 2017/12/25 13:34
  */
@@ -15,6 +15,7 @@ public class SemaphoreTest {
             return;
         }
         try{
+//            tryAcquire(long timeout, TimeUnit unit)//引入超时机制
             semaphore.acquire();//获取一个资源,如果获取不到就blocking
         }catch (Exception e){
             e.printStackTrace();

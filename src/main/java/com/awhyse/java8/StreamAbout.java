@@ -1,5 +1,6 @@
 package com.awhyse.java8;
 
+import com.billings.billingsystem.model.BaoyueBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,26 @@ public class StreamAbout {
 //        newSreamAsList();
 //        streamMap();
 
-        streamTOList();
+//        streamTOList();
+        listToMap();
+    }
+
+    private static void listToMap() {
+        List<BaoyueBean> list = new ArrayList<>();
+        BaoyueBean item = new BaoyueBean();
+        item.setId(1L);
+        item.setSourceuuid("123");
+        list.add(item);
+
+        item = new BaoyueBean();
+        item.setId(2L);
+        item.setSourceuuid("23");
+        list.add(item);
+
+        // key = id, value - websites
+        Map<Long, BaoyueBean> result1 = list.stream().collect(
+                Collectors.toMap(x->x.getId(), x->x));
+        System.err.println(result1);
     }
 
     /**

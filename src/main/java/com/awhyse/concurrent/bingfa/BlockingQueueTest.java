@@ -41,15 +41,14 @@ public class BlockingQueueTest {
 
 	private static void queueOpts() throws InterruptedException {
 		BlockingQueue<Integer> blockingQueueShare = new LinkedBlockingQueue<Integer>();
-		for(int i=0;i<20;i++)
-			blockingQueueShare.put(i);
 
 		ExecutorServiceTest.executorService.execute(()->{
 			while(true) {
 				try {
 					Thread.sleep(3000);
-					for (int i = 0; i < 9; i++)
+					for (int i = 0; i < 9; i++) {
 						blockingQueueShare.put(i);
+					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -58,15 +57,20 @@ public class BlockingQueueTest {
 		});
 
 		while(true) {
+
+			Integer item = blockingQueueShare.take();
+			Thread.sleep(1000);
+			logger.info("----- 休息够-----");
+
 			List<Integer> list = new ArrayList<>(7);
-			blockingQueueShare.drainTo(list,7);
+			list.add(item);
+			blockingQueueShare.drainTo(list,6);
+
 			for (Integer i : list) {
 				logger.info("_" + i);
 			}
 			logger.info("size :"+blockingQueueShare.size());
-			if(blockingQueueShare.isEmpty()){
-				logger.info("_" + blockingQueueShare.take());
-			}
+
 		}
 	}
 
@@ -159,7 +163,7 @@ public class BlockingQueueTest {
 	 * 2016-6-15 上午11:27:17
 	 */
 	private static void simpleTest() {
-		final BlockingQueue<Integer> blockingQueueShare = new LinkedBlockingQueue<Integer>(2);
+		final BlockingQueue<Integer> blockingQueueShare = new LinkedBlockingQueue<>(2);
 		Thread prodThread = new Thread(new Runnable() {
 			
 			@Override

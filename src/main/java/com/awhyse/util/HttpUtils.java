@@ -34,23 +34,9 @@ public class HttpUtils {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Map<String, Object> mapTar = new HashMap<String, Object>(8);
-//		mapTar.put("cmd", "c=history('002415','2017-11-14');return c");
-		mapTar.put("cmd", "a=15\n" +
-				"if(a>10):\n" +
-				"    a=a-8\n" +
-				"else:\n" +
-				"    a=a-4\n" +
-				"return a");
-		
-//		String str = JSON.toJSONString(mapTar);
-//		str = URLEncoder.encode(str);
-//		System.err.println(str);
-		
-		String url = "http://localhost:8888/service";
-//		String retStr =  NetUtil.sendPost("http://localhost:8080/im/xiaotDoScore", str);
-		Map<String,String> mapHeards = new HashMap<>(2);
-		postJson(url,null,mapTar);
+		String url = "http://help.zcy.gov.cn/help-center/api/cmsProductDynamics/getProductDynamicsContentsByCode?pageSize=6&categoryCode=help_loan";
+		String str = postJson(url,null,null);
+		System.err.println(str);
 	}
 
 	/**
@@ -88,7 +74,6 @@ public class HttpUtils {
 			if (response.isSuccessful()) {
 				// 打印服务端返回结果
 				String str = response.body().string();
-				System.err.println(str);
 				return str;
 			}
 		} catch (IOException e) {

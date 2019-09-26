@@ -19,7 +19,7 @@ public class NetUtil {
     public static void main(String[] args) {
 //        requestThenReturn("http://10.139.100.2/rosefinch/menu-1?code=yhcui");
 //    	String str = sendGet("http://10.139.100.2/rosefinch/menu-1","code=yhcui");
-    	String str = sendPost("http://10.139.100.2/rosefinch/menu-1","code=yhcui");
+    	String str = requestThenReturn("https://www.baidu.com/");
     	System.err.println(str);
 //    	BillingsOperImpl ob = new BillingsOperImpl();
 //		BillingsOperBean bean =new BillingsOperBean();

@@ -122,7 +122,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.connector.version}</version>
+			<version>8.0.13</version>
 		</dependency>
 		
 		<!-- 视图解析器部分 -->
@@ -235,6 +235,12 @@
 			<version>3.1.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.12.2</version>
+		</dependency>
+
 		 <!-- Jackson -->
 		<dependency>
 		    <groupId>com.alibaba</groupId>
@@ -309,6 +315,13 @@
 			</exclusion>
 		</exclusions>
 	</dependency>
+
+		<!--验签+签名-->
+	<dependency>
+		<groupId>com.auth0</groupId>
+		<artifactId>java-jwt</artifactId>
+		<version>3.4.1</version>
+	</dependency>
 	
 	<!-- akka相关 -->
 		<dependency>
@@ -357,7 +370,7 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
-			<version>1.0.29</version>
+			<version>1.1.5</version>
 		</dependency>
 
 		<!-- gateway-->
@@ -366,11 +379,11 @@
 			<artifactId>commons-compress</artifactId>
 			<version>1.9</version>
 		</dependency>
-		<dependency>
-			<groupId>net.asdfa</groupId>
-			<artifactId>msgpacklite</artifactId>
-			<version>1.0.0</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>net.asdfa</groupId>-->
+			<!--<artifactId>msgpacklite</artifactId>-->
+			<!--<version>1.0.0</version>-->
+		<!--</dependency>-->
 
 		<dependency>
 			<groupId>org.elasticsearch</groupId>
@@ -458,26 +471,27 @@
 		      
 		      <!-- ==============之前的plugins都是必须要的=========================== -->
 		      <!-- mybatis自动生成代码 -->
-		      <plugin>
-				<groupId>org.mybatis.generator</groupId>
-				<artifactId>mybatis-generator-maven-plugin</artifactId>
-				<version>${mybatis.generator.version}</version>
-				<!-- 无法让插件编译本地代码，只能这样搞 -->
-				<dependencies>
-					<dependency>
-						<groupId>com.xuwhyse</groupId> 
-						<artifactId>mybatis-generate-self</artifactId> 
-						<version>1.0.0</version> 
-						<scope>system</scope> 
-						<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/mybatis-generate-self-1.0.0.jar</systemPath>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<verbose>true</verbose>
-					<overwrite>true</overwrite>
-				</configuration>
-                 
-			</plugin>
+<!--		      <plugin>-->
+<!--				<groupId>org.mybatis.generator</groupId>-->
+<!--				<artifactId>mybatis-generator-maven-plugin</artifactId>-->
+<!--				<version>${mybatis.generator.version}</version>-->
+<!--				&lt;!&ndash; 无法让插件编译本地代码，只能这样搞 &ndash;&gt;-->
+<!--				<dependencies>-->
+<!--					<dependency>-->
+<!--						<groupId>com.xuwhyse</groupId> -->
+<!--						<artifactId>mybatis-generate-self</artifactId> -->
+<!--						<version>1.0.0</version> -->
+<!--						<scope>system</scope> -->
+<!--						<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/mybatis-generate-self-1.0.0.jar</systemPath>-->
+<!--					</dependency>-->
+<!--				</dependencies>-->
+<!--				<configuration>-->
+<!--					<verbose>true</verbose>-->
+<!--					<overwrite>true</overwrite>-->
+<!--				</configuration>-->
+<!--                 -->
+<!--			</plugin>-->
+
 			<!-- jetty容器 -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>

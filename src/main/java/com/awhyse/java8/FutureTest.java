@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by whyse
@@ -29,8 +30,9 @@ public class FutureTest {
             return "dsgf";
         });
         System.err.println(System.currentTimeMillis()-time);
-        if(fut.get()==null)
+        if(fut.get(7, TimeUnit.SECONDS)==null) {
             System.err.println("空");
+        }
         System.err.println(System.currentTimeMillis()-time);
         return fut;
     }

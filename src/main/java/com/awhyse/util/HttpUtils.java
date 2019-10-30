@@ -1,70 +1,68 @@
 package com.awhyse.util;
 
-import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class HttpUtils {
 
-	static Logger logger = LoggerFactory.getLogger(HttpUtils.class);
 	private static final MediaType MEDIA_TYPE_JSON = MediaType
-			.parse("application/x-www-form-urlencoded; charset=utf-8");// mdiatype
-																		// 这个需要和服务端保持一致
+			.parse("application/x-www-form-urlencoded; charset=utf-8");
 	private static final MediaType MEDIA_TYPE_MARKDOWN = MediaType
-			.parse("text/x-markdown; charset=utf-8");// mdiatype 这个需要和服务端保持一致
+			.parse("text/x-markdown; charset=utf-8");
 	public static final MediaType JSONType = MediaType
 			.parse("application/json; charset=utf-8");
-	private static final String TAG = HttpUtils.class.getSimpleName();
-	private static final String BASE_URL = "http://xxx.com/openapi";// 请求接口根地址
-	private static volatile HttpUtils mInstance;// 单利引用
-	public static final int TYPE_GET = 0;// get请求
-	public static final int TYPE_POST_JSON = 1;// post请求参数为json
-	public static final int TYPE_POST_FORM = 2;// post请求参数为表单
-	private OkHttpClient mOkHttpClient;// okHttpClient 实例
-//	private Handler okHttpHandler;// 全局处理子线程和M主线程通信
+
+	private static final int timeOut = 9;
+
+	/**
+	 * 单例客户端
+	 */
+	private static OkHttpClient okHttpClient = null;
+	static {
+		okHttpClient = new OkHttpClient().newBuilder().
+				connectTimeout(timeOut, TimeUnit.SECONDS)
+				.readTimeout(timeOut,TimeUnit.SECONDS)
+				.writeTimeout(timeOut,TimeUnit.SECONDS)
+				.build();
+	}
 
 	/**
 	 * @param args
 	 *            author:xumin 2016-12-16 上午11:44:06
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		String url = "http://help.zcy.gov.cn/help-center/api/cmsProductDynamics/getProductDynamicsContentsByCode?pageSize=6&categoryCode=help_loan";
-		String str = postJson(url,null,null);
-		System.err.println(str);
+		postJson("http://www.baidu.com",null,"hello");
 	}
 
 	/**
 	 *
 	 * @param url 请求的地址
-	 * @param mapHeards  可以为null
-	 * @param mapBody  不能为null,请求体
+	 * @param mapHeard  可以为null
+	 * @param json  不能为null,请求体
 	 * @return 成功就返回   失败返回null
 	 */
-	public static String postJson(String url,Map<String,String> mapHeards,Map<String, Object> mapBody) {
-		//注意这个超时时间
-		OkHttpClient okHttpClient = new OkHttpClient().newBuilder().
-				connectTimeout(7, TimeUnit.SECONDS)
-				.readTimeout(7,TimeUnit.SECONDS)
-				.writeTimeout(7,TimeUnit.SECONDS)
-				.build();
+	public static String postJson(String url,Map<String,String> mapHeard,String json) {
 		// 创建一个RequestBody(参数1：数据类型 参数2传递的json串)
-		RequestBody requestBody = RequestBody.create(JSONType,JSON.toJSONString(mapBody));
+		if(json == null){
+			json = "";
+		}
+		RequestBody requestBody = RequestBody.create(JSONType, json);
 		// 创建一个请求对象
 		Request request = null;
-		if(mapHeards==null) {
+		if(mapHeard==null) {
 			request = new Request.Builder()
 					.url(url)
 					.post(requestBody).build();
 		}else{
 			request = new Request.Builder()
 					.url(url)
-					.headers(SetHeaders(mapHeards))
+					.headers(SetHeaders(mapHeard))
 					.post(requestBody).build();
 		}
 		// 发送请求获取响应
@@ -75,9 +73,48 @@ public class HttpUtils {
 				// 打印服务端返回结果
 				String str = response.body().string();
 				return str;
+			}else{
+				System.err.println(response.toString());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("error",e);
+		}
+		return null;
+
+	}
+
+	/**
+	 *
+	 * @param url 请求的地址
+	 * @param mapHeard  可以为null
+	 * @return 成功就返回   失败返回null
+	 */
+	public static String get(String url,Map<String,String> mapHeard) {
+		// 创建一个请求对象
+		Request request = null;
+		if(mapHeard==null) {
+			request = new Request.Builder()
+					.url(url)
+					.build();
+		}else{
+			request = new Request.Builder()
+					.url(url)
+					.headers(SetHeaders(mapHeard))
+					.build();
+		}
+		// 发送请求获取响应
+		try {
+			Response response = okHttpClient.newCall(request).execute();
+			// 判断请求是否成功
+			if (response.isSuccessful()) {
+				// 打印服务端返回结果
+				String str = response.body().string();
+				return str;
+			}else{
+				System.err.println(response.toString());
+			}
+		} catch (IOException e) {
+			log.error("error",e);
 		}
 		return null;
 
@@ -97,7 +134,6 @@ public class HttpUtils {
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 			headersbuilder.add(key, headersParams.get(key));
-//			logger.info("get http", "get_headers==="+key+"===="+headersParams.get(key));
 		}
 		headers = headersbuilder.build();
 		return headers;

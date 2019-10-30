@@ -25,7 +25,7 @@ public class CompletableFutureTest {
     private static void test2() {
         BaoyueBean user = new BaoyueBean();
         CompletableFuture<String> future1 = CompletableFuture.supplyAsync(()->{
-            String s = timeLong("1"); user.setSourceuuid(s);return "sd";}, ThreadPoolExecutorTest.executor);
+            String s = timeLong("1"); user.setSourceuuid(s);return "sd";}, ThreadPoolHelper.threadPoolExecutor);
 
         CompletableFuture<Void> future2 = CompletableFuture.runAsync(()->{
             String s =  timeLong("2");user.setCreatetime(111L);});

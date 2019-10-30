@@ -1,9 +1,8 @@
 package com.awhyse.util;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.*;
 import java.io.IOException;
@@ -15,23 +14,33 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
  * 处理https
  * @author xumin
  */
+@Slf4j
 public class HttpsUtils {
 
-	static Logger logger = LoggerFactory.getLogger(HttpUtils.class);
 	private static final MediaType MEDIA_TYPE_JSON = MediaType
-			.parse("application/x-www-form-urlencoded; charset=utf-8");// mdiatype
-	// 这个需要和服务端保持一致
+			.parse("application/x-www-form-urlencoded; charset=utf-8");
 	private static final MediaType MEDIA_TYPE_MARKDOWN = MediaType
-			.parse("text/x-markdown; charset=utf-8");// mdiatype 这个需要和服务端保持一致
+			.parse("text/x-markdown; charset=utf-8");
 	public static final MediaType JSONType = MediaType
 			.parse("application/json; charset=utf-8");
+
+	/**
+	 * 单例客户端
+	 */
+	private static OkHttpClient okHttpClient = null;
+	static {
+		okHttpClient = getAllTrustOkHttpClient();
+	}
 
 
 	static class MyTrustManager implements X509TrustManager {
@@ -65,9 +74,6 @@ public class HttpsUtils {
 	 * @return 成功就返回   失败返回null
 	 */
 	public static String postJson(String url,Map<String,String> mapHeards,Map<String, Object> mapBody) {
-		//注意这个超时时间
-		OkHttpClient okHttpClient = getAllTrustOkHttpClient();
-//		okHttpClient = getTrustClient(null);
 		// 创建一个RequestBody(参数1：数据类型 参数2传递的json串)
 		RequestBody requestBody = RequestBody.create(JSONType, JSON.toJSONString(mapBody));
 		// 创建一个请求对象
@@ -93,6 +99,43 @@ public class HttpsUtils {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	/**
+	 *
+	 * @param url 请求的地址
+	 * @param mapHeard  可以为null
+	 * @return 成功就返回   失败返回null
+	 */
+	public static String get(String url,Map<String,String> mapHeard) {
+		// 创建一个请求对象
+		Request request = null;
+		if(mapHeard==null) {
+			request = new Request.Builder()
+					.url(url)
+					.build();
+		}else{
+			request = new Request.Builder()
+					.url(url)
+					.headers(SetHeaders(mapHeard))
+					.build();
+		}
+		// 发送请求获取响应
+		try {
+			Response response = okHttpClient.newCall(request).execute();
+			// 判断请求是否成功
+			if (response.isSuccessful()) {
+				// 打印服务端返回结果
+				String str = response.body().string();
+				return str;
+			}else{
+				System.err.println(response.toString());
+			}
+		} catch (IOException e) {
+			log.error("error",e);
 		}
 		return null;
 

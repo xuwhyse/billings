@@ -1,6 +1,6 @@
 package com.awhyse.l2019;
 
-import com.awhyse.concurrent.bingfa.ThreadPoolExecutorTest;
+import com.awhyse.concurrent.bingfa.ThreadPoolHelper;
 import com.billings.billingsystem.model.BaoyueBean;
 
 import java.util.Random;
@@ -18,7 +18,7 @@ public class CompletableFutureTest {
     public static void main(String[] args) {
         BaoyueBean user = new BaoyueBean();
         CompletableFuture<String> future1 = CompletableFuture.supplyAsync(()->{
-          String s = timeLong("1"); user.setSourceuuid(s);return "sd";}, ThreadPoolExecutorTest.executor);
+          String s = timeLong("1"); user.setSourceuuid(s);return "sd";}, ThreadPoolHelper.threadPoolExecutor);
 
         CompletableFuture<Void> future2 = CompletableFuture.runAsync(()->{
             String s =  timeLong("2");user.setCreatetime(111L);});

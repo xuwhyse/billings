@@ -1,130 +1,104 @@
 package com.awhyse.concurrent.bingfa.Ali;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
+ * 三个线程，顺序循环打印
  * Created by whyse
  * on 2017/3/10 22:30
  */
 public class TestTwoMy {
-    static ExecutorService executorService = Executors.newFixedThreadPool(3);
+
     static volatile  int  order = 1;
     static volatile  int  index = 0;
+
     public static void main(String[] args) {
-        int threadNum = 3;
-        getStringAli(threadNum);
+        int count = 100;
+        long time = System.currentTimeMillis();
+        getStringAli1(count);
+        System.err.println(System.currentTimeMillis()-time);
+
     }
 
     /**
      * 题目2：有3个线程和1个公共的字符数组。线程1的功能就是向数组输出A，线程2的
      * 功能就是向字符输出l，线程3的功能就是向数组输出i。要求按顺序向数组赋值AliAliAli
      * ，Ali的个数由线程函数1的参数指定。
-     * @param threadNum
+     * @param count
      * @return
      */
-    private static void getStringAli(int threadNum) {
-        final int size = 3*threadNum;
-        final byte[] byteAli = new byte[3*threadNum];
-//        final TestTwo testTwo = new TestTwo();
-        final ReentrantLock reentrantLock = new ReentrantLock();
-        final Condition condAHasOver  = reentrantLock.newCondition();
-        final Condition condBHasOver  = reentrantLock.newCondition();
-        final Condition condCHasOver  = reentrantLock.newCondition();
+    private static void getStringAli1(int count) {
+        char[] charAli = new char[3*count];
 
 
-        final Runnable runA = new Runnable() {
+        Runnable runnablei = new Runnable() {
+            @Override
             public void run() {
-                while(index<size) {
-                    reentrantLock.lock();//lock是阻塞的
-                        try {
-                            while (order != 1) {
-//                                condAHasOver.signal();
-                                System.out.println("A获得锁释放A");
-                                condCHasOver.await();
-                            }
-                            if(index>=size){
-                                break;
-                            }
-                            System.out.print("a");
-                            byteAli[index++] = 'A';
-                            order = 2;
-//                            testTwo.notifyAll();
-                            condAHasOver.signal();
-//                            System.out.println(index.get());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }finally {
-                            reentrantLock.unlock();
-                        }
+                int c = count;
+                while (c>0) {
+                    if(order == 3) {
+                        charAli[index++] = 'i';
+                        order = 1;
+                        c--;
                     }
-                }
-        };
-
-        //============================
-        final Runnable runl = new Runnable() {
-
-            public void run() {
-                while(index<size) {
-                    reentrantLock.lock();//lock是阻塞的
-                        try {
-                            while (order != 2) {
-//                                testTwo.wait();
-//                                condBHasOver.signal();
-                                System.out.println("B获得锁释放B");
-                                condAHasOver.await();
-                            }
-                            if(index>=size){
-                                break;
-                            }
-                            System.out.print("l");
-                            byteAli[index++] = 'l';
-                            order = 3;
-//                            testTwo.notifyAll();
-                            condBHasOver.signal();
-//                            System.out.println(index.get());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }finally {
-                            reentrantLock.unlock();
-                        }
+//                    else{
+//                        //主动释放cpu占有资源，使runable线程参与竞争;  似乎加不加时间一样
+//                        Thread.yield();
+//                    }
                 }
             }
         };
-        //==========================================
-        final Runnable runi = new Runnable() {
+        Thread iThd = new Thread(runnablei);
+
+        Runnable runnablel = new Runnable() {
+            @Override
             public void run() {
-                while(index<size) {
-                    reentrantLock.lock();//lock是阻塞的
-                        try {
-                            while (order != 3) {
-//                                testTwo.wait();
-//                                condCHasOver.signal();
-                                System.out.println("C获得锁释放C");
-                                condBHasOver.await();
-                            }
-                            if(index>=size){
-                                break;
-                            }
-                            System.out.print("i");
-                            byteAli[index++] = 'i';
-                            order = 1;
-//                            testTwo.notifyAll();
-                            condCHasOver.signal();
-//                            System.out.println(index.get());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }finally {
-                            reentrantLock.unlock();
-                        }
+                int c = count;
+                while (c>0) {
+                    if(order == 2) {
+                        charAli[index++] = 'l';
+                        order = 3;
+                        c--;
+                    }
+//                    else{
+//                        //主动释放cpu占有资源，使runable线程参与竞争
+//                        Thread.yield();
+//                    }
                 }
             }
         };
-        executorService.submit(runA);
-        executorService.submit(runl);
-        executorService.submit(runi);
+        Thread lThd = new Thread(runnablel);
+
+
+        Runnable runnableA = new Runnable() {
+            @Override
+            public void run() {
+                int c = count;
+                while (c>0) {
+                    if(order == 1) {
+                        charAli[index++] = 'A';
+                        order = 2;
+                        c--;
+                    }
+//                    else{
+//                        //主动释放cpu占有资源，使runable线程参与竞争
+//                        Thread.yield();
+//                    }
+                }
+            }
+        };
+        Thread AThd = new Thread(runnableA);
+
+
+        try {
+            AThd.start();
+            lThd.start();
+            iThd.start();
+            iThd.join();
+
+            System.err.println(charAli);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

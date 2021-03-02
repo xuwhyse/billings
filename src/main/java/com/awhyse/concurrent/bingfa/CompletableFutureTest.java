@@ -10,6 +10,10 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * https://juejin.im/post/5ca47aa0e51d457131257269
+ * thenAccept()处理正常结果；
+ * exceptional()处理异常结果；
+ * thenApplyAsync()用于串行化另一个CompletableFuture；
+ * anyOf()和allOf()用于并行化多个CompletableFuture。
  * 异步方法
  * @author xumin
  * @date 2019-04-22 18:34

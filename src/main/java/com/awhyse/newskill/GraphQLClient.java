@@ -1,5 +1,6 @@
 package com.awhyse.newskill;
 
+import com.alibaba.fastjson.JSON;
 import com.awhyse.util.HttpUtils;
 
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class GraphQLClient {
         mapPara.put("variables",variables);
         variables.put("traceId",traceId);
 
-        String jsonRsp = HttpUtils.postJson(url,null,mapPara);
+        String jsonRsp = HttpUtils.postJson(url,null,null);
         System.err.print(jsonRsp);
     }
 
@@ -73,7 +74,7 @@ public class GraphQLClient {
 
 
         Map<String,String> mapHeards = new HashMap<>(2);
-        String jsonRsp = HttpUtils.postJson(url,mapHeards,mapPara);
+        String jsonRsp = HttpUtils.postJson(url,mapHeards, JSON.toJSONString(paging));
         System.err.print(jsonRsp);
     }
 }

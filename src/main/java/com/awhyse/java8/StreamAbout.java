@@ -44,6 +44,11 @@ public class StreamAbout {
         // key = id, value - websites
         Map<Long, BaoyueBean> result1 = list.stream().collect(
                 Collectors.toMap(x->x.getId(), x->x));
+
+
+        Map<Long, BaoyueBean> result2 = list.stream().collect(
+                Collectors.toMap(x->x.getId(), x->x,(x1,x2)->x1));
+
         System.err.println(result1);
     }
 

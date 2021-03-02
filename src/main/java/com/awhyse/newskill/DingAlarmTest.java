@@ -1,5 +1,6 @@
 package com.awhyse.newskill;
 
+import com.alibaba.fastjson.JSON;
 import com.awhyse.util.HttpUtils;
 
 import java.util.LinkedHashMap;
@@ -34,7 +35,7 @@ public class DingAlarmTest {
         //图片URL  可以不填
         link.put("picUrl","");
 
-        String jsonRsp = HttpUtils.postJson(url,null,mapPara);
+        String jsonRsp = HttpUtils.postJson(url,null, JSON.toJSONString(mapPara));
         System.err.print(jsonRsp);
     }
 }

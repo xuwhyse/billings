@@ -1,4 +1,4 @@
-package com.awhyse.alearn.jisuan;
+package com.awhyse.jisuan;
 
 import java.util.HashMap;
 

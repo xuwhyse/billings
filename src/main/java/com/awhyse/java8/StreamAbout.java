@@ -1,6 +1,7 @@
 package com.awhyse.java8;
 
 import com.billings.billingsystem.model.BaoyueBean;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,7 @@ import java.util.stream.Stream;
  * Created by whyse
  * on 2017/1/23 13:36
  */
+@Slf4j
 public class StreamAbout {
     static Logger logger = LoggerFactory.getLogger(BingFaNew.class);
     //====================================================
@@ -40,6 +42,15 @@ public class StreamAbout {
         item.setId(2L);
         item.setSourceuuid("23");
         list.add(item);
+
+        item = new BaoyueBean();
+        item.setId(3L);
+        item.setSourceuuid("3333");
+        list.add(item);
+
+        list.parallelStream().forEach(temp->{
+            log.info(temp.toString());
+        });
 
         // key = id, value - websites
         Map<Long, BaoyueBean> result1 = list.stream().collect(

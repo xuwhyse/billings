@@ -41,7 +41,7 @@ public class EsMain {
         initClient();
 //        index();//插入
 //        get();
-//        testMultiGet();
+        testMultiGet();
 //        testMatchAllQuery();
         Map<String,Object> map = map = getEsCbbcSC();//getEsCbbc(null);
 //        map = getEsCbbcSC();

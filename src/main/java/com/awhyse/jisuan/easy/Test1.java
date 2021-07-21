@@ -1,4 +1,4 @@
-package com.awhyse.alearn.jisuan.easy;
+package com.awhyse.jisuan.easy;
 
 import java.util.HashSet;
 import java.util.Set;

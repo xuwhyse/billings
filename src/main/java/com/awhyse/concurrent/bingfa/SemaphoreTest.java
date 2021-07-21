@@ -14,12 +14,14 @@ public class SemaphoreTest {
             //等待信号量的线程数
             return;
         }
+//        semaphore.tryAcquire(long timeout, TimeUnit unit)//引入超时机制
+//        semaphore.acquire();//获取一个资源,如果获取不到就blocking
         try{
-//            tryAcquire(long timeout, TimeUnit unit)//引入超时机制
-            semaphore.acquire();//获取一个资源,如果获取不到就blocking
+
         }catch (Exception e){
             e.printStackTrace();
         }finally {
+            //增加一个资源
             semaphore.release();//释放一个资源
         }
     }

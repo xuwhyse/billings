@@ -388,7 +388,7 @@
 		<dependency>
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch</artifactId>
-			<version>5.5.2</version>
+			<version>6.8.17</version>
 		</dependency>
 		<!--这边有netty冲突，注意-->
 		<dependency>

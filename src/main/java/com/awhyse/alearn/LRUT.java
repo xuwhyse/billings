@@ -1,8 +1,7 @@
 package com.awhyse.alearn;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.Map;
 
 /**
  * 设计LRU缓存结构，该结构在构造时确定大小，假设大小为K，并有如下两个功能
@@ -32,21 +31,12 @@ import java.util.Map;
  * Created by whyse
  * on 2018/5/18 下午9:27
  */
-public class LRU {
+public class LRUT {
 
-    class Node{
-        int key;
-        int value;
-        Node front;
-        Node tail;
-    }
-    private Node head,tail;
-    private int size;
-    private Map<Integer,Node> map;
 
     public static void main(String[] args) {
         int[][] opts = {{1,1,1},{1,2,2},{1,3,2},{2,1},{1,4,4},{2,2}};
-        LRU lru = new LRU();
+        LRUT lru = new LRUT();
         int[] tar = lru.LRU1(opts,3);
         System.out.println(tar);
     }
@@ -60,94 +50,45 @@ public class LRU {
      */
     public int[] LRU1 (int[][] operators, int k) {
         // write code here
-        map = new HashMap<>(k+1);
-        size = k;
-        head = new Node();
-        head.key = -1;
-        tail = new Node();
-        tail.key = -2;
-        head.tail = tail;
-        tail.front = head;
+        //map 的keySet 是有序的链表，集成自hashmap,且node维护了双相链表，也有虚头和尾保证顺序
+        LinkedHashMap<Integer,Integer> map = new LinkedHashMap();
 
         LinkedList<Integer> tarList = new LinkedList<>();
 
 
         for(int i=0;i<operators.length;i++){
             int[] temp = operators[i];
+            int key = temp[1];
             if(temp[0] == 1){
                 //插入
-                myPut(temp[1],temp[2]);
+                if(map.size()<k){
+                    map.put(key, temp[2]);
+                }else{
+                    int keyFirst = map.keySet().iterator().next();
+                    map.remove(keyFirst);
+                    map.put(key, temp[2]);
+                }
             }
             if(temp[0] == 2){
                 //get
-                Integer item = myGet(temp[1]);
-                tarList.add(item);
+                Integer item = map.get(key);
+                if(item==null){
+                    tarList.add(-1);
+                }else{
+                    map.remove(key);
+                    map.put(key,item);
+                    tarList.add(item);
+                }
             }
 
         }
+
 
         int[] tar = new int[tarList.size()];
         for(int i=0;i<tarList.size();i++){
             tar[i] = tarList.get(i);
         }
         return tar;
-    }
-
-    private Integer myGet(int key) {
-        Node item = map.get(key);
-        if(item == null){
-            return -1;
-        }
-        item.front.tail = item.tail;
-        item.tail.front = item.front;
-
-        Node Temp = head.tail;
-        head.tail = item;
-        item.tail = Temp;
-        item.front = head;
-        Temp.front = item;
-
-        return item.value;
-    }
-
-    /**
-     *  put: map中没有key就头插入,有的话拿出来再头插入
-     * @param key
-     * @param value
-     */
-    private void myPut(int key, int value) {
-        Node item = map.get(key);
-        if(item == null){
-            item = new Node();
-            item.key = key;
-            item.value = value;
-            Node Temp = head.tail;
-            head.tail = item;
-            item.tail = Temp;
-            item.front = head;
-            Temp.front = item;
-
-            map.put(key,item);
-            if(map.size() > size){
-                Node tail1 = tail.front;
-                tail1.front.tail = tail;
-                tail.front = tail1.front;
-
-                tail1.front = null;
-                tail1.tail = null;
-
-                map.remove(tail1.key);
-            }
-        }else{
-            item.front.tail = item.tail;
-            item.tail.front = item.front;
-
-            Node Temp = head.tail;
-            head.tail = item;
-            item.tail = Temp;
-            item.front = head;
-            Temp.front = item;
-        }
     }
 
 }

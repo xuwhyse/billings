@@ -9,8 +9,13 @@ public class ListNode {
     public int value;
     public ListNode next;
 
-    ListNode(int value){
+    public ListNode(int value){
         this.value = value;
+    }
+
+    public ListNode(int value,ListNode next){
+        this.value = value;
+        this.next = next;
     }
 
 }

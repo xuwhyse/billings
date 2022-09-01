@@ -43,7 +43,7 @@
 		<hibernate.validator.version>5.1.0.Final</hibernate.validator.version>
 		<javax.validation.version>1.1.0.Final</javax.validation.version>
 		<commons.beanutils.version>1.9.1</commons.beanutils.version>
-		<jsoup.version>1.7.3</jsoup.version>
+		<jsoup.version>1.15.3</jsoup.version>
 	</properties>
 
 	<dependencies>

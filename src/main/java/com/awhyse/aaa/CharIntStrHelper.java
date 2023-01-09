@@ -8,8 +8,7 @@ package com.awhyse.aaa;
 public class CharIntStrHelper {
 
     public static void main(String[] args) {
-        System.err.println(getInt('8'));
-        System.err.println(getChar(7));
+        System.err.println('9'-8);
     }
 
 

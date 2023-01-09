@@ -4,7 +4,7 @@ package com.awhyse.aaa.array;
  * @author xumin
  * @date 2021-12-24 17:26
  */
-public class BigNumber {
+public class EBigNumber {
 
     public static void main(String[] args) {
         String a = "1";

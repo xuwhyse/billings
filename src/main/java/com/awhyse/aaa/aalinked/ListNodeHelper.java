@@ -10,10 +10,42 @@ public class ListNodeHelper {
     public static void main(String[] args) {
         int size = 6;
         ListNode listNode = genRandomList(size,0);
-        ListNode listNode1 = genRandomList(size,1);
-        ListNode listNode2 = genRandomList(size,2);
+        ListNode listNode1 = genRandomList(3,1);
+        ListNode listNode2 = genRandomList(6,1);
+
+        listNode = getMergeList(listNode1,listNode2);
         System.err.println(listNode);
     }
+
+    private static ListNode getMergeList(ListNode linkedNode1, ListNode linkedNode2) {
+
+        ListNode head = new ListNode(-1);
+        ListNode pCur = head;
+        ListNode pCur1 = linkedNode1;
+        ListNode pCur2 = linkedNode2;
+
+        while(pCur1!=null && pCur2!=null){
+            if(pCur1.value<=pCur2.value){
+                pCur.next = pCur1;
+                pCur1 = pCur1.next;
+            }else{
+                pCur.next = pCur2;
+                pCur2 = pCur2.next;
+            }
+            pCur = pCur.next;
+        }
+        if(pCur1 == null && pCur2!=null){
+            pCur.next = pCur2;
+            return head;
+        }
+
+        if(pCur2 == null && pCur1!=null){
+            pCur.next = pCur1;
+            return head;
+        }
+        return head;
+    }
+
 
     /**
      * 测试用例用，创建链表

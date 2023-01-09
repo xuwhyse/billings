@@ -4,7 +4,7 @@ package com.awhyse.aaa.array;
  * @author xumin
  * @date 2022-01-13 17:49
  */
-public class TwoArray {
+public class BErWeiArrayFindKey {
 
     public static void main(String[] args) {
         int[][] arra1 = {{}};
